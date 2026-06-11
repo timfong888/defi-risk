@@ -17,6 +17,10 @@ export interface Feed {
     verified: boolean;
     note: string;
   };
+  coverageBlocker: {
+    kind: "provider-scope" | "access-gated" | "verification-pending";
+    note: string;
+  };
 }
 
 export interface Protocol {

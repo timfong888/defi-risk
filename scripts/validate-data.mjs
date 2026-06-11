@@ -15,6 +15,7 @@ async function loadJson(rel) {
 const STATUSES = ["covered", "partial", "not-yet-covered"];
 const FEED_TYPES = ["Rating", "Dashboard", "Monitoring", "Research"];
 const ACCESS_CLASSES = ["public-api", "published-scrapeable", "gated-manual"];
+const BLOCKER_KINDS = ["provider-scope", "access-gated", "verification-pending"];
 const METRIC_KINDS = ["tvl", "volume24h"];
 
 const feeds = await loadJson("data/feeds.json");
@@ -33,6 +34,8 @@ for (const f of feeds.feeds ?? []) {
     err(where, `bad accessibility.class "${f.accessibility?.class}"`);
   if (typeof f.accessibility?.verified !== "boolean")
     err(where, "accessibility.verified must be boolean");
+  if (!BLOCKER_KINDS.includes(f.coverageBlocker?.kind) || !f.coverageBlocker?.note)
+    err(where, "coverageBlocker must have a valid kind and a note");
 }
 
 const protocolIds = new Set();

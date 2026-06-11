@@ -207,11 +207,7 @@ export default async function ProtocolPage({
       </section>
 
       <section className="mt-8">
-        <SectionHeading
-          id="feeds"
-          title="What each risk feed says"
-          sub="verbatim — no synthesis"
-        />
+        <SectionHeading id="feeds" title="What each risk feed says" />
         {feedTypes.map((type) => (
           <div key={type} className="mt-4">
             <h3
@@ -266,7 +262,13 @@ export default async function ProtocolPage({
                           </blockquote>
                         ) : cell.status === "not-yet-covered" ? (
                           <span className="text-gray-400">
-                            No assessment from this provider yet.
+                            No assessment from this provider yet.{" "}
+                            <Link
+                              href="/feeds#gaps"
+                              className="text-gray-500 underline"
+                            >
+                              Why?
+                            </Link>
                           </span>
                         ) : (
                           <>
