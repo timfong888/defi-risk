@@ -30,6 +30,13 @@ already implements the core of M1:
   curation-pending states.
 - **Methodology page** — scope, the full registry with rationale, and the
   provenance tag legend.
+- **One feed already live-syncing.** DeFiScan assessments (stage rating +
+  5-dimension risk vector) are extracted from their open-source repository
+  by a committed script and rendered verbatim with attribution, update date,
+  and source link — 9 of 20 seed protocols already carry real provider
+  assessments. A nightly GitHub Action opens a reviewable PR when upstream
+  data changes, so no data mutates silently. This is a slice of the M2
+  automation deliverable, operational before submission.
 - **Project charter committed to the repo** documenting the
   no-composite-scoring constraint and the EF-written-agreement requirement
   to ever change it.
@@ -60,6 +67,14 @@ checks in CI — a malformed correction fails visibly. This is what makes the
 project a *public good* rather than a website: any other team can fork the
 data layer and build a different interface on it.
 
+Protocol teams get a structured role without rating influence: factual
+corrections (tagged `self-reported` until independently verifiable), an
+attributed right-of-response slot alongside feed assessments, and page
+claiming with freshness attestation. New protocols are listed by a published
+mechanical criterion (Ethereum mainnet + DefiLlama threshold + capital at
+risk) checked in CI — inclusion is rules-based, never editorial, and never
+paid. Full design: `design/community-contribution-model.md` in the repo.
+
 ### Feed registry and automation strategy
 
 Our proposed registry (full rationale:
@@ -71,8 +86,12 @@ research). Each provider is classified by data accessibility —
 `public-api` / `published-scrapeable` / `gated-manual` — and that
 classification drives the M2 automation plan: automate everything
 machine-readable; reserve manual curation (with reviewer sign-off and
-provenance tags) for gated feeds. First-hand verification of each
-provider's access class is our first M1 work item.
+provenance tags) for gated feeds. Verification has started: DeFiScan is
+confirmed machine-readable and already syncing; BlockAnalitica, DeFi Saver,
+and Credora are confirmed to need access agreements, each with a documented
+plan and fallback (coverage never blocks on access — gated providers fall
+back to manual curation with explicit provenance). This is where EF App
+Relations introductions convert directly into data quality.
 
 Governance data will move from documentation-sourced to onchain-verified
 where possible (direct contract reads of governor/timelock/multisig state,
