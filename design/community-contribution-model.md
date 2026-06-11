@@ -127,7 +127,10 @@ implicit endorsement; a rejected provider gets a legitimate bias complaint.
    feed must be useful to this matrix, not aspirational).
 3. **Independence** — not owned or controlled by a protocol it rates;
    no pay-for-rating from rated parties. Commercial relationships with
-   rated protocols must be disclosed in the registry entry.
+   rated protocols must be disclosed in a `disclosures` array on the
+   provider's `feeds.json` entry (`{ party, relationship, since }`), so
+   the disclosure is schema-enforceable and rendered on the methodology
+   page — an empty array is an explicit "none declared," validated by CI.
 4. **Attributable output** — assessments are published under the provider's
    name with dates (anonymous or undated feeds cannot be quoted verbatim).
 5. **Stability** — output available for ≥90 days (prevents pop-up feeds).

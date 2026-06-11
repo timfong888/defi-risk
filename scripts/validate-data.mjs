@@ -42,10 +42,13 @@ for (const p of protocols.protocols ?? []) {
   protocolIds.add(p.id);
   if (!p.name || !p.family || !p.category || !p.notes)
     err(where, "missing name/family/category/notes");
-  if (!METRIC_KINDS.includes(p.metric?.kind))
-    err(where, `bad metric.kind "${p.metric?.kind}"`);
-  if (p.metric?.slug !== null && typeof p.metric?.slug !== "string")
-    err(where, "metric.slug must be string or null");
+  if (!p.metric) err(where, "missing metric");
+  else {
+    if (!METRIC_KINDS.includes(p.metric.kind))
+      err(where, `bad metric.kind "${p.metric.kind}"`);
+    if (p.metric.slug !== null && typeof p.metric.slug !== "string")
+      err(where, "metric.slug must be string or null");
+  }
 }
 
 function checkCoverageEntry(e, where) {
