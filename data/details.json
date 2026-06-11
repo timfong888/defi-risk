@@ -1,0 +1,52 @@
+{
+  "$comment": "Per-protocol detail data: governance, audits, incidents. Prototype populates aave, lido, uniswap fully; remaining protocols show the page structure with curation-pending states (full population is M1 work, SAT-298). Provenance tags: 'public-docs' = stated in protocol's public documentation, pending onchain verification; 'onchain-verifiable' = directly checkable onchain.",
+  "details": {
+    "aave": {
+      "governance": [
+        { "label": "Governance system", "value": "Aave Governance v3 — onchain voting by AAVE/stkAAVE/aAAVE holders across voting networks", "provenance": "public-docs", "source": "https://docs.aave.com/governance" },
+        { "label": "Execution", "value": "Payloads executed via PayloadsController with timelocked executors per network", "provenance": "onchain-verifiable", "source": "https://github.com/bgd-labs/aave-governance-v3" },
+        { "label": "Emergency powers", "value": "Community Guardian multisig with constrained pause powers, ratified by governance", "provenance": "public-docs", "source": "https://docs.aave.com/governance" }
+      ],
+      "audits": [
+        { "firm": "Trail of Bits", "scope": "Aave v3 core", "date": "2022", "link": "https://github.com/aave-dao/aave-v3-origin/tree/main/audits" },
+        { "firm": "OpenZeppelin", "scope": "Aave v3 core", "date": "2022", "link": "https://github.com/aave-dao/aave-v3-origin/tree/main/audits" },
+        { "firm": "Certora", "scope": "Formal verification, v3 + upgrades", "date": "2022–ongoing", "link": "https://github.com/aave-dao/aave-v3-origin/tree/main/audits" }
+      ],
+      "incidents": [
+        { "date": "2023-11", "description": "Protocol paused on several markets after a vulnerability report; no user funds lost; fixed via governance", "link": "https://governance.aave.com" },
+        { "date": "2023-08", "description": "CRV liquidation left ~$1.6M bad debt on v2 after large borrower position unwound; covered via treasury process", "link": "https://governance.aave.com" }
+      ]
+    },
+    "lido": {
+      "governance": [
+        { "label": "Governance system", "value": "Lido DAO via Aragon, LDO token voting; Dual Governance adds stETH-holder dynamic timelock as a check on DAO decisions", "provenance": "public-docs", "source": "https://docs.lido.fi" },
+        { "label": "Node operators", "value": "Curated operator set plus permissionless modules (Simple DVT, CSM)", "provenance": "public-docs", "source": "https://operatorportal.lido.fi" },
+        { "label": "Emergency powers", "value": "GateSeal emergency pause (time-limited, committee-held)", "provenance": "public-docs", "source": "https://docs.lido.fi" }
+      ],
+      "audits": [
+        { "firm": "Statemind", "scope": "Core protocol & upgrades", "date": "ongoing", "link": "https://github.com/lidofinance/audits" },
+        { "firm": "Certora", "scope": "Formal verification", "date": "ongoing", "link": "https://github.com/lidofinance/audits" },
+        { "firm": "MixBytes", "scope": "Protocol components", "date": "ongoing", "link": "https://github.com/lidofinance/audits" }
+      ],
+      "incidents": [
+        { "date": "2025-05", "description": "One of nine oracle committee keys compromised (Chorus One); quorum design contained impact, no user funds lost; key rotated", "link": "https://blog.lido.fi" },
+        { "date": "2023-10", "description": "Launchnodes operator validators slashed (~20 validators); losses compensated to stakers per DAO process", "link": "https://blog.lido.fi" }
+      ]
+    },
+    "uniswap": {
+      "governance": [
+        { "label": "Governance system", "value": "UNI token voting via Governor Bravo with timelock; governance controls treasury and fee switch, not pool logic", "provenance": "public-docs", "source": "https://docs.uniswap.org/concepts/governance/overview" },
+        { "label": "Upgradeability", "value": "v3 and v4 core contracts are non-upgradeable (immutable once deployed); v4 hooks are pool-creator-chosen, not protocol-controlled", "provenance": "onchain-verifiable", "source": "https://docs.uniswap.org" },
+        { "label": "Frontend/protocol separation", "value": "Uniswap Labs interface is distinct from the onchain protocol; UniswapX uses signed intents settled by fillers", "provenance": "public-docs", "source": "https://docs.uniswap.org" }
+      ],
+      "audits": [
+        { "firm": "Trail of Bits", "scope": "v3 core", "date": "2021", "link": "https://github.com/Uniswap/v3-core/tree/main/audits" },
+        { "firm": "ABDK", "scope": "v3 core", "date": "2021", "link": "https://github.com/Uniswap/v3-core/tree/main/audits" },
+        { "firm": "OpenZeppelin / Spearbit and others", "scope": "v4 core & periphery", "date": "2024", "link": "https://github.com/Uniswap/v4-core" }
+      ],
+      "incidents": [
+        { "date": "2022-07", "description": "Phishing campaign targeted LP NFT holders (~$8M user losses); not a protocol contract flaw", "link": "https://blog.uniswap.org" }
+      ]
+    }
+  }
+}

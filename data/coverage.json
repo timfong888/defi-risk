@@ -1,0 +1,74 @@
+{
+  "$comment": "Coverage matrix entries. Any protocol×feed pair NOT listed here defaults to status 'not-yet-covered' with provenance 'assessment-pending' — the app renders that default explicitly so every cell is labeled. All entries below are provenance 'manual-unverified': curated from each provider's public materials during prototyping; first-hand verification is tracked in SAT-302. Verbatim ratings are only included where we have a confirmed public source.",
+  "defaultStatus": "not-yet-covered",
+  "entries": [
+    { "protocol": "aave", "feed": "defiscan", "status": "covered", "provenance": "manual-unverified", "note": "Listed with decentralization stage review on defiscan.info" },
+    { "protocol": "spark", "feed": "defiscan", "status": "covered", "provenance": "manual-unverified", "note": "Listed with decentralization stage review" },
+    { "protocol": "morpho", "feed": "defiscan", "status": "covered", "provenance": "manual-unverified", "note": "Listed with decentralization stage review" },
+    { "protocol": "compound", "feed": "defiscan", "status": "covered", "provenance": "manual-unverified", "note": "Listed with decentralization stage review" },
+    { "protocol": "liquity", "feed": "defiscan", "status": "covered", "provenance": "manual-unverified", "note": "Listed; immutable design frequently cited as reference case" },
+    { "protocol": "uniswap", "feed": "defiscan", "status": "covered", "provenance": "manual-unverified", "note": "Listed with decentralization stage review" },
+    { "protocol": "curve", "feed": "defiscan", "status": "covered", "provenance": "manual-unverified", "note": "Listed with decentralization stage review" },
+    { "protocol": "lido", "feed": "defiscan", "status": "covered", "provenance": "manual-unverified", "note": "Listed with decentralization stage review" },
+    { "protocol": "fluid", "feed": "defiscan", "status": "partial", "provenance": "manual-unverified", "note": "Review status to confirm" },
+    { "protocol": "euler", "feed": "defiscan", "status": "partial", "provenance": "manual-unverified", "note": "Review status to confirm" },
+
+    { "protocol": "spark", "feed": "blockanalitica", "status": "covered", "provenance": "manual-unverified", "note": "Maker/Sky ecosystem risk dashboards" },
+    { "protocol": "aave", "feed": "blockanalitica", "status": "covered", "provenance": "manual-unverified", "note": "Lending market risk dashboards" },
+    { "protocol": "morpho", "feed": "blockanalitica", "status": "covered", "provenance": "manual-unverified", "note": "Morpho market dashboards" },
+    { "protocol": "compound", "feed": "blockanalitica", "status": "partial", "provenance": "manual-unverified", "note": "Coverage scope to confirm" },
+    { "protocol": "curve", "feed": "blockanalitica", "status": "partial", "provenance": "manual-unverified", "note": "crvUSD market coverage to confirm" },
+
+    { "protocol": "morpho-vaults", "feed": "curatorwatch", "status": "covered", "provenance": "manual-unverified", "note": "Core focus: Morpho curator/vault monitoring" },
+    { "protocol": "morpho", "feed": "curatorwatch", "status": "partial", "provenance": "manual-unverified", "note": "Vault-level focus; core protocol indirectly covered" },
+    { "protocol": "euler", "feed": "curatorwatch", "status": "partial", "provenance": "manual-unverified", "note": "Curated vault coverage to confirm" },
+
+    { "protocol": "aave", "feed": "defisaver", "status": "covered", "provenance": "manual-unverified", "note": "Loan health and liquidation stats" },
+    { "protocol": "compound", "feed": "defisaver", "status": "covered", "provenance": "manual-unverified", "note": "Loan health and liquidation stats" },
+    { "protocol": "liquity", "feed": "defisaver", "status": "covered", "provenance": "manual-unverified", "note": "Trove management and stats" },
+    { "protocol": "spark", "feed": "defisaver", "status": "covered", "provenance": "manual-unverified", "note": "Position management support" },
+    { "protocol": "morpho", "feed": "defisaver", "status": "partial", "provenance": "manual-unverified", "note": "Support scope to confirm" },
+    { "protocol": "fluid", "feed": "defisaver", "status": "partial", "provenance": "manual-unverified", "note": "Support scope to confirm" },
+
+    { "protocol": "curve", "feed": "llamarisk", "status": "covered", "provenance": "manual-unverified", "note": "Long-running Curve-ecosystem risk research" },
+    { "protocol": "aave", "feed": "llamarisk", "status": "partial", "provenance": "manual-unverified", "note": "Collateral risk research engagements" },
+    { "protocol": "liquity", "feed": "llamarisk", "status": "partial", "provenance": "manual-unverified", "note": "Stablecoin/CDP research coverage to confirm" },
+    { "protocol": "lido", "feed": "llamarisk", "status": "partial", "provenance": "manual-unverified", "note": "LST collateral research coverage to confirm" },
+    { "protocol": "pendle", "feed": "llamarisk", "status": "partial", "provenance": "manual-unverified", "note": "Research coverage to confirm" },
+
+    { "protocol": "aave", "feed": "credora", "status": "partial", "provenance": "manual-unverified", "note": "Institutional credit ratings; protocol coverage to confirm" },
+    { "protocol": "morpho", "feed": "credora", "status": "partial", "provenance": "manual-unverified", "note": "Coverage to confirm" },
+    { "protocol": "compound", "feed": "credora", "status": "partial", "provenance": "manual-unverified", "note": "Coverage to confirm" },
+
+    { "protocol": "aave", "feed": "pharos", "status": "partial", "provenance": "manual-unverified", "note": "Live risk-event monitoring scope to confirm" },
+    { "protocol": "lido", "feed": "pharos", "status": "partial", "provenance": "manual-unverified", "note": "Monitoring scope to confirm" },
+
+    { "protocol": "uniswap", "feed": "defipunkd", "status": "partial", "provenance": "manual-unverified", "note": "Registry coverage to confirm" },
+    { "protocol": "aave", "feed": "defipunkd", "status": "partial", "provenance": "manual-unverified", "note": "Registry coverage to confirm" },
+    { "protocol": "lido", "feed": "defipunkd", "status": "partial", "provenance": "manual-unverified", "note": "Registry coverage to confirm" },
+
+    { "protocol": "yearn", "feed": "pigi", "status": "covered", "provenance": "manual-unverified", "note": "Vault analytics across 50+ protocols" },
+    { "protocol": "morpho-vaults", "feed": "pigi", "status": "covered", "provenance": "manual-unverified", "note": "Vault analytics coverage" },
+    { "protocol": "pendle", "feed": "pigi", "status": "partial", "provenance": "manual-unverified", "note": "Coverage to confirm" },
+    { "protocol": "mellow", "feed": "pigi", "status": "partial", "provenance": "manual-unverified", "note": "Coverage to confirm" },
+
+    { "protocol": "yearn", "feed": "xerberus", "status": "partial", "provenance": "manual-unverified", "note": "Vault rating coverage to confirm" },
+    { "protocol": "morpho-vaults", "feed": "xerberus", "status": "partial", "provenance": "manual-unverified", "note": "Vault rating coverage to confirm" },
+    { "protocol": "mellow", "feed": "xerberus", "status": "partial", "provenance": "manual-unverified", "note": "Vault rating coverage to confirm" },
+
+    { "protocol": "curve", "feed": "zyfai", "status": "partial", "provenance": "manual-unverified", "note": "Pool-level risk dashboard coverage to confirm" },
+    { "protocol": "balancer", "feed": "zyfai", "status": "partial", "provenance": "manual-unverified", "note": "Pool coverage to confirm" },
+    { "protocol": "uniswap", "feed": "zyfai", "status": "partial", "provenance": "manual-unverified", "note": "Pool coverage to confirm" },
+
+    { "protocol": "yearn", "feed": "philidor", "status": "covered", "provenance": "manual-unverified", "note": "700+ vault deterministic coverage" },
+    { "protocol": "morpho-vaults", "feed": "philidor", "status": "covered", "provenance": "manual-unverified", "note": "Vault scoring coverage" },
+    { "protocol": "mellow", "feed": "philidor", "status": "partial", "provenance": "manual-unverified", "note": "Coverage to confirm" },
+
+    { "protocol": "lido", "feed": "risklayer", "status": "partial", "provenance": "manual-unverified", "note": "Restaking-adjacent attestation coverage to confirm" },
+    { "protocol": "rocket-pool", "feed": "risklayer", "status": "partial", "provenance": "manual-unverified", "note": "Coverage to confirm" },
+
+    { "protocol": "aave", "feed": "defisphere", "status": "partial", "provenance": "manual-unverified", "note": "Multi-dimensional analysis coverage to confirm" },
+    { "protocol": "uniswap", "feed": "defisphere", "status": "partial", "provenance": "manual-unverified", "note": "Coverage to confirm" },
+    { "protocol": "lido", "feed": "defisphere", "status": "partial", "provenance": "manual-unverified", "note": "Coverage to confirm" }
+  ]
+}

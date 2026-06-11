@@ -1,0 +1,25 @@
+{
+  "$comment": "RFP §3 seed protocol list — top 20 Ethereum DeFi protocols by TVL or equivalent volume. metric.kind 'tvl' uses api.llama.fi/tvl/{slug}; 'volume24h' uses api.llama.fi/summary/aggregators/{slug} per RFP for protocols where TVL is not applicable.",
+  "protocols": [
+    { "id": "spark", "name": "Spark", "family": "Sky", "category": "Lending", "notes": "Sky sub-protocol. SparkLend and sUSDS.", "metric": { "kind": "tvl", "slug": "spark" } },
+    { "id": "aave", "name": "Aave", "family": "Aave", "versions": ["v3", "v4"], "category": "Lending", "notes": "Include v3 and v4.", "metric": { "kind": "tvl", "slug": "aave" } },
+    { "id": "morpho", "name": "Morpho", "family": "Morpho", "category": "Lending", "notes": "Core lending protocol. See also Morpho Vaults under Yield.", "metric": { "kind": "tvl", "slug": "morpho" } },
+    { "id": "fluid", "name": "Fluid", "family": "Fluid", "category": "Lending", "notes": "Lending and DEX hybrid.", "metric": { "kind": "tvl", "slug": "fluid" } },
+    { "id": "gearbox", "name": "Gearbox", "family": "Gearbox", "category": "Lending", "notes": "Credit account leverage protocol.", "metric": { "kind": "tvl", "slug": "gearbox" } },
+    { "id": "euler", "name": "Euler", "family": "Euler", "category": "Lending", "notes": "Modular vault lending.", "metric": { "kind": "tvl", "slug": "euler" } },
+    { "id": "compound", "name": "Compound", "family": "Compound", "versions": ["v2", "v3"], "category": "Lending", "notes": "Include v2 and v3.", "metric": { "kind": "tvl", "slug": "compound-finance" } },
+    { "id": "liquity", "name": "Liquity", "family": "Liquity", "versions": ["v1", "v2"], "category": "Lending", "notes": "Include v1 and v2. Immutable CDP protocol.", "metric": { "kind": "tvl", "slug": "liquity" } },
+    { "id": "uniswap", "name": "Uniswap", "family": "Uniswap", "versions": ["v3", "v4", "UniswapX"], "category": "DEX / AMM", "notes": "Include v3, v4, and UniswapX.", "metric": { "kind": "tvl", "slug": "uniswap" } },
+    { "id": "curve", "name": "Curve", "family": "Curve", "category": "DEX / AMM", "notes": "Stablecoin and LST AMM infrastructure.", "metric": { "kind": "tvl", "slug": "curve-finance" } },
+    { "id": "balancer", "name": "Balancer", "family": "Balancer", "category": "DEX / AMM", "notes": "Weighted and stable pools.", "metric": { "kind": "tvl", "slug": "balancer" } },
+    { "id": "cow-swap", "name": "CoW Swap", "family": "CoW", "category": "Swap Aggregator", "notes": "Intent-based DEX with MEV protection. TVL not applicable — 24h volume shown per RFP.", "metric": { "kind": "volume24h", "slug": "cow-swap" } },
+    { "id": "1inch", "name": "1inch", "family": "1inch", "category": "Swap Aggregator", "notes": "DEX aggregator and limit order protocol. TVL not applicable — 24h volume shown per RFP.", "metric": { "kind": "volume24h", "slug": "1inch" } },
+    { "id": "0x-matcha", "name": "0x / Matcha", "family": "0x", "category": "Swap Aggregator", "notes": "0x protocol and Matcha frontend. TVL not applicable — 24h volume shown per RFP.", "metric": { "kind": "volume24h", "slug": "0x-aggregator" } },
+    { "id": "yearn", "name": "Yearn Finance", "family": "Yearn", "category": "Yield / Vault", "notes": "Automated yield vaults.", "metric": { "kind": "tvl", "slug": "yearn-finance" } },
+    { "id": "mellow", "name": "Mellow", "family": "Mellow", "category": "Yield / Vault", "notes": "Modular LRT vault infrastructure.", "metric": { "kind": "tvl", "slug": "mellow-protocol" } },
+    { "id": "morpho-vaults", "name": "Morpho Vaults", "family": "Morpho", "category": "Yield / Vault", "notes": "Curated MetaMorpho vaults. No dedicated DefiLlama listing — vault TVL reported within Morpho; dedicated metric pending.", "metric": { "kind": "tvl", "slug": null } },
+    { "id": "pendle", "name": "Pendle", "family": "Pendle", "category": "Yield / Vault", "notes": "Yield tokenization and fixed-rate trading.", "metric": { "kind": "tvl", "slug": "pendle" } },
+    { "id": "lido", "name": "Lido", "family": "Lido", "category": "Liquid Staking", "notes": "Largest ETH staking protocol. stETH is the most widely used DeFi collateral and yield source.", "metric": { "kind": "tvl", "slug": "lido" } },
+    { "id": "rocket-pool", "name": "Rocket Pool", "family": "Rocket Pool", "category": "Liquid Staking", "notes": "Decentralized ETH staking. rETH.", "metric": { "kind": "tvl", "slug": "rocket-pool" } }
+  ]
+}

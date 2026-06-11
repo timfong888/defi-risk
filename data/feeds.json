@@ -1,0 +1,117 @@
+{
+  "$comment": "Risk feed registry. RFP §4 list is illustrative; this is our proposed registry. accessibility is our working classification — entries marked verified:false are pending first-hand verification (SAT-302).",
+  "feeds": [
+    {
+      "id": "defiscan",
+      "name": "DeFiScan",
+      "focus": "Decentralization maturity framework: who controls keys, upgrades, and admin powers",
+      "type": "Rating",
+      "url": "https://defiscan.info",
+      "accessibility": { "class": "published-scrapeable", "verified": false, "note": "Publishes stage ratings and reviews publicly; machine-readable export to verify" }
+    },
+    {
+      "id": "curatorwatch",
+      "name": "CuratorWatch",
+      "focus": "Vault-level risk monitoring for Morpho curators, tracking allocation risk and curator behavior",
+      "type": "Dashboard",
+      "url": "https://curatorwatch.xyz",
+      "accessibility": { "class": "published-scrapeable", "verified": false, "note": "Public dashboard; API availability to verify" }
+    },
+    {
+      "id": "blockanalitica",
+      "name": "BlockAnalitica",
+      "focus": "Quantitative on-chain risk dashboards for lending markets: liquidations, collateral health, market exposure",
+      "type": "Dashboard",
+      "url": "https://blockanalitica.com",
+      "accessibility": { "class": "published-scrapeable", "verified": false, "note": "Public per-market dashboards; API availability to verify" }
+    },
+    {
+      "id": "defipunkd",
+      "name": "DeFiPunk'd",
+      "focus": "Multi-dimension risk registry: Control, Exit, Autonomy, Open Access, Verifiability via distributed LLM consensus",
+      "type": "Rating",
+      "url": "https://defipunkd.xyz",
+      "accessibility": { "class": "public-api", "verified": false, "note": "Registry model suggests open data; endpoint to verify" }
+    },
+    {
+      "id": "pharos",
+      "name": "Pharos",
+      "focus": "Real-time risk monitoring and automated alerts for live protocol risk events",
+      "type": "Monitoring",
+      "url": "https://pharos.watch",
+      "accessibility": { "class": "gated-manual", "verified": false, "note": "Alert product; public feed availability to verify" }
+    },
+    {
+      "id": "defisphere",
+      "name": "DeFi Sphere",
+      "focus": "Multi-dimensional protocol analysis covering technical, financial, and operational risk",
+      "type": "Rating",
+      "url": "https://defisphere.io",
+      "accessibility": { "class": "gated-manual", "verified": false, "note": "Analysis reports; machine-readable access to verify" }
+    },
+    {
+      "id": "defisaver",
+      "name": "DeFi Saver",
+      "focus": "Live loan health and liquidation statistics for leveraged DeFi positions",
+      "type": "Dashboard",
+      "url": "https://defisaver.com",
+      "accessibility": { "class": "public-api", "verified": false, "note": "Public position/loan-health stats; API to verify" }
+    },
+    {
+      "id": "credora",
+      "name": "Credora",
+      "focus": "Institutional-grade credit risk ratings for DeFi protocols and borrowers",
+      "type": "Rating",
+      "url": "https://credora.io",
+      "accessibility": { "class": "gated-manual", "verified": false, "note": "Institutional product; expect gated, manual curation with permission" }
+    },
+    {
+      "id": "risklayer",
+      "name": "RiskLayer",
+      "focus": "Economic security middleware built on EigenLayer. Proof of Risk consensus for decentralized, validator-attested risk scores",
+      "type": "Rating",
+      "url": "https://risklayer.xyz",
+      "accessibility": { "class": "public-api", "verified": false, "note": "Onchain attestation model implies readable outputs; endpoint to verify" }
+    },
+    {
+      "id": "pigi",
+      "name": "pigi.finance",
+      "focus": "Vault analytics and risk-adjusted yield comparison across 50+ protocols. Tracks historical exploits, holder concentration, and risk-adjusted APY",
+      "type": "Dashboard",
+      "url": "https://pigi.finance",
+      "accessibility": { "class": "published-scrapeable", "verified": false, "note": "Public dashboard; API availability to verify" }
+    },
+    {
+      "id": "xerberus",
+      "name": "Xerberus",
+      "focus": "Independent risk rating protocol for DeFi vaults. 300+ subscores across 85+ mechanisms. Investor-focused and open-source",
+      "type": "Rating",
+      "url": "https://xerberus.io",
+      "accessibility": { "class": "public-api", "verified": false, "note": "Open-source and API-first per their positioning; endpoint to verify" }
+    },
+    {
+      "id": "zyfai",
+      "name": "Zyfai Risk",
+      "focus": "Real-time risk score dashboard for DeFi liquidity pools. Tracks risk metrics, TVL, APY, and security grades across pools",
+      "type": "Dashboard",
+      "url": "https://zyf.ai",
+      "accessibility": { "class": "published-scrapeable", "verified": false, "note": "Public dashboard; API availability to verify" }
+    },
+    {
+      "id": "llamarisk",
+      "name": "LlamaRisk",
+      "focus": "Protocol risk research and parameter recommendations for DeFi. Analytics and monitoring focused on collateral and governance risk",
+      "type": "Research",
+      "url": "https://llamarisk.com",
+      "accessibility": { "class": "published-scrapeable", "verified": false, "note": "Public research reports; structured data to verify" }
+    },
+    {
+      "id": "philidor",
+      "name": "Philidor Analytics",
+      "focus": "Deterministic vault risk scoring across 700+ vaults. Three-vector framework: asset quality, platform code maturity, and governance controls. Open methodology",
+      "type": "Rating",
+      "url": "https://philidor.xyz",
+      "accessibility": { "class": "public-api", "verified": false, "note": "Open methodology, deterministic outputs; endpoint to verify" }
+    }
+  ]
+}
