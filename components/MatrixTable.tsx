@@ -315,7 +315,7 @@ export default function MatrixTable({
                     >
                       <Link
                         href={`/protocol/${row.protocol.id}#feed-${f.id}`}
-                        title={`${f.name}: ${s.label}${cell.note ? ` — ${cell.note}` : ""} [provenance: ${cell.provenance}]`}
+                        title={`${f.name}: ${s.label}${cell.verbatim ? ` — ${cell.verbatim}` : cell.note ? ` — ${cell.note}` : ""} [provenance: ${cell.provenance}]`}
                         className="inline-flex h-6 w-6 items-center justify-center rounded-full hover:ring-2 hover:ring-gray-300"
                       >
                         <span className={`h-2.5 w-2.5 rounded-full ${s.dot}`} />

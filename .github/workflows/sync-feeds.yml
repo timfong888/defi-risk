@@ -1,0 +1,31 @@
+name: Sync feed data
+
+on:
+  schedule:
+    - cron: "20 4 * * *" # nightly
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/sync-defiscan.mjs
+      - name: Open PR if data changed
+        uses: peter-evans/create-pull-request@v6
+        with:
+          add-paths: data/synced/
+          branch: sync/feed-data
+          commit-message: "data: nightly feed sync"
+          title: "Nightly feed data sync"
+          body: >
+            Automated sync from provider sources (currently DeFiScan's
+            open-source repo). Review the diff: every change to a verbatim
+            assessment should trace to an upstream provider change.

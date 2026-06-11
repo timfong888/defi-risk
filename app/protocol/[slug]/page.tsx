@@ -220,7 +220,27 @@ export default async function ProtocolPage({
                       </div>
                       <p className="mt-1 text-xs text-gray-500">{f.focus}</p>
                       <div className="mt-2 text-sm">
-                        {cell.status === "not-yet-covered" ? (
+                        {cell.verbatim ? (
+                          <blockquote className="rounded bg-gray-50 px-2.5 py-2 text-gray-800">
+                            {cell.verbatim.split(" | ").map((line) => (
+                              <span key={line} className="block">
+                                {line}
+                              </span>
+                            ))}
+                            <footer className="mt-1 text-xs text-gray-400">
+                              — {f.name}
+                              {cell.updated && ` · updated ${cell.updated}`}
+                              {cell.sourceUrl && (
+                                <>
+                                  {" · "}
+                                  <a href={cell.sourceUrl} className="underline">
+                                    source
+                                  </a>
+                                </>
+                              )}
+                            </footer>
+                          </blockquote>
+                        ) : cell.status === "not-yet-covered" ? (
                           <span className="text-gray-400">
                             No assessment from this provider yet.
                           </span>

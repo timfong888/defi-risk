@@ -7,7 +7,7 @@
       "focus": "Decentralization maturity framework: who controls keys, upgrades, and admin powers",
       "type": "Rating",
       "url": "https://defiscan.info",
-      "accessibility": { "class": "published-scrapeable", "verified": false, "note": "Publishes stage ratings and reviews publicly; machine-readable export to verify" }
+      "accessibility": { "class": "public-api", "verified": true, "note": "Open-source GitHub repo (deficollective/defiscan) with structured per-chain frontmatter; synced via scripts/sync-defiscan.mjs" }
     },
     {
       "id": "curatorwatch",
