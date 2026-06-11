@@ -121,8 +121,13 @@ export function getProtocol(id: string): Protocol | undefined {
   return protocols.find((p) => p.id === id);
 }
 
-// Cells with a recorded assessment (everything else is explicitly pending).
-export const assessedCellCount = cellMap.size;
+// Honest counting (peer-review finding: never let manual claims inflate
+// "assessed"): provider-verified = synced verbatim data; claimed = manual
+// curation pending first-hand verification.
+export const providerVerifiedCellCount = [...cellMap.values()].filter(
+  (c) => c.provenance === "provider-published"
+).length;
+export const claimedCellCount = cellMap.size - providerVerifiedCellCount;
 
 // DefiLlama icon CDN slugs that differ from the metric slug.
 const ICON_SLUG_OVERRIDES: Record<string, string> = {

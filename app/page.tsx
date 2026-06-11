@@ -1,24 +1,26 @@
 import MatrixTable, { type MatrixRow } from "@/components/MatrixTable";
 import {
-  assessedCellCount,
+  claimedCellCount,
   feeds,
   getCell,
   orderedFeeds,
   protocols,
+  providerVerifiedCellCount,
 } from "@/lib/data";
 import { fetchMetric, formatUsd } from "@/lib/metrics";
 
 export const revalidate = 3600;
 
 export default async function Home() {
-  const metricValues = await Promise.all(
+  const metrics = await Promise.all(
     protocols.map((p) => fetchMetric(p.metric))
   );
 
   const rows: MatrixRow[] = protocols.map((p, i) => ({
     protocol: p,
-    metricValue: metricValues[i],
-    metricLabel: formatUsd(metricValues[i]),
+    metricValue: metrics[i].value,
+    metricLabel: formatUsd(metrics[i].value),
+    metricStale: metrics[i].stale,
     cells: Object.fromEntries(
       orderedFeeds.map((f) => [f.id, getCell(p.id, f.id)])
     ),
@@ -26,7 +28,7 @@ export default async function Home() {
 
   const totalTvl = protocols.reduce(
     (sum, p, i) =>
-      p.metric.kind === "tvl" ? sum + (metricValues[i] ?? 0) : sum,
+      p.metric.kind === "tvl" ? sum + (metrics[i].value ?? 0) : sum,
     0
   );
   const totalCells = protocols.length * feeds.length;
@@ -35,9 +37,9 @@ export default async function Home() {
     ["Protocols", String(protocols.length), "top 20 by funds at risk"],
     ["Independent risk feeds", String(feeds.length), "no single feed is canonical"],
     [
-      "Cells assessed",
-      `${assessedCellCount} / ${totalCells}`,
-      "remainder explicitly labeled pending",
+      "Provider-verified cells",
+      `${providerVerifiedCellCount} / ${totalCells}`,
+      `${claimedCellCount} more claimed, pending verification`,
     ],
     ["TVL tracked", formatUsd(totalTvl), "live from DefiLlama, hourly"],
   ];

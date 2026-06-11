@@ -8,6 +8,7 @@ export interface MatrixRow {
   protocol: Protocol;
   metricValue: number | null;
   metricLabel: string;
+  metricStale: boolean; // serving last-known snapshot after live fetch failed
   cells: Record<string, CoverageCell>; // feedId -> cell
 }
 
@@ -283,6 +284,14 @@ export default function MatrixTable({
                   ) : (
                     <>
                       <span className="font-medium">{row.metricLabel}</span>
+                      {row.metricStale && (
+                        <span
+                          className="ml-1 rounded bg-orange-50 px-1 text-[11px] text-orange-600"
+                          title="Live fetch failed — showing last-known value"
+                        >
+                          stale
+                        </span>
+                      )}
                       {row.protocol.metric.kind === "volume24h" ? (
                         <span className="ml-1 text-[11px] text-gray-400">24h vol</span>
                       ) : (

@@ -112,6 +112,32 @@ The deeper permissionless surface is the **data layer itself**: AGPL JSON in
 a public repo. Anyone can fork it, build a competing UI, or extend it. The
 canonical site is just the reference renderer with mechanical listing rules.
 
+## 3b. Feed-provider inclusion — same rigor as protocols
+
+Design review found an asymmetry: rows (protocols) had mechanical criteria
+while columns (feeds) were pure editorial discretion — and the columns are
+where neutrality will actually be attacked. A bad-faith "risk feed" admitted
+to the registry gets its assessments displayed verbatim with the site's
+implicit endorsement; a rejected provider gets a legitimate bias complaint.
+
+**Feed inclusion rule (machine- or checklist-checkable):**
+1. **Published methodology** — a public document describing what is assessed
+   and how; "trust us" scores with no methodology are ineligible.
+2. **Coverage floor** — assesses ≥3 protocols on the current seed list (the
+   feed must be useful to this matrix, not aspirational).
+3. **Independence** — not owned or controlled by a protocol it rates;
+   no pay-for-rating from rated parties. Commercial relationships with
+   rated protocols must be disclosed in the registry entry.
+4. **Attributable output** — assessments are published under the provider's
+   name with dates (anonymous or undated feeds cannot be quoted verbatim).
+5. **Stability** — output available for ≥90 days (prevents pop-up feeds).
+
+Inclusion PRs add the provider to `feeds.json` with evidence links for each
+criterion; removal follows the same evidenced process (e.g., independence
+violation discovered). The current 14 RFP-listed providers are re-evaluated
+against this rule as part of SAT-302 verification — any that fail criterion
+1 or 3 are flagged to the EF rather than silently retained.
+
 ## 4. Execution plan
 
 | Phase | Work | Tracks to |

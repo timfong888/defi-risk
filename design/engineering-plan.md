@@ -69,15 +69,29 @@ self-upgrades as feeds come online; no one deletes manual curation by hand.
 ### 4.1 Live metrics (built)
 `lib/metrics.ts` fetches `api.llama.fi/tvl/{slug}` (TVL) or
 `api.llama.fi/summary/aggregators/{slug}` (24h volume for the three swap
-aggregators) server-side with `revalidate: 3600`. Null → explicit
-"metric pending" badge.
+aggregators) server-side with `revalidate: 3600`. On live-fetch failure the
+app falls back to `data/metrics-snapshot.json` (last-known values, refreshed
+by the nightly workflow) rendered with an explicit **stale** badge; no
+snapshot → "metric pending" badge. Never a blank.
 
 ### 4.2 Feed sync (pattern established; 1 of 14 live)
 `scripts/sync-defiscan.mjs` is the template every feed follows:
 fetch provider source → parse → normalize to the synced-entry schema →
 write `data/synced/<feed>.json`. A nightly GitHub Action
 (`.github/workflows/sync-feeds.yml`) re-runs scripts and opens a reviewable
-PR on diff — no silent data mutation. Per-feed approach is driven by the
+PR on diff — no silent data mutation.
+
+**"Verbatim" defined operationally** (design review finding): verbatim means
+*faithful structured transcription* — the provider's own values (stage
+labels, risk levels, rating text) reproduced exactly, with any structural
+mapping (e.g., positional risk arrays → named dimensions) governed by a
+transcription spec inside the sync script. Every sync script must refuse to
+write when upstream shape drifts from its spec (dimension count, unknown
+enum values) and must refuse entry-count regressions vs. the committed file
+— misattributing a provider's assessment is the worst failure this system
+can have, so not transcribing is the only honest fallback. Golden-file
+tests against pinned upstream fixtures are part of each feed's
+definition-of-done (M1). Per-feed approach is driven by the
 verified accessibility class (SAT-302):
 
 | Class | Method | Provenance |
@@ -94,12 +108,29 @@ facts read directly from mainnet RPC, no indexer required. Event history
 into `details.json` with `onchain-verifiable` provenance + contract address
 + method, so any reader can re-derive every fact.
 
+**RPC decision** (verified 2026-06-11): single public endpoints are not
+reliable — eth.llamarpc.com and cloudflare-eth.com both failed basic calls
+in testing while ethereum-rpc.publicnode.com served `eth_call` in <200ms.
+The extractor uses an ordered fallback pool of public endpoints with
+retries; a keyed provider (env var, Actions secret) is an optional upgrade,
+not a dependency. The contract-address registry the extractor reads from is
+itself provenance-tagged data (see §10.4).
+
 ## 5. CI and automation
 
-- **Schema validation on every PR** (SAT-301): zod schemas shared between
-  app and CI; malformed corrections fail visibly. This is the gatekeeper
-  that makes mechanical listing and community correction safe.
-- **Nightly feed sync** (built): PR-gated, reviewable diffs.
+- **Data validation on every PR** (built): `scripts/validate-data.mjs` —
+  plain-node schema checks (enums, referential integrity, required
+  provenance/source fields) run by `.github/workflows/validate.yml` on every
+  PR and push to main, plus a full `next build`. This is the gatekeeper that
+  makes mechanical listing and community correction safe. (Originally
+  planned as zod; plain-node checks shipped first — zod migration optional,
+  SAT-301 tracks shared app/CI schemas.)
+- **Nightly feed sync** (built): PR-gated, reviewable diffs on
+  timestamp-suffixed branches (audit trail preserved across unmerged days).
+  **Review policy**: auto-merge is acceptable when the diff is schema-valid,
+  entry counts do not regress, and only `verbatim`/`updated`/`generatedAt`
+  fields changed; anything else requires human review. Feeds run as
+  independent steps so one provider's failure doesn't starve the rest.
 - **Staleness bot** (M2): opens issues on claimed protocol pages with data
   older than 90 days.
 - **Threshold check** (M1): new-protocol PRs validated against the published
@@ -108,9 +139,15 @@ into `details.json` with `onchain-verifiable` provenance + contract address
 ## 6. Deployment and operations
 
 - Vercel: `vercel deploy --prod` from main; preview deployments per PR.
+- **Branch protection on `main` (required, pending repo-admin action)**:
+  require PRs, require the Validate check to pass, no force-push. Without
+  it, the schema-CI gate is advisory — design review flagged this as the
+  single cheapest integrity fix.
 - Rollback = redeploy previous build (static output, no migrations ever).
 - Secrets: only in GitHub Actions secrets (feed API keys if granted) and
   Vercel env. Nothing secret in the repo; the app needs no keys at all today.
+  Workflows that run on `pull_request` use read-only permissions and never
+  see secrets on fork PRs.
 - Monitoring: Vercel analytics + the app's own honesty mechanics (stale
   badges surface data problems to every visitor — public accountability is
   the monitor).
@@ -136,10 +173,59 @@ into `details.json` with `onchain-verifiable` provenance + contract address
 
 1. Scraper hosting for `published-scrapeable` feeds: in-repo Actions (free,
    public) vs. provider-negotiated exports (better; SAT-304 outcome decides).
-2. RPC provider for governance extraction: public endpoints suffice for
-   nightly current-state reads; confirm rate limits at 20 protocols.
+2. ~~RPC provider for governance extraction~~ **Decided** — fallback pool of
+   public endpoints, keyed provider optional (§4.3, decision log D1).
 3. Historical TVL sparklines: deferred — DefiLlama per-protocol history is
    heavyweight; revisit post-M1 if design review wants the density.
-4. `.eth` mirror (eth.limo + IPFS static export): cheap because the site is
-   static; decide post-M1 whether the differentiation is worth the extra
-   deploy artifact.
+4. `.eth` mirror (eth.limo + IPFS static export): note from review — static
+   export is incompatible with ISR; the mirror needs client-side metric
+   fetch or build-time snapshot values. Decide post-M1.
+5. **morpho-vaults metric** (traceability gap): M1 requires TVL or
+   equivalent for *all* protocols; no dedicated DefiLlama listing exists.
+   Options: MetaMorpho vault aggregation via DefiLlama, or onchain vault
+   totals via the governance extractor. Owner: M1 week 1.
+6. Mobile: collapse the vertical feed-name header band (~7rem of blank space
+   above the table on small screens). UX punch list, low.
+
+## 10. Data governance policies
+
+Resolved by design review — implementers must not invent these.
+
+1. **De-listing**: the 20 seed protocols are grandfathered through M2 (RFP
+   names them). The inclusion threshold applies to *additions* only. Post-M2,
+   a protocol below threshold for 90 consecutive days moves to an archived
+   section (data retained, row de-emphasized) via the same PR-gated process.
+2. **Covered vs. partial rubric** (manual entries): `covered` = the provider
+   publishes a complete assessment of the protocol's current mainnet
+   version(s); `partial` = subset of versions, indirect coverage (e.g.,
+   vault-level only), or stale major version; anything weaker stays
+   `not-yet-covered`. Manual statuses are always `manual-unverified` until
+   the provider's own output confirms them.
+3. **Org-claim mechanics**: a claim PR adds the protocol's canonical GitHub
+   org to its data file; the claimer must either have *public* org
+   membership (API-checkable) or merge a trivial PR in the org's primary
+   repo referencing the claim. The protocol→org mapping is itself
+   provenance-tagged data.
+4. **Address-registry provenance**: contract addresses the governance
+   extractor reads from are data-layer entries requiring source links
+   (protocol docs + Etherscan verification); extracted facts inherit
+   `onchain-verifiable` only when the address entry itself is verified.
+5. **Licensing split** (review finding — AGPL alone over-promises): code is
+   AGPL-3.0; maintainer-curated facts are released CC0; provider verbatim
+   content remains © its provider, displayed with permission or under
+   quotation norms, **excluded from the open-data grant** and marked as such
+   in `data/synced/` file headers. Per-feed permission status is recorded in
+   `feeds.json`. Rescission procedure: remove verbatim content, keep
+   status + link-out, note the removal in the file header; git history
+   retention is disclosed to providers when permission is requested.
+
+## 11. Decision log
+
+| # | Decision | Context | Alternatives rejected |
+|---|---|---|---|
+| D1 | RPC fallback pool, keyed provider optional | llamarpc + cloudflare-eth failed live tests; publicnode healthy | single public endpoint (unreliable); mandatory paid key (cost, lock-in) |
+| D2 | Metrics snapshot fallback with stale badge | ISR regenerates successfully with nulls, so "stale page serves" did NOT hold — a single failed fetch wiped good values | persisting in a DB (violates no-backend); accepting data loss |
+| D3 | Branch protection + Validate check required on main | repo had none; CI gate was advisory | trust-based merging |
+| D4 | Sync scripts hard-fail on schema drift and entry regression | positional transcription can misattribute provider risk dimensions | best-effort parsing (silent misrepresentation risk) |
+| D5 | Headline stat counts only provider-verified cells | 47 manual-unverified cells were counted as "assessed" — self-inflating | renaming statuses only (insufficient); hiding manual data (loses utility) |
+| D6 | Feed registry gets a mechanical inclusion rule | columns had pure editorial discretion while rows had none | curated registry (neutrality attack surface) |

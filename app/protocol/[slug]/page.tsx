@@ -36,9 +36,25 @@ const TYPE_STYLE: Record<string, string> = {
   Research: "bg-violet-50 text-violet-700",
 };
 
+const PROVENANCE_DESC: Record<string, string> = {
+  "onchain-verifiable":
+    "Directly checkable against Ethereum mainnet state or verified contracts",
+  "public-docs":
+    "Stated in public documentation; onchain verification pending",
+  "provider-published":
+    "Published by the risk feed provider; synced by a re-runnable script",
+  "self-reported": "Submitted by the protocol team; independent verification pending",
+  "manual-unverified":
+    "Curated by maintainers from public materials; first-hand verification pending",
+  "assessment-pending": "Not yet assessed — explicitly labeled, never blank",
+};
+
 function Provenance({ tag }: { tag: string }) {
   return (
-    <span className="rounded border border-gray-200 bg-gray-50 px-1 py-0.5 text-[11px] text-gray-500">
+    <span
+      className="rounded border border-gray-200 bg-gray-50 px-1 py-0.5 text-[11px] text-gray-500"
+      title={PROVENANCE_DESC[tag]}
+    >
       {tag}
     </span>
   );
@@ -70,7 +86,7 @@ export default async function ProtocolPage({
   const protocol = getProtocol(slug);
   if (!protocol) notFound();
 
-  const metricValue = await fetchMetric(protocol.metric);
+  const metric = await fetchMetric(protocol.metric);
   const detail = details[protocol.id];
 
   const cells = Object.fromEntries(
@@ -118,7 +134,15 @@ export default async function ProtocolPage({
         </span>
         <span className="ml-auto text-right">
           <span className="block text-xl font-semibold tabular-nums">
-            {formatUsd(metricValue)}
+            {formatUsd(metric.value)}
+            {metric.stale && (
+              <span
+                className="ml-1.5 align-middle rounded bg-orange-50 px-1.5 text-xs font-normal text-orange-600"
+                title="Live fetch failed — showing last-known value"
+              >
+                stale
+              </span>
+            )}
           </span>
           <span className="text-xs text-gray-400">
             {protocol.metric.kind === "volume24h" ? "24h volume" : "TVL"} ·
