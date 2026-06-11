@@ -98,3 +98,24 @@ export function getCell(protocolId: string, feedId: string): CoverageCell {
 export function getProtocol(id: string): Protocol | undefined {
   return protocols.find((p) => p.id === id);
 }
+
+// Cells with a recorded assessment (everything else is explicitly pending).
+export const assessedCellCount = cellMap.size;
+
+// DefiLlama icon CDN slugs that differ from the metric slug.
+const ICON_SLUG_OVERRIDES: Record<string, string> = {
+  "cow-swap": "cowswap",
+  "morpho-vaults": "morpho",
+};
+
+export function iconSlugFor(p: Protocol): string | null {
+  return ICON_SLUG_OVERRIDES[p.id] ?? p.metric.slug;
+}
+
+const TYPE_ORDER = ["Rating", "Dashboard", "Monitoring", "Research"];
+
+// Feeds grouped by methodology type for column ordering; registry order
+// preserved within each type.
+export const orderedFeeds: Feed[] = [...feeds].sort(
+  (a, b) => TYPE_ORDER.indexOf(a.type) - TYPE_ORDER.indexOf(b.type)
+);
