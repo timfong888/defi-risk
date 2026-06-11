@@ -3,7 +3,7 @@
 **Submitted to:** Ethereum Foundation, App Relations
 **RFP:** Neutral DeFi Risk Intelligence Aggregator (deadline June 15 AoE, 2026)
 **Applicant:** Tim Fong ({{ team-legal-or-org-name }}) — GitHub: timfong888
-**Working prototype:** {{ deployed-url }} · Code: https://github.com/timfong888/defi-risk
+**Working prototype:** https://defi-risk-one.vercel.app · Code: https://github.com/timfong888/defi-risk
 
 ---
 
@@ -12,8 +12,8 @@
 ### The prototype is the proposal
 
 We built a working prototype before submitting. It is live at
-{{ deployed-url }}, AGPL-3.0 from the first commit, and already implements
-the core of M1:
+https://defi-risk-one.vercel.app, AGPL-3.0 from the first commit, and
+already implements the core of M1:
 
 - **Summary matrix** — all 20 seed protocols × 14 risk feeds. Every one of
   the 280 cells is assessed and labeled (covered / partial / not yet
