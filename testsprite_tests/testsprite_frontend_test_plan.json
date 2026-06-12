@@ -1,0 +1,711 @@
+[
+  {
+    "id": "TC001",
+    "title": "Search and open a protocol from the coverage matrix",
+    "description": "This verifies that a user can find a protocol on the home matrix and open its detail page after using search and filters.",
+    "category": "Coverage matrix home",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the search field with a protocol name"
+      },
+      {
+        "type": "action",
+        "description": "Select a family filter that matches the chosen protocol"
+      },
+      {
+        "type": "action",
+        "description": "Sort the matrix by TVL"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the filtered protocol is visible in the matrix"
+      },
+      {
+        "type": "action",
+        "description": "Click the protocol entry"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the protocol detail page is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC002",
+    "title": "Search and filter the coverage matrix to find a protocol",
+    "description": "A user can search for a protocol, narrow the matrix by family, and still see the matching protocol row.",
+    "category": "Coverage matrix table",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the search field with a protocol name"
+      },
+      {
+        "type": "action",
+        "description": "Select the lending family filter"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the matching protocol row is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify non-matching protocol rows are hidden"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC003",
+    "title": "Inspect a coverage cell before drilling into protocol details",
+    "description": "This verifies that a user can inspect a protocol-feed coverage state and then open the corresponding protocol detail page.",
+    "category": "Coverage matrix home",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Select a protocol family filter"
+      },
+      {
+        "type": "action",
+        "description": "Sort the matrix by coverage"
+      },
+      {
+        "type": "action",
+        "description": "Open a coverage cell tooltip"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the coverage tooltip content is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Click the protocol entry from the matrix"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the protocol detail page is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC004",
+    "title": "Sort the matrix by protocol size and coverage",
+    "description": "A user can switch the matrix ordering by TVL or volume and by coverage so the most relevant protocols rise to the top.",
+    "category": "Coverage matrix table",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Select the size-based sort option"
+      },
+      {
+        "type": "action",
+        "description": "Select the coverage-based sort option"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the matrix order changes to reflect the selected sort"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify protocol size context is still shown for the listed rows"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC005",
+    "title": "Inspect a coverage cell tooltip",
+    "description": "A user can inspect a matrix cell to see the coverage status, note, and provenance for that feed.",
+    "category": "Coverage matrix table",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Hover over a coverage cell"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a coverage tooltip is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the tooltip includes status and provenance information"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC006",
+    "title": "Navigate through the top tabs and keep the active state clear",
+    "description": "This verifies that a user can switch among Coverage Matrix, Feeds, and Methodology while the current tab remains clearly indicated.",
+    "category": "Site navigation with active state",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the Coverage Matrix tab is active"
+      },
+      {
+        "type": "action",
+        "description": "Click the Feeds tab"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the Feeds page is displayed and the Feeds tab is active"
+      },
+      {
+        "type": "action",
+        "description": "Click the Methodology tab"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the Methodology page is displayed and the Methodology tab is active"
+      },
+      {
+        "type": "action",
+        "description": "Click the Coverage Matrix tab"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the coverage matrix home page is displayed and the Coverage Matrix tab is active"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC007",
+    "title": "Open a protocol detail page from the matrix",
+    "description": "A user can drill from the matrix into a protocol detail page to continue review from a selected protocol.",
+    "category": "Coverage matrix table",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click a protocol name in the matrix"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the protocol detail page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify governance and feed assessment sections are available"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC008",
+    "title": "Review governance and provenance on a protocol detail page",
+    "description": "A user can inspect a protocol’s governance facts and provenance tags to understand the source and scope of the detail page.",
+    "category": "Protocol detail page",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /protocol/aave"
+      },
+      {
+        "type": "action",
+        "description": "Click the governance section anchor"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify governance facts are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify provenance tags are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC009",
+    "title": "Compare protocol details and move to the next protocol",
+    "description": "This verifies that a user can review a protocol’s governance, provenance, feed assessments, audits, and incidents, then continue to the next protocol.",
+    "category": "Protocol detail pages",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /protocol/aave"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify governance information is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify provenance information is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the feed assessments section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify feed assessment cards are displayed"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the audits and incidents sections"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify audits and incidents information is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Click the next protocol link"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the next protocol detail page is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC010",
+    "title": "Use the stats header to open the feeds registry",
+    "description": "A user can move from the matrix summary into the feeds registry through the independent risk feeds summary tile.",
+    "category": "Stats header with feeds link",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the independent risk feeds summary tile"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the feeds registry page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the feed registry overview is visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC011",
+    "title": "Read feed assessment quotes on a protocol detail page",
+    "description": "A user can review the feed assessment cards and read the verbatim quoted assessments for a protocol.",
+    "category": "Protocol detail page",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /protocol/aave"
+      },
+      {
+        "type": "action",
+        "description": "Click the feed assessments section anchor"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify feed assessment cards are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify verbatim assessment quotes are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC012",
+    "title": "Review feed coverage by category in the registry",
+    "description": "This verifies that a user can compare feed coverage across protocol categories on the feeds registry page.",
+    "category": "Feeds registry page",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /feeds"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the feed registry summaries are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the coverage-by-category matrix is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the blockers table"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify blocker classifications are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC013",
+    "title": "Compare feed coverage across protocol categories in the registry",
+    "description": "A user can review the feeds registry to compare coverage by protocol category and identify blocker classifications.",
+    "category": "Risk feed registry",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /feeds"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the category coverage matrix"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify coverage by category is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify blocker classifications are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC014",
+    "title": "Review audits and incidents on a protocol detail page",
+    "description": "A user can inspect the audit history and incident history sections to assess a protocol’s past security record.",
+    "category": "Protocol detail page",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /protocol/aave"
+      },
+      {
+        "type": "action",
+        "description": "Click the audits section anchor"
+      },
+      {
+        "type": "action",
+        "description": "Click the incidents section anchor"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify audit history is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify incident history is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC015",
+    "title": "Jump from protocol gaps to the feeds registry",
+    "description": "This verifies that a user can find feed-gap explanations on a protocol page and follow the link to the feeds gaps section.",
+    "category": "Protocol detail pages",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /protocol/lido"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the feed-gap explanations section"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to the feeds gaps section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the feeds registry page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the gaps section content is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC016",
+    "title": "Open the feeds gaps explanation from a not-yet-covered feed",
+    "description": "A user can jump from a protocol detail page to the feeds gaps section when a feed is not yet covered.",
+    "category": "Protocol detail page",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /protocol/lido"
+      },
+      {
+        "type": "action",
+        "description": "Click a why link for a not-yet-covered feed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the feeds gaps section is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a gap explanation is visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC017",
+    "title": "Move from a protocol detail page to the next protocol",
+    "description": "A user can continue sequential protocol review by using the protocol navigation at the bottom of a detail page.",
+    "category": "Protocol detail page",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /protocol/aave"
+      },
+      {
+        "type": "action",
+        "description": "Click the next protocol link"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify another protocol detail page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the protocol navigation remains available"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC018",
+    "title": "Understand what blocks broader feed coverage",
+    "description": "This verifies that a user can inspect blocker types and the corresponding unblock path for feeds in the registry.",
+    "category": "Feeds registry page",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /feeds"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the blockers table"
+      },
+      {
+        "type": "action",
+        "description": "Inspect multiple feed rows in the blockers table"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify blocker classifications are visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify unblock path guidance is visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC019",
+    "title": "Open a provider site from the feeds registry",
+    "description": "A user can open a provider’s external site from the feeds registry to inspect the source behind a feed.",
+    "category": "Risk feed registry",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /feeds"
+      },
+      {
+        "type": "action",
+        "description": "Click a provider site link"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the external provider site link is available"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify provider information is displayed in the registry"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC020",
+    "title": "Confirm the methodology scope and no composite scoring rule",
+    "description": "This verifies that a user can read the methodology page to confirm the app’s neutral scope and that it does not use composite scoring.",
+    "category": "Methodology page",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /methodology"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the scope statement is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the no composite scoring explanation is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC021",
+    "title": "Review provenance legend and correction process",
+    "description": "A user can use the methodology page to understand provenance tags and the process for correcting content.",
+    "category": "Methodology",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /methodology"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the provenance legend"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the correction process section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the provenance legend is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the correction process is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC022",
+    "title": "Return from methodology to the matrix and keep navigation context",
+    "description": "A user can move between methodology and the coverage matrix using the top navigation and preserve the active-state context.",
+    "category": "Methodology",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /methodology"
+      },
+      {
+        "type": "action",
+        "description": "Click the coverage matrix link in the top navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the coverage matrix page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the coverage matrix tab is active"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC023",
+    "title": "Handle an empty search result in the matrix",
+    "description": "A user sees a clear empty state when search and filter choices produce no matching protocols.",
+    "category": "Coverage matrix table",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the search field with a non-matching protocol name"
+      },
+      {
+        "type": "action",
+        "description": "Select a filter that excludes the search result"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an empty state message is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify no protocol rows are displayed"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC024",
+    "title": "See pending metrics for a protocol without TVL data",
+    "description": "A user can open the Morpho Vaults protocol page and see that the metric is pending rather than incorrectly showing TVL.",
+    "category": "Coverage matrix table",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the Morpho Vaults protocol name"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the protocol detail page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a metric pending badge is displayed"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC025",
+    "title": "Recognize curation-pending placeholders on an incomplete protocol page",
+    "description": "A user can open an incomplete protocol detail page and see honest placeholder sections for uncurated governance, audit, or incident content.",
+    "category": "Protocol detail page",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /protocol/lido"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify placeholder sections are displayed for uncaptured detail content"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the page still shows the main protocol summary"
+      }
+    ],
+    "priority": "Low"
+  }
+]

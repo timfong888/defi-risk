@@ -40,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 proposal/EF-proposal-draft.md
+
+testsprite_tests/tmp/config.json
+testsprite_tests/tmp/
