@@ -4,10 +4,10 @@
 
 ## 1️⃣ Document Metadata
 - **Project Name:** defi-risk
-- **Date:** 2026-06-11
+- **Date:** 2026-06-11 (run 1: TC001–TC015) and 2026-06-12 (run 2: TC016–TC025)
 - **Prepared by:** TestSprite AI Team (report completed by Claude)
 - **Target:** Next.js production build at `http://localhost:3000` (branch `design-review-v1`)
-- **Scope:** Frontend, codebase-wide; 25 cases planned, 15 executed (free-plan per-run cap)
+- **Scope:** Frontend, codebase-wide; 25 cases planned, 25 executed across two runs (free-plan per-run cap of 15)
 
 ---
 
@@ -55,8 +55,25 @@ The /feeds page must list the registry, categorize coverage by protocol category
 - **TC015 Jump from protocol gaps to the feeds registry** — ✅ Passed
   *"Why?" link on not-yet-covered cards lands on /feeds#gaps (SAT-316 fix verified).*
 
-### Requirement R5 — External links, methodology, and honest empty/edge states (NOT EXECUTED)
-- TC016–TC025 were planned but not executed this run (per-run execution cap on the Free plan). These include the edge-state cases: empty search results (TC023), "metric pending" for Morpho Vaults (TC024), and curation-pending placeholders (TC025).
+### Requirement R5 — External links, methodology, and honest empty/edge states (run 2)
+The methodology must state the no-scoring constraint; navigation context must survive round-trips; and every empty/pending state must read as labeled information, never as a broken page.
+
+- **TC016 Open the feeds gaps explanation from a not-yet-covered feed** — ✅ Passed
+  *"Why?" link on uncovered cards lands on /feeds#gaps with the blocker table visible.*
+- **TC017 Move from a protocol detail page to the next protocol** — ✅ Passed
+- **TC018 Understand what blocks broader feed coverage** — ✅ Passed
+  *Blocker classifications (provider-scope / access-gated / verification-pending) render with unblock paths.*
+- **TC019 Open a provider site from the feeds registry** — ✅ Passed
+- **TC020 Confirm the methodology scope and no composite scoring rule** — ✅ Passed
+  *The binding no-composite-scoring statement is present and legible.*
+- **TC021 Review provenance legend and correction process** — ✅ Passed
+- **TC022 Return from methodology to the matrix and keep navigation context** — ✅ Passed
+- **TC023 Handle an empty search result in the matrix** — ✅ Passed
+  *No-match search renders an empty table without breaking layout.*
+- **TC024 See pending metrics for a protocol without TVL data** — ✅ Passed
+  *Morpho Vaults shows the explicit "metric pending" badge.*
+- **TC025 Recognize curation-pending placeholders on an incomplete protocol page** — ✅ Passed
+  *Unpopulated detail sections render labeled dashed placeholders, not blanks.*
 
 ---
 
@@ -68,17 +85,17 @@ The /feeds page must list the registry, categorize coverage by protocol category
 | R2 Navigation & IA | 2 | 2 | 0 | 0 |
 | R3 Protocol detail pages | 5 | 5 | 0 | 0 |
 | R4 Feeds registry & gaps | 3 | 3 | 0 | 0 |
-| R5 Methodology & edge states | 10 | — | — | 10 |
-| **Total** | **25** | **15** | **0** | **10** |
+| R5 Methodology & edge states | 10 | 10 | 0 | 0 |
+| **Total** | **25** | **25** | **0** | **0** |
 
-- **Pass rate (executed):** 15/15 = 100%
-- **Plan coverage executed:** 15/25 = 60%
+- **Pass rate:** 25/25 = 100%
+- **Plan coverage executed:** 25/25 = 100% (two runs)
 
 ---
 
 ## 4️⃣ Key Gaps / Risks
 
-1. **10 planned cases unexecuted** (TC016–TC025) due to the Free-plan per-run cap — notably the *honest empty-state* cases (empty search, metric-pending badge, curation placeholders), which are central to this product's labeled-never-blank design principle. Recommend a follow-up run scoped to `testIds: ["TC016"…"TC025"]`.
-2. **All executed coverage is happy-path UI behavior** — no tests yet exercise failure modes (DefiLlama fetch failure → stale badge, sync-script drift guards); those are covered by design-review guards and CI, not browser tests.
-3. **Tests ran against localhost prod build**, not the deployed Vercel preview — environment parity is high (static output) but deployment-protection and CDN behavior are untested by this run.
-4. Test code artifacts (`TC0xx_*.py`) live on the TestSprite dashboard; only plan, PRD, and this report are in the repo.
+1. **Full plan executed, zero failures** — including the honest empty-state cases (empty search, metric-pending badge, curation placeholders) that carry the product's labeled-never-blank principle.
+2. **Coverage is UI behavior** — no browser tests exercise failure modes (DefiLlama fetch failure → stale badge, sync-script drift guards); those are covered by design-review guards and CI validation, not this suite.
+3. **Tests ran against the localhost prod build**, not the deployed Vercel preview — environment parity is high (static output) but deployment-protection and CDN behavior are untested.
+4. The generated Playwright test files (`TC0xx_*.py`) are committed in this directory and re-runnable; per-test video traces live on the TestSprite dashboard.
