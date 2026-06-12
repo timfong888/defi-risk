@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
+import NavLinks from "@/components/NavLinks";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -35,23 +36,7 @@ export default function RootLayout({
             <Link href="/" className="font-semibold tracking-tight">
               DeFi Risk Intelligence Aggregator
             </Link>
-            <nav className="flex gap-4 text-sm text-gray-600">
-              <Link href="/" className="hover:text-gray-900">
-                Matrix
-              </Link>
-              <Link href="/methodology" className="hover:text-gray-900">
-                Methodology
-              </Link>
-              <a
-                href="https://github.com/timfong888/defi-risk"
-                className="hover:text-gray-900"
-              >
-                GitHub
-              </a>
-            </nav>
-            <span className="ml-auto hidden sm:inline text-xs text-gray-400">
-              No composite scoring — feed assessments shown verbatim
-            </span>
+            <NavLinks />
           </div>
         </header>
         <main className="flex-1 mx-auto w-full max-w-screen-2xl px-4 py-6">

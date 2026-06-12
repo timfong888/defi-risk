@@ -1,5 +1,5 @@
 {
-  "$comment": "Risk feed registry. RFP §4 list is illustrative; this is our proposed registry. accessibility is our working classification — entries marked verified:false are pending first-hand verification (SAT-302).",
+  "$comment": "Risk feed registry. RFP \u00a74 list is illustrative; this is our proposed registry. accessibility is our working classification \u2014 entries marked verified:false are pending first-hand verification (SAT-302).",
   "feeds": [
     {
       "id": "defiscan",
@@ -7,7 +7,15 @@
       "focus": "Decentralization maturity framework: who controls keys, upgrades, and admin powers",
       "type": "Rating",
       "url": "https://defiscan.info",
-      "accessibility": { "class": "public-api", "verified": true, "note": "Open-source GitHub repo (deficollective/defiscan) with structured per-chain frontmatter; synced via scripts/sync-defiscan.mjs" }
+      "accessibility": {
+        "class": "public-api",
+        "verified": true,
+        "note": "Open-source GitHub repo (deficollective/defiscan) with structured per-chain frontmatter; synced via scripts/sync-defiscan.mjs"
+      },
+      "coverageBlocker": {
+        "kind": "provider-scope",
+        "note": "DeFiScan reviews protocols one by one; uncovered protocols have no published review yet. Unblock: request a review upstream (open process) \u2014 nothing on our side."
+      }
     },
     {
       "id": "curatorwatch",
@@ -15,7 +23,15 @@
       "focus": "Vault-level risk monitoring for Morpho curators, tracking allocation risk and curator behavior",
       "type": "Dashboard",
       "url": "https://curatorwatch.xyz",
-      "accessibility": { "class": "published-scrapeable", "verified": false, "note": "Public dashboard; API availability to verify" }
+      "accessibility": {
+        "class": "published-scrapeable",
+        "verified": false,
+        "note": "Public dashboard; API availability to verify"
+      },
+      "coverageBlocker": {
+        "kind": "provider-scope",
+        "note": "CuratorWatch monitors the Morpho curator/vault ecosystem only; most seed protocols are outside its scope by design. Unblock: not applicable beyond Morpho-family rows."
+      }
     },
     {
       "id": "blockanalitica",
@@ -23,7 +39,15 @@
       "focus": "Quantitative on-chain risk dashboards for lending markets: liquidations, collateral health, market exposure",
       "type": "Dashboard",
       "url": "https://blockanalitica.com",
-      "accessibility": { "class": "published-scrapeable", "verified": false, "note": "Public per-market dashboards; API availability to verify" }
+      "accessibility": {
+        "class": "published-scrapeable",
+        "verified": false,
+        "note": "Public per-market dashboards; API availability to verify"
+      },
+      "coverageBlocker": {
+        "kind": "access-gated",
+        "note": "No public API found (verified 2026-06-10). Their dashboards cover Sky/Aave/Morpho lending markets; verbatim ingestion is blocked on a data-access relationship. Unblock: outreach via EF App Relations intro (SAT-305)."
+      }
     },
     {
       "id": "defipunkd",
@@ -31,7 +55,15 @@
       "focus": "Multi-dimension risk registry: Control, Exit, Autonomy, Open Access, Verifiability via distributed LLM consensus",
       "type": "Rating",
       "url": "https://defipunkd.xyz",
-      "accessibility": { "class": "public-api", "verified": false, "note": "Registry model suggests open data; endpoint to verify" }
+      "accessibility": {
+        "class": "public-api",
+        "verified": false,
+        "note": "Registry model suggests open data; endpoint to verify"
+      },
+      "coverageBlocker": {
+        "kind": "verification-pending",
+        "note": "Registry/API availability not yet verified first-hand. Unblock: our verification work (SAT-302)."
+      }
     },
     {
       "id": "pharos",
@@ -39,7 +71,15 @@
       "focus": "Real-time risk monitoring and automated alerts for live protocol risk events",
       "type": "Monitoring",
       "url": "https://pharos.watch",
-      "accessibility": { "class": "gated-manual", "verified": false, "note": "Alert product; public feed availability to verify" }
+      "accessibility": {
+        "class": "gated-manual",
+        "verified": false,
+        "note": "Alert product; public feed availability to verify"
+      },
+      "coverageBlocker": {
+        "kind": "access-gated",
+        "note": "Real-time alerting product; no public event feed confirmed. Unblock: determine access model and request a feed/webhook (SAT-308)."
+      }
     },
     {
       "id": "defisphere",
@@ -47,7 +87,15 @@
       "focus": "Multi-dimensional protocol analysis covering technical, financial, and operational risk",
       "type": "Rating",
       "url": "https://defisphere.io",
-      "accessibility": { "class": "gated-manual", "verified": false, "note": "Analysis reports; machine-readable access to verify" }
+      "accessibility": {
+        "class": "gated-manual",
+        "verified": false,
+        "note": "Analysis reports; machine-readable access to verify"
+      },
+      "coverageBlocker": {
+        "kind": "access-gated",
+        "note": "Analysis reports; machine-readable access unconfirmed. Unblock: request rating export (SAT-308)."
+      }
     },
     {
       "id": "defisaver",
@@ -55,7 +103,15 @@
       "focus": "Live loan health and liquidation statistics for leveraged DeFi positions",
       "type": "Dashboard",
       "url": "https://defisaver.com",
-      "accessibility": { "class": "public-api", "verified": false, "note": "Public position/loan-health stats; API to verify" }
+      "accessibility": {
+        "class": "public-api",
+        "verified": false,
+        "note": "Public position/loan-health stats; API to verify"
+      },
+      "coverageBlocker": {
+        "kind": "access-gated",
+        "note": "API exists but returns 401 (verified 2026-06-10) \u2014 needs a key. Scope is also limited to lending/CDP position health. Unblock: API key request (SAT-306)."
+      }
     },
     {
       "id": "credora",
@@ -63,7 +119,15 @@
       "focus": "Institutional-grade credit risk ratings for DeFi protocols and borrowers",
       "type": "Rating",
       "url": "https://credora.io",
-      "accessibility": { "class": "gated-manual", "verified": false, "note": "Institutional product; expect gated, manual curation with permission" }
+      "accessibility": {
+        "class": "gated-manual",
+        "verified": false,
+        "note": "Institutional product; expect gated, manual curation with permission"
+      },
+      "coverageBlocker": {
+        "kind": "access-gated",
+        "note": "Institutional product; redistribution of ratings requires an agreement. Unblock: data agreement (SAT-307)."
+      }
     },
     {
       "id": "risklayer",
@@ -71,7 +135,15 @@
       "focus": "Economic security middleware built on EigenLayer. Proof of Risk consensus for decentralized, validator-attested risk scores",
       "type": "Rating",
       "url": "https://risklayer.xyz",
-      "accessibility": { "class": "public-api", "verified": false, "note": "Onchain attestation model implies readable outputs; endpoint to verify" }
+      "accessibility": {
+        "class": "public-api",
+        "verified": false,
+        "note": "Onchain attestation model implies readable outputs; endpoint to verify"
+      },
+      "coverageBlocker": {
+        "kind": "verification-pending",
+        "note": "Onchain attestation outputs not yet verified first-hand. Unblock: SAT-302."
+      }
     },
     {
       "id": "pigi",
@@ -79,7 +151,15 @@
       "focus": "Vault analytics and risk-adjusted yield comparison across 50+ protocols. Tracks historical exploits, holder concentration, and risk-adjusted APY",
       "type": "Dashboard",
       "url": "https://pigi.finance",
-      "accessibility": { "class": "published-scrapeable", "verified": false, "note": "Public dashboard; API availability to verify" }
+      "accessibility": {
+        "class": "published-scrapeable",
+        "verified": false,
+        "note": "Public dashboard; API availability to verify"
+      },
+      "coverageBlocker": {
+        "kind": "verification-pending",
+        "note": "Public dashboard; API availability unverified. Vault-focused scope. Unblock: SAT-302."
+      }
     },
     {
       "id": "xerberus",
@@ -87,7 +167,15 @@
       "focus": "Independent risk rating protocol for DeFi vaults. 300+ subscores across 85+ mechanisms. Investor-focused and open-source",
       "type": "Rating",
       "url": "https://xerberus.io",
-      "accessibility": { "class": "public-api", "verified": false, "note": "Open-source and API-first per their positioning; endpoint to verify" }
+      "accessibility": {
+        "class": "public-api",
+        "verified": false,
+        "note": "Open-source and API-first per their positioning; endpoint to verify"
+      },
+      "coverageBlocker": {
+        "kind": "verification-pending",
+        "note": "API-first positioning unverified; vault-focused scope. Unblock: SAT-302."
+      }
     },
     {
       "id": "zyfai",
@@ -95,7 +183,15 @@
       "focus": "Real-time risk score dashboard for DeFi liquidity pools. Tracks risk metrics, TVL, APY, and security grades across pools",
       "type": "Dashboard",
       "url": "https://zyf.ai",
-      "accessibility": { "class": "published-scrapeable", "verified": false, "note": "Public dashboard; API availability to verify" }
+      "accessibility": {
+        "class": "published-scrapeable",
+        "verified": false,
+        "note": "Public dashboard; API availability to verify"
+      },
+      "coverageBlocker": {
+        "kind": "verification-pending",
+        "note": "Pool-level dashboard; API unverified. Unblock: SAT-302."
+      }
     },
     {
       "id": "llamarisk",
@@ -103,7 +199,15 @@
       "focus": "Protocol risk research and parameter recommendations for DeFi. Analytics and monitoring focused on collateral and governance risk",
       "type": "Research",
       "url": "https://llamarisk.com",
-      "accessibility": { "class": "published-scrapeable", "verified": false, "note": "Public research reports; structured data to verify" }
+      "accessibility": {
+        "class": "published-scrapeable",
+        "verified": false,
+        "note": "Public research reports; structured data to verify"
+      },
+      "coverageBlocker": {
+        "kind": "verification-pending",
+        "note": "Public research reports; structured-data availability unverified. Unblock: SAT-302."
+      }
     },
     {
       "id": "philidor",
@@ -111,7 +215,15 @@
       "focus": "Deterministic vault risk scoring across 700+ vaults. Three-vector framework: asset quality, platform code maturity, and governance controls. Open methodology",
       "type": "Rating",
       "url": "https://philidor.xyz",
-      "accessibility": { "class": "public-api", "verified": false, "note": "Open methodology, deterministic outputs; endpoint to verify" }
+      "accessibility": {
+        "class": "public-api",
+        "verified": false,
+        "note": "Open methodology, deterministic outputs; endpoint to verify"
+      },
+      "coverageBlocker": {
+        "kind": "verification-pending",
+        "note": "Open methodology, deterministic outputs claimed; endpoint unverified. Vault-focused scope. Unblock: SAT-302."
+      }
     }
   ]
 }

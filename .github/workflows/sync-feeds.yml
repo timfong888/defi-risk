@@ -18,14 +18,21 @@ jobs:
         with:
           node-version: 22
       - run: node scripts/sync-defiscan.mjs
+      - run: node scripts/snapshot-metrics.mjs
+      - run: node scripts/validate-data.mjs
       - name: Open PR if data changed
         uses: peter-evans/create-pull-request@v6
         with:
-          add-paths: data/synced/
+          add-paths: |
+            data/synced/
+            data/metrics-snapshot.json
           branch: sync/feed-data
+          branch-suffix: timestamp
           commit-message: "data: nightly feed sync"
           title: "Nightly feed data sync"
           body: >
-            Automated sync from provider sources (currently DeFiScan's
-            open-source repo). Review the diff: every change to a verbatim
-            assessment should trace to an upstream provider change.
+            Automated sync from provider sources. Review the diff: every
+            change to a verbatim assessment should trace to an upstream
+            provider change. Sync scripts fail on upstream schema drift and
+            on entry-count regression, so a green run means shape-stable
+            data; the diff review is about content.
