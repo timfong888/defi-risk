@@ -4,6 +4,7 @@ import {
   claimedCellCount,
   feeds,
   getCell,
+  independentProviderCount,
   orderedFeeds,
   protocols,
   providerVerifiedCellCount,
@@ -37,9 +38,9 @@ export default async function Home() {
   const stats: { label: string; value: string; hint: string; href?: string }[] = [
     { label: "Protocols", value: String(protocols.length), hint: "top 20 by funds at risk" },
     {
-      label: "Independent risk feeds",
+      label: "Risk feeds",
       value: String(feeds.length),
-      hint: "see the full registry →",
+      hint: `${independentProviderCount} independent providers →`,
       href: "/feeds",
     },
     {

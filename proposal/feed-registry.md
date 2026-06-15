@@ -26,7 +26,7 @@ methodology** — the criteria, in product terms, are:
 | BlockAnalitica | Dashboard | published-scrapeable | Deepest quantitative lending-market dashboards (Sky/Aave/Morpho) |
 | DeFiPunk'd | Rating | public-api | Distinct LLM-consensus methodology adds diversity; registry model |
 | Pharos | Monitoring | gated-manual | Only real-time risk-event alerting in the registry |
-| DeFi Sphere | Rating | gated-manual | Multi-dimensional analysis spanning technical/financial/operational |
+| DeFi Sphere | Rating | gated-manual | Multi-dimensional analysis spanning technical/financial/operational. **Operated by Block Analitica** (a Block Analitica product — counted as the same provider, not independent) |
 | DeFi Saver | Dashboard | public-api | Live loan-health and liquidation stats — ground-truth usage data |
 | Credora | Rating | gated-manual | Institutional credit-rating lens absent elsewhere |
 | RiskLayer | Rating | public-api | Validator-attested onchain ratings — structurally distinct trust model |
@@ -35,6 +35,13 @@ methodology** — the criteria, in product terms, are:
 | Zyfai Risk | Dashboard | published-scrapeable | Pool-level risk for AMMs — covers the DEX rows others miss |
 | LlamaRisk | Research | published-scrapeable | Deep research desk; long Curve/CDP track record |
 | Philidor Analytics | Rating | public-api | Deterministic, open-methodology vault scoring across 700+ vaults |
+
+**Independence note.** These are 14 RFP-listed *feeds* but **13 independent
+providers**: DeFi Sphere is a Block Analitica product, so the two are counted as
+one independent methodology, not two. The "≥2 independent providers per class"
+criterion above is evaluated on the 13 distinct operators, and still holds for
+every class. (Separately, Credora is owned by RedStone, an oracle provider — a
+conflict to disclose if RedStone-fed protocols are rated.)
 
 ## Candidates for addition (post-M1, registry expansion)
 

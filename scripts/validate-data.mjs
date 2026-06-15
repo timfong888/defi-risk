@@ -29,6 +29,8 @@ for (const f of feeds.feeds ?? []) {
   if (!f.id || feedIds.has(f.id)) err(where, "missing or duplicate id");
   feedIds.add(f.id);
   if (!f.name || !f.focus || !f.url) err(where, "missing name/focus/url");
+  if (f.operator !== undefined && typeof f.operator !== "string")
+    err(where, "operator must be a string when present");
   if (!FEED_TYPES.includes(f.type)) err(where, `bad type "${f.type}"`);
   if (!ACCESS_CLASSES.includes(f.accessibility?.class))
     err(where, `bad accessibility.class "${f.accessibility?.class}"`);

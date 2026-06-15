@@ -9,6 +9,10 @@ export type CoverageStatus = "covered" | "partial" | "not-yet-covered";
 export interface Feed {
   id: string;
   name: string;
+  // The company/org that operates the feed. Defaults to `name` when absent.
+  // Set explicitly when distinct products share an operator (e.g. DeFi Sphere
+  // is a Block Analitica product) so we never double-count them as independent.
+  operator?: string;
   focus: string;
   type: "Rating" | "Dashboard" | "Monitoring" | "Research";
   url: string;
@@ -69,6 +73,16 @@ export interface ProtocolDetail {
 }
 
 export const feeds = feedsJson.feeds as Feed[];
+
+// The company behind a feed (falls back to the feed's own name).
+export function feedOperator(f: Feed): string {
+  return f.operator ?? f.name;
+}
+
+// Count of distinct operators — the honest "independent providers" number.
+// Lower than feeds.length when products share a company (DeFi Sphere ⊂ Block
+// Analitica), so the neutrality claim never overstates independence.
+export const independentProviderCount = new Set(feeds.map(feedOperator)).size;
 export const protocols = protocolsJson.protocols as Protocol[];
 export const details = detailsJson.details as unknown as Record<
   string,
