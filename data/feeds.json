@@ -36,18 +36,17 @@
     {
       "id": "blockanalitica",
       "name": "BlockAnalitica",
-      "operator": "Block Analitica",
-      "focus": "Quantitative on-chain risk dashboards for lending markets: liquidations, collateral health, market exposure",
+      "focus": "Quantitative on-chain risk modeling for lending markets: liquidations, collateral health, market exposure. Works directly with protocols (Sky/Aave/Morpho); output is not published as a public dashboard or feed",
       "type": "Dashboard",
       "url": "https://blockanalitica.com",
       "accessibility": {
-        "class": "published-scrapeable",
-        "verified": false,
-        "note": "Public per-market dashboards; API availability to verify"
+        "class": "gated-manual",
+        "verified": true,
+        "note": "No public-facing data (verified 2026-06-17). Block Analitica markets risk analytics and risk modeling but publishes no open dashboard or API; any ingestion requires a direct data relationship."
       },
       "coverageBlocker": {
         "kind": "access-gated",
-        "note": "No public API found (verified 2026-06-10). Their dashboards cover Sky/Aave/Morpho lending markets; verbatim ingestion is blocked on a data-access relationship. Unblock: outreach via EF App Relations intro (SAT-305)."
+        "note": "No public data of any kind (verified 2026-06-17) — Block Analitica's risk work for Sky/Aave/Morpho is delivered privately to those protocols. Verbatim ingestion is blocked on a data-access relationship. Unblock: outreach via EF App Relations intro (SAT-305)."
       }
     },
     {
@@ -80,23 +79,6 @@
       "coverageBlocker": {
         "kind": "access-gated",
         "note": "Real-time alerting product; no public event feed confirmed. Unblock: determine access model and request a feed/webhook (SAT-308)."
-      }
-    },
-    {
-      "id": "defisphere",
-      "name": "DeFi Sphere",
-      "operator": "Block Analitica",
-      "focus": "Multi-dimensional protocol analysis covering technical, financial, and operational risk (a Block Analitica product, formerly defisphere.io)",
-      "type": "Rating",
-      "url": "https://defisphere.io",
-      "accessibility": {
-        "class": "gated-manual",
-        "verified": false,
-        "note": "Analysis reports; machine-readable access to verify"
-      },
-      "coverageBlocker": {
-        "kind": "access-gated",
-        "note": "Analysis reports; machine-readable access unconfirmed. Unblock: request rating export (SAT-308)."
       }
     },
     {

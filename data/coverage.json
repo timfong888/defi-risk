@@ -65,10 +65,6 @@
     { "protocol": "mellow", "feed": "philidor", "status": "partial", "provenance": "manual-unverified", "note": "Coverage to confirm" },
 
     { "protocol": "lido", "feed": "risklayer", "status": "partial", "provenance": "manual-unverified", "note": "Restaking-adjacent attestation coverage to confirm" },
-    { "protocol": "rocket-pool", "feed": "risklayer", "status": "partial", "provenance": "manual-unverified", "note": "Coverage to confirm" },
-
-    { "protocol": "aave", "feed": "defisphere", "status": "partial", "provenance": "manual-unverified", "note": "Multi-dimensional analysis coverage to confirm" },
-    { "protocol": "uniswap", "feed": "defisphere", "status": "partial", "provenance": "manual-unverified", "note": "Coverage to confirm" },
-    { "protocol": "lido", "feed": "defisphere", "status": "partial", "provenance": "manual-unverified", "note": "Coverage to confirm" }
+    { "protocol": "rocket-pool", "feed": "risklayer", "status": "partial", "provenance": "manual-unverified", "note": "Coverage to confirm" }
   ]
 }

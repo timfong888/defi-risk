@@ -1,11 +1,5 @@
 import Link from "next/link";
-import {
-  feedOperator,
-  getCell,
-  independentProviderCount,
-  orderedFeeds,
-  protocols,
-} from "@/lib/data";
+import { getCell, orderedFeeds, protocols } from "@/lib/data";
 
 export const metadata = {
   title: "Risk Feeds — DeFi Risk Intelligence Aggregator",
@@ -55,11 +49,9 @@ export default function FeedsPage() {
           Risk feed registry
         </h1>
         <p className="mt-1.5 max-w-3xl text-sm text-gray-600">
-          The {orderedFeeds.length} risk feeds aggregated by this site — from{" "}
-          {independentProviderCount} independent providers (DeFi Sphere is a
-          Block Analitica product, so the two are counted as one). What each one
-          does, how its data is accessed, and where its coverage of the seed
-          protocols stands. Inclusion follows the{" "}
+          The {orderedFeeds.length} independent feeds aggregated by this site —
+          what each one does, how its data is accessed, and where its coverage
+          of the seed protocols stands. Inclusion follows the{" "}
           <a
             href="https://github.com/timfong888/defi-risk/blob/main/design/community-contribution-model.md"
             className="underline"
@@ -89,11 +81,6 @@ export default function FeedsPage() {
                   )}
                 </span>
               </div>
-              {feedOperator(f) !== f.name && (
-                <p className="mt-1 text-xs font-medium text-gray-500">
-                  Operated by {feedOperator(f)}
-                </p>
-              )}
               <p className="mt-1 text-sm text-gray-700">{f.focus}</p>
               <p className="mt-0.5 text-xs text-gray-500">
                 {f.accessibility.note}
