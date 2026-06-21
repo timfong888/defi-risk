@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { excludedFeeds, getCell, orderedFeeds, protocols } from "@/lib/data";
+import { ApiPill, Cap } from "@/components/AccessBadges";
 import FeedMatrixFilter from "./FeedMatrixFilter";
 
 export const metadata = {
@@ -28,32 +29,6 @@ const BLOCKER_LABEL: Record<string, { label: string; style: string }> = {
   },
 };
 
-// #66 access categorization — one MECE API-access value + three yes/no/unknown capability flags.
-const API_STYLE: Record<string, string> = {
-  open: "bg-emerald-50 text-emerald-700",
-  permissioned: "bg-amber-50 text-amber-700",
-  paid: "bg-violet-50 text-violet-700",
-  none: "bg-gray-100 text-gray-500",
-  unknown: "bg-gray-50 text-gray-400",
-};
-
-function Cap({ label, v }: { label: string; v: "yes" | "no" | "unknown" }) {
-  const mark = v === "yes" ? "✓" : v === "no" ? "✗" : "?";
-  const style =
-    v === "yes"
-      ? "bg-emerald-50 text-emerald-700"
-      : v === "no"
-        ? "bg-gray-100 text-gray-400"
-        : "bg-amber-50 text-amber-600";
-  return (
-    <span
-      className={`rounded px-1.5 py-0.5 text-[11px] ${style}`}
-      title={v === "unknown" ? "not yet verified (SAT-302)" : v}
-    >
-      {label} {mark}
-    </span>
-  );
-}
 
 export default function FeedsPage() {
   const categories = Array.from(new Set(protocols.map((p) => p.category)));
@@ -117,12 +92,7 @@ export default function FeedsPage() {
                 >
                   {f.type}
                 </span>
-                <span
-                  className={`rounded px-1.5 py-0.5 text-[11px] font-medium ${API_STYLE[f.accessibility.api]}`}
-                  title="how the data is accessed programmatically"
-                >
-                  API: {f.accessibility.api}
-                </span>
+                <ApiPill api={f.accessibility.api} />
                 <Cap label="API docs" v={f.accessibility.apiDocumented} />
                 <Cap label="Dashboard" v={f.accessibility.publicDashboard} />
                 <Cap label="Methodology" v={f.accessibility.methodologyOpen} />
