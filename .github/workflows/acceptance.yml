@@ -1,0 +1,31 @@
+name: Acceptance
+
+# Non-blocking acceptance verification: runs the full (network-capable) check suite from
+# acceptance/criteria.mjs and prints the per-issue PASS/FAIL/BLOCKED report to the run summary.
+# Manual + nightly. PR gating lives in validate.yml (which can run the --offline subset).
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 5 * * *" # 05:30 UTC daily
+
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Verify acceptance criteria
+        env:
+          GH_TOKEN: ${{ github.token }}
+        # Do not fail the workflow on incomplete milestones — this is a status report.
+        run: node scripts/verify-acceptance.mjs --all | tee "$GITHUB_STEP_SUMMARY" || true
