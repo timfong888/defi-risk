@@ -36,17 +36,17 @@
     {
       "id": "blockanalitica",
       "name": "BlockAnalitica",
-      "focus": "Quantitative on-chain risk modeling for lending markets: liquidations, collateral health, market exposure. Works directly with protocols (Sky/Aave/Morpho); output is not published as a public dashboard or feed",
+      "focus": "Quantitative on-chain risk modeling for lending markets: liquidations, collateral health, market exposure. Publishes a public Morpho risk dashboard (morpho.blockanalitica.com); bespoke modeling for other protocols (Sky/Aave) is delivered privately",
       "type": "Dashboard",
       "url": "https://blockanalitica.com",
       "accessibility": {
-        "class": "gated-manual",
+        "class": "published-scrapeable",
         "verified": true,
-        "note": "No public-facing data (verified 2026-06-17). Block Analitica markets risk analytics and risk modeling but publishes no open dashboard or API; any ingestion requires a direct data relationship."
+        "note": "Public Morpho risk dashboard at morpho.blockanalitica.com (per-vault liquidation/collateral analytics). Coverage of other protocols' bespoke modeling remains gated on a direct data relationship."
       },
       "coverageBlocker": {
-        "kind": "access-gated",
-        "note": "No public data of any kind (verified 2026-06-17) — Block Analitica's risk work for Sky/Aave/Morpho is delivered privately to those protocols. Verbatim ingestion is blocked on a data-access relationship. Unblock: outreach via EF App Relations intro (SAT-305)."
+        "kind": "verification-pending",
+        "note": "Morpho coverage is via the public dashboard (morpho.blockanalitica.com); verbatim transcription pending a parser + first-hand verification. Non-Morpho bespoke modeling stays private (outreach via EF App Relations, SAT-305)."
       }
     },
     {

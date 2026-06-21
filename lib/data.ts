@@ -81,6 +81,7 @@ interface CoverageEntry {
   status: string;
   provenance: string;
   note?: string;
+  sourceUrl?: string;
 }
 
 const cellMap = new Map<string, CoverageCell>();
@@ -89,6 +90,7 @@ for (const e of coverageJson.entries as CoverageEntry[]) {
     status: e.status as CoverageStatus,
     provenance: e.provenance,
     note: e.note,
+    sourceUrl: e.sourceUrl,
   });
 }
 

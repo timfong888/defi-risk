@@ -20,6 +20,7 @@
     { "protocol": "curve", "feed": "blockanalitica", "status": "partial", "provenance": "manual-unverified", "note": "crvUSD market coverage to confirm" },
 
     { "protocol": "morpho-vaults", "feed": "curatorwatch", "status": "covered", "provenance": "manual-unverified", "note": "Core focus: Morpho curator/vault monitoring" },
+    { "protocol": "morpho-vaults", "feed": "blockanalitica", "status": "covered", "provenance": "manual-unverified", "note": "Public Morpho risk dashboard", "sourceUrl": "https://morpho.blockanalitica.com/" },
     { "protocol": "morpho", "feed": "curatorwatch", "status": "partial", "provenance": "manual-unverified", "note": "Vault-level focus; core protocol indirectly covered" },
     { "protocol": "euler", "feed": "curatorwatch", "status": "partial", "provenance": "manual-unverified", "note": "Curated vault coverage to confirm" },
 

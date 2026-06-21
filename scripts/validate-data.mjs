@@ -59,6 +59,8 @@ function checkCoverageEntry(e, where) {
   if (!feedIds.has(e.feed)) err(where, `unknown feed "${e.feed}"`);
   if (!STATUSES.includes(e.status)) err(where, `bad status "${e.status}"`);
   if (!e.provenance) err(where, "missing provenance");
+  if (e.sourceUrl !== undefined && !/^https:\/\/\S+$/.test(e.sourceUrl))
+    err(where, `sourceUrl must be an https URL, got "${e.sourceUrl}"`);
 }
 
 (coverage.entries ?? []).forEach((e, i) =>

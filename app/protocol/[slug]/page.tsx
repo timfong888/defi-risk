@@ -272,7 +272,17 @@ export default async function ProtocolPage({
                           </span>
                         ) : (
                           <>
-                            <span className="text-gray-600">{cell.note ?? "Coverage noted"}.</span>
+                            <span className="text-gray-600">{cell.note ?? "Coverage noted"}.</span>{" "}
+                            {cell.sourceUrl && (
+                              <a
+                                href={cell.sourceUrl}
+                                className="text-xs font-medium text-sky-700 underline"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                View dashboard ↗
+                              </a>
+                            )}
                             <span className="block text-xs text-gray-400">
                               Verbatim assessment ingestion pending first-hand
                               verification.
