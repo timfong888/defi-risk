@@ -114,22 +114,6 @@
       }
     },
     {
-      "id": "risklayer",
-      "name": "RiskLayer",
-      "focus": "Economic security middleware built on EigenLayer. Proof of Risk consensus for decentralized, validator-attested risk scores",
-      "type": "Rating",
-      "url": "https://risklayer.xyz",
-      "accessibility": {
-        "class": "public-api",
-        "verified": false,
-        "note": "Onchain attestation model implies readable outputs; endpoint to verify"
-      },
-      "coverageBlocker": {
-        "kind": "verification-pending",
-        "note": "Onchain attestation outputs not yet verified first-hand. Unblock: SAT-302."
-      }
-    },
-    {
       "id": "pigi",
       "name": "pigi.finance",
       "focus": "Vault analytics and risk-adjusted yield comparison across 50+ protocols. Tracks historical exploits, holder concentration, and risk-adjusted APY",

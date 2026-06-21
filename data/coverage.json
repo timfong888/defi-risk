@@ -63,9 +63,6 @@
 
     { "protocol": "yearn", "feed": "philidor", "status": "covered", "provenance": "manual-unverified", "note": "700+ vault deterministic coverage" },
     { "protocol": "morpho-vaults", "feed": "philidor", "status": "covered", "provenance": "manual-unverified", "note": "Vault scoring coverage" },
-    { "protocol": "mellow", "feed": "philidor", "status": "partial", "provenance": "manual-unverified", "note": "Coverage to confirm" },
-
-    { "protocol": "lido", "feed": "risklayer", "status": "partial", "provenance": "manual-unverified", "note": "Restaking-adjacent attestation coverage to confirm" },
-    { "protocol": "rocket-pool", "feed": "risklayer", "status": "partial", "provenance": "manual-unverified", "note": "Coverage to confirm" }
+    { "protocol": "mellow", "feed": "philidor", "status": "partial", "provenance": "manual-unverified", "note": "Coverage to confirm" }
   ]
 }
