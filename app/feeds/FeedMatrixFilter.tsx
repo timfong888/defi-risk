@@ -20,6 +20,7 @@ const TYPE_STYLE: Record<string, string> = {
   Monitoring: "bg-rose-50 text-rose-700",
   Research: "bg-violet-50 text-violet-700",
 };
+const DEFAULT_TYPE_STYLE = "bg-gray-50 text-gray-700";
 
 function StatusCell({ status }: { status?: string }) {
   if (status === "covered")
@@ -52,10 +53,11 @@ export default function FeedMatrixFilter({
 
   const addProtocol = (raw: string) => {
     const id = byName.get(raw.trim().toLowerCase());
-    if (id && !selected.includes(id)) setSelected([...selected, id]);
+    if (id) setSelected((prev) => (prev.includes(id) ? prev : [...prev, id]));
     setInput("");
   };
-  const remove = (id: string) => setSelected(selected.filter((s) => s !== id));
+  const remove = (id: string) =>
+    setSelected((prev) => prev.filter((s) => s !== id));
 
   // A feed is shown if it covers (covered/partial) at least one selected protocol.
   // With nothing selected, every feed is shown.
@@ -152,7 +154,7 @@ export default function FeedMatrixFilter({
                 <td className="px-3 py-1.5 font-medium whitespace-nowrap">{f.name}</td>
                 <td className="px-3 py-1.5">
                   <span
-                    className={`rounded px-1.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${TYPE_STYLE[f.type]}`}
+                    className={`rounded px-1.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${TYPE_STYLE[f.type] ?? DEFAULT_TYPE_STYLE}`}
                   >
                     {f.type}
                   </span>
