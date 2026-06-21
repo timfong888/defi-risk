@@ -32,12 +32,13 @@ export default function FeedsPage() {
   const categories = Array.from(new Set(protocols.map((p) => p.category)));
 
   // covered/partial coverage per feed per protocol, for the interactive filter
-  const coverage: Record<string, Record<string, string>> = {};
+  const coverage: Record<string, Record<string, "covered" | "partial">> = {};
   for (const f of orderedFeeds) {
     coverage[f.id] = {};
     for (const p of protocols) {
       const status = getCell(p.id, f.id).status;
-      if (status !== "not-yet-covered") coverage[f.id][p.id] = status;
+      if (status === "covered" || status === "partial")
+        coverage[f.id][p.id] = status;
     }
   }
 

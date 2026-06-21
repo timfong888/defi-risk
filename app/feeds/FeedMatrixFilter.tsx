@@ -2,17 +2,20 @@
 
 import { useMemo, useState } from "react";
 
+type FeedType = "Rating" | "Dashboard" | "Monitoring" | "Research";
+type CoverageStatus = "covered" | "partial";
+
 interface FeedLite {
   id: string;
   name: string;
-  type: string;
+  type: FeedType;
 }
 interface ProtocolLite {
   id: string;
   name: string;
 }
 // coverage[feedId][protocolId] = "covered" | "partial" (not-yet-covered omitted)
-type Coverage = Record<string, Record<string, string>>;
+type Coverage = Record<string, Record<string, CoverageStatus>>;
 
 const TYPE_STYLE: Record<string, string> = {
   Rating: "bg-indigo-50 text-indigo-700",
@@ -22,7 +25,7 @@ const TYPE_STYLE: Record<string, string> = {
 };
 const DEFAULT_TYPE_STYLE = "bg-gray-50 text-gray-700";
 
-function StatusCell({ status }: { status?: string }) {
+function StatusCell({ status }: { status?: CoverageStatus }) {
   if (status === "covered")
     return <span className="text-emerald-700" title="covered">●</span>;
   if (status === "partial")
@@ -61,11 +64,20 @@ export default function FeedMatrixFilter({
 
   // A feed is shown if it covers (covered/partial) at least one selected protocol.
   // With nothing selected, every feed is shown.
-  const visible = feeds.filter(
-    (f) => selected.length === 0 || selected.some((pid) => coverage[f.id]?.[pid])
+  const visible = useMemo(
+    () =>
+      feeds.filter(
+        (f) =>
+          selected.length === 0 ||
+          selected.some((pid) => coverage[f.id]?.[pid])
+      ),
+    [feeds, coverage, selected]
   );
 
-  const available = protocols.filter((p) => !selected.includes(p.id));
+  const available = useMemo(
+    () => protocols.filter((p) => !selected.includes(p.id)),
+    [protocols, selected]
+  );
 
   return (
     <div>
