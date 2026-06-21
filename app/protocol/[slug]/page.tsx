@@ -250,14 +250,6 @@ export default async function ProtocolPage({
                             <footer className="mt-1 text-xs text-gray-400">
                               — {f.name}
                               {cell.updated && ` · updated ${cell.updated}`}
-                              {cell.sourceUrl && (
-                                <>
-                                  {" · "}
-                                  <a href={cell.sourceUrl} className="underline">
-                                    source
-                                  </a>
-                                </>
-                              )}
                             </footer>
                           </blockquote>
                         ) : cell.status === "not-yet-covered" ? (
@@ -272,22 +264,23 @@ export default async function ProtocolPage({
                           </span>
                         ) : (
                           <>
-                            <span className="text-gray-600">{cell.note ?? "Coverage noted"}.</span>{" "}
-                            {cell.sourceUrl && (
-                              <a
-                                href={cell.sourceUrl}
-                                className="text-xs font-medium text-sky-700 underline"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                View source ↗
-                              </a>
-                            )}
+                            <span className="text-gray-600">{cell.note ?? "Coverage noted"}.</span>
                             <span className="block text-xs text-gray-400">
                               Verbatim assessment ingestion pending first-hand
                               verification.
                             </span>
                           </>
+                        )}
+                        {/* one consistent source link for every cell that has one */}
+                        {cell.sourceUrl && (
+                          <a
+                            href={cell.sourceUrl}
+                            className="mt-1 block text-xs text-gray-500 underline"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            source ↗
+                          </a>
                         )}{" "}
                         <Provenance tag={cell.provenance} />
                       </div>
