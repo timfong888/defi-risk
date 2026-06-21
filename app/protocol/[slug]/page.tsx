@@ -280,7 +280,7 @@ export default async function ProtocolPage({
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >
-                                View dashboard ↗
+                                View source ↗
                               </a>
                             )}
                             <span className="block text-xs text-gray-400">
