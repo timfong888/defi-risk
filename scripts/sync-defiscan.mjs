@@ -106,7 +106,7 @@ for (const [protocol, reviews] of Object.entries(MAPPING)) {
     provenance: "provider-published",
     verbatim: parts.join(" | "),
     note: "Decentralization stage review",
-    sourceUrl: `https://defiscan.info/protocols/${reviews[0].id}`,
+    sourceUrl: `https://www.defiscan.info/protocol/${protocol}`,
     updated: latest,
   });
 }
