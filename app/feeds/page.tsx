@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { excludedFeeds, getCell, orderedFeeds, protocols } from "@/lib/data";
+import { ApiPill, Cap } from "@/components/AccessBadges";
 import FeedMatrixFilter from "./FeedMatrixFilter";
 
 export const metadata = {
@@ -27,6 +28,7 @@ const BLOCKER_LABEL: Record<string, { label: string; style: string }> = {
     style: "bg-sky-50 text-sky-700",
   },
 };
+
 
 export default function FeedsPage() {
   const categories = Array.from(new Set(protocols.map((p) => p.category)));
@@ -72,6 +74,12 @@ export default function FeedsPage() {
           </a>
           ; no single feed is canonical.
         </p>
+        <p className="mt-1.5 text-xs text-gray-500">
+          Each feed is tagged by <strong>API access</strong> (open · permissioned
+          · paid · none) and whether it offers <strong>API docs</strong>, a{" "}
+          <strong>public dashboard</strong>, and an{" "}
+          <strong>open methodology</strong> (✓ yes · ✗ no · ? not yet verified).
+        </p>
         <div className="mt-4 space-y-3">
           {orderedFeeds.map((f) => (
             <div key={f.id} className="rounded-lg border border-gray-200 p-3">
@@ -84,14 +92,13 @@ export default function FeedsPage() {
                 >
                   {f.type}
                 </span>
-                <span className="text-xs text-gray-500">
-                  {f.accessibility.class}
-                  {f.accessibility.verified ? (
-                    <span className="ml-1 text-emerald-600">verified</span>
-                  ) : (
-                    <span className="ml-1 text-amber-600">to verify</span>
-                  )}
-                </span>
+                <ApiPill api={f.accessibility.api} />
+                <Cap label="API docs" v={f.accessibility.apiDocumented} />
+                <Cap label="Dashboard" v={f.accessibility.publicDashboard} />
+                <Cap label="Methodology" v={f.accessibility.methodologyOpen} />
+                {f.accessibility.verified && (
+                  <span className="text-[11px] text-emerald-600">verified</span>
+                )}
               </div>
               <p className="mt-1 text-sm text-gray-700">{f.focus}</p>
               <p className="mt-0.5 text-xs text-gray-500">

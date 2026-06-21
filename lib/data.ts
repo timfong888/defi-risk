@@ -14,7 +14,11 @@ export interface Feed {
   type: "Rating" | "Dashboard" | "Monitoring" | "Research";
   url: string;
   accessibility: {
-    class: "public-api" | "published-scrapeable" | "gated-manual";
+    // #66 categorization — orthogonal attributes, each MECE; "unknown" = not yet verified (SAT-302)
+    api: "open" | "permissioned" | "paid" | "none" | "unknown";
+    apiDocumented: "yes" | "no" | "unknown";
+    publicDashboard: "yes" | "no" | "unknown";
+    methodologyOpen: "yes" | "no" | "unknown";
     verified: boolean;
     note: string;
   };

@@ -1,4 +1,5 @@
 import { feeds } from "@/lib/data";
+import { ApiPill, Cap } from "@/components/AccessBadges";
 
 export const metadata = { title: "Methodology — DeFi Risk Intelligence Aggregator" };
 
@@ -70,13 +71,13 @@ export default function MethodologyPage() {
                 </td>
                 <td className="py-1.5 pr-3 text-gray-600">{f.type}</td>
                 <td className="py-1.5 pr-3 text-gray-600">{f.focus}</td>
-                <td className="py-1.5 text-gray-600 whitespace-nowrap">
-                  {f.accessibility.class}
-                  {!f.accessibility.verified && (
-                    <span className="ml-1 text-xs text-amber-600">
-                      (to verify)
-                    </span>
-                  )}
+                <td className="py-1.5 whitespace-nowrap">
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <ApiPill api={f.accessibility.api} />
+                    <Cap label="API docs" v={f.accessibility.apiDocumented} />
+                    <Cap label="Dashboard" v={f.accessibility.publicDashboard} />
+                    <Cap label="Methodology" v={f.accessibility.methodologyOpen} />
+                  </div>
                 </td>
               </tr>
             ))}
