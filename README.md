@@ -63,4 +63,5 @@ npm run dev
 
 ## License
 
-[AGPL-3.0](LICENSE). The data layer is part of the licensed work.
+[AGPL-3.0](LICENSE) — full license text: <https://www.gnu.org/licenses/agpl-3.0.html>. The data
+layer is part of the licensed work.
