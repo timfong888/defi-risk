@@ -22,6 +22,7 @@ const feeds = await loadJson("data/feeds.json");
 const protocols = await loadJson("data/protocols.json");
 const coverage = await loadJson("data/coverage.json");
 const details = await loadJson("data/details.json");
+const excluded = await loadJson("data/excluded-feeds.json");
 
 const feedIds = new Set();
 for (const f of feeds.feeds ?? []) {
@@ -36,6 +37,13 @@ for (const f of feeds.feeds ?? []) {
     err(where, "accessibility.verified must be boolean");
   if (!BLOCKER_KINDS.includes(f.coverageBlocker?.kind) || !f.coverageBlocker?.note)
     err(where, "coverageBlocker must have a valid kind and a note");
+}
+
+for (const e of excluded.excluded ?? []) {
+  const where = `excluded-feeds.json[${e.id ?? "?"}]`;
+  if (!e.id || !e.name || !e.reason || !e.checked)
+    err(where, "excluded feed needs id/name/reason/checked");
+  if (feedIds.has(e.id)) err(where, `excluded id "${e.id}" is also in the active registry`);
 }
 
 const protocolIds = new Set();

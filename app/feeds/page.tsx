@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getCell, orderedFeeds, protocols } from "@/lib/data";
+import { excludedFeeds, getCell, orderedFeeds, protocols } from "@/lib/data";
 
 export const metadata = {
   title: "Risk Feeds — DeFi Risk Intelligence Aggregator",
@@ -202,6 +202,39 @@ export default function FeedsPage() {
           .
         </p>
       </section>
+
+      {excludedFeeds.length > 0 && (
+        <section id="excluded" className="scroll-mt-20">
+          <h2 className="text-lg font-semibold">Considered but excluded</h2>
+          <p className="mt-1 max-w-3xl text-sm text-gray-600">
+            A feed must be inspectable first-hand. A source we cannot verify is
+            excluded and labeled here — never silently displayed — and would be
+            re-included if a live, inspectable product appears.
+          </p>
+          <table className="mt-3 w-full text-sm">
+            <thead>
+              <tr className="border-b border-gray-200 text-left text-gray-500">
+                <th className="py-1 pr-3 font-medium">Feed</th>
+                <th className="py-1 pr-3 font-medium">Why excluded</th>
+                <th className="py-1 font-medium">Checked</th>
+              </tr>
+            </thead>
+            <tbody>
+              {excludedFeeds.map((f) => (
+                <tr key={f.id} className="border-b border-gray-100 align-top">
+                  <td className="py-1.5 pr-3 whitespace-nowrap font-medium">
+                    {f.name}
+                  </td>
+                  <td className="py-1.5 pr-3 text-gray-600">{f.reason}</td>
+                  <td className="py-1.5 whitespace-nowrap text-gray-500">
+                    {f.checked}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      )}
     </div>
   );
 }

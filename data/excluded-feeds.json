@@ -1,0 +1,17 @@
+{
+  "$comment": "Feeds considered for the registry but excluded. Verifiability rule (RFP): a feed must be inspectable first-hand; an unverifiable source is excluded and labeled as such, never silently displayed. Every exclusion is a labeled, reversible datum — re-included if a live, inspectable product appears. Ids here must NOT also appear in feeds.json.",
+  "excluded": [
+    {
+      "id": "risklayer",
+      "name": "RiskLayer",
+      "reason": "Unverifiable — risklayer.xyz does not resolve and the @risk_layer X account does not exist (verified 2026-06-21). No live, inspectable product to transcribe.",
+      "checked": "2026-06-21"
+    },
+    {
+      "id": "defisphere",
+      "name": "DeFi Sphere",
+      "reason": "Unverifiable — no live product found; previously mis-attributed as a Block Analitica product, which it is not (verified 2026-06-17).",
+      "checked": "2026-06-17"
+    }
+  ]
+}

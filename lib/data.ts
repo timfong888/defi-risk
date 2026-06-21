@@ -3,6 +3,7 @@ import protocolsJson from "@/data/protocols.json";
 import coverageJson from "@/data/coverage.json";
 import detailsJson from "@/data/details.json";
 import syncedDefiscan from "@/data/synced/defiscan.json";
+import excludedFeedsJson from "@/data/excluded-feeds.json";
 
 export type CoverageStatus = "covered" | "partial" | "not-yet-covered";
 
@@ -68,7 +69,15 @@ export interface ProtocolDetail {
   incidents: Incident[];
 }
 
+export interface ExcludedFeed {
+  id: string;
+  name: string;
+  reason: string;
+  checked: string;
+}
+
 export const feeds = feedsJson.feeds as Feed[];
+export const excludedFeeds = excludedFeedsJson.excluded as ExcludedFeed[];
 export const protocols = protocolsJson.protocols as Protocol[];
 export const details = detailsJson.details as unknown as Record<
   string,
