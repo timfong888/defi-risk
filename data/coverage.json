@@ -20,6 +20,7 @@
     { "protocol": "curve", "feed": "blockanalitica", "status": "partial", "provenance": "manual-unverified", "note": "crvUSD market coverage to confirm" },
 
     { "protocol": "morpho-vaults", "feed": "curatorwatch", "status": "covered", "provenance": "manual-unverified", "note": "Core focus: Morpho curator/vault monitoring" },
+    { "protocol": "morpho-vaults", "feed": "blockanalitica", "status": "covered", "provenance": "manual-unverified", "note": "Public Morpho risk dashboard", "sourceUrl": "https://morpho.blockanalitica.com/" },
     { "protocol": "morpho", "feed": "curatorwatch", "status": "partial", "provenance": "manual-unverified", "note": "Vault-level focus; core protocol indirectly covered" },
     { "protocol": "euler", "feed": "curatorwatch", "status": "partial", "provenance": "manual-unverified", "note": "Curated vault coverage to confirm" },
 
@@ -45,7 +46,7 @@
 
     { "protocol": "uniswap", "feed": "defipunkd", "status": "partial", "provenance": "manual-unverified", "note": "Registry coverage to confirm" },
     { "protocol": "aave", "feed": "defipunkd", "status": "partial", "provenance": "manual-unverified", "note": "Registry coverage to confirm" },
-    { "protocol": "lido", "feed": "defipunkd", "status": "partial", "provenance": "manual-unverified", "note": "Registry coverage to confirm" },
+    { "protocol": "lido", "feed": "defipunkd", "status": "covered", "provenance": "manual-unverified", "note": "Listed in the DeFiPunk'd risk registry", "sourceUrl": "https://defipunkd.com/protocol/lido" },
 
     { "protocol": "yearn", "feed": "pigi", "status": "covered", "provenance": "manual-unverified", "note": "Vault analytics across 50+ protocols" },
     { "protocol": "morpho-vaults", "feed": "pigi", "status": "covered", "provenance": "manual-unverified", "note": "Vault analytics coverage" },

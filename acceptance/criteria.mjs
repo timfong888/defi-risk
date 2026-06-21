@@ -116,6 +116,16 @@ export const criteria = {
         file: "acceptance/attestations/steward.md", patterns: ["Steward:", "Commitment:"] },
     ],
   },
+  46: {
+    milestone: "M1",
+    title: "Detail page links covered cells to their dashboard",
+    checks: [
+      { id: "dashboard-data", desc: "Coverage sourceUrls are valid https and the morpho-vaults×blockanalitica seed is present", type: "command", tag: "auto",
+        cmd: "node --test test/dashboard-link.test.mjs" },
+      { id: "dashboard-live", desc: "morpho-vaults detail page links the BlockAnalitica dashboard", type: "http", tag: "auto",
+        url: `${PROD}/protocol/morpho-vaults`, expectStatus: 200, bodyContains: ["morpho.blockanalitica.com"] },
+    ],
+  },
 };
 
 // Sub-issues for #5: one per protocol id (filled by sync-issue-criteria.mjs after creation).

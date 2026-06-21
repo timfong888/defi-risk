@@ -250,14 +250,6 @@ export default async function ProtocolPage({
                             <footer className="mt-1 text-xs text-gray-400">
                               — {f.name}
                               {cell.updated && ` · updated ${cell.updated}`}
-                              {cell.sourceUrl && (
-                                <>
-                                  {" · "}
-                                  <a href={cell.sourceUrl} className="underline">
-                                    source
-                                  </a>
-                                </>
-                              )}
                             </footer>
                           </blockquote>
                         ) : cell.status === "not-yet-covered" ? (
@@ -278,6 +270,17 @@ export default async function ProtocolPage({
                               verification.
                             </span>
                           </>
+                        )}
+                        {/* one consistent source link for every cell that has one */}
+                        {cell.sourceUrl && (
+                          <a
+                            href={cell.sourceUrl}
+                            className="mt-1 block text-xs text-gray-500 underline"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            source ↗
+                          </a>
                         )}{" "}
                         <Provenance tag={cell.provenance} />
                       </div>
