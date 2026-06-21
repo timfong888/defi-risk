@@ -8,8 +8,13 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 
 const REPO = "deficollective/defiscan";
 const RAW = `https://raw.githubusercontent.com/${REPO}/main`;
+// Canonical DeFiScan protocol-page base. Per-cell sourceUrl is `${PROTOCOL_BASE}/<our-protocol-id>`.
+const PROTOCOL_BASE = "https://www.defiscan.info/protocol";
 
-// our protocol id -> DeFiScan review ids (versions within our RFP scope)
+// our protocol id -> DeFiScan review ids (versions within our RFP scope).
+// NB: the MAPPING keys (our protocol ids) double as DeFiScan's canonical protocol-page slugs —
+// all 9 verified resolving at `${PROTOCOL_BASE}/<key>` on 2026-06-21. If a future protocol's id
+// ever diverges from its DeFiScan slug, give that entry an explicit slug and use it below.
 const MAPPING = {
   aave: [{ id: "aave", label: "Aave v3" }],
   compound: [
@@ -106,7 +111,7 @@ for (const [protocol, reviews] of Object.entries(MAPPING)) {
     provenance: "provider-published",
     verbatim: parts.join(" | "),
     note: "Decentralization stage review",
-    sourceUrl: `https://defiscan.info/protocols/${reviews[0].id}`,
+    sourceUrl: `${PROTOCOL_BASE}/${protocol}`,
     updated: latest,
   });
 }
