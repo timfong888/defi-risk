@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { excludedFeeds, getCell, orderedFeeds, protocols } from "@/lib/data";
+import FeedMatrixFilter from "./FeedMatrixFilter";
 
 export const metadata = {
   title: "Risk Feeds — DeFi Risk Intelligence Aggregator",
@@ -29,6 +30,16 @@ const BLOCKER_LABEL: Record<string, { label: string; style: string }> = {
 
 export default function FeedsPage() {
   const categories = Array.from(new Set(protocols.map((p) => p.category)));
+
+  // covered/partial coverage per feed per protocol, for the interactive filter
+  const coverage: Record<string, Record<string, string>> = {};
+  for (const f of orderedFeeds) {
+    coverage[f.id] = {};
+    for (const p of protocols) {
+      const status = getCell(p.id, f.id).status;
+      if (status !== "not-yet-covered") coverage[f.id][p.id] = status;
+    }
+  }
 
   // covered/partial counts per feed per protocol category
   const counts = (feedId: string, category: string) => {
@@ -87,6 +98,21 @@ export default function FeedsPage() {
               </p>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section id="find" className="scroll-mt-20">
+        <h2 className="text-lg font-semibold">Find feeds by protocol</h2>
+        <p className="mt-1 max-w-3xl text-sm text-gray-600">
+          Type the protocol(s) you care about — the list narrows to the feeds
+          that actually cover them, so you can see at a glance who assesses what.
+        </p>
+        <div className="mt-3">
+          <FeedMatrixFilter
+            feeds={orderedFeeds.map((f) => ({ id: f.id, name: f.name, type: f.type }))}
+            protocols={protocols.map((p) => ({ id: p.id, name: p.name }))}
+            coverage={coverage}
+          />
         </div>
       </section>
 
