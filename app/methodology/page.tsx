@@ -71,12 +71,17 @@ export default function MethodologyPage() {
                 <td className="py-1.5 pr-3 text-gray-600">{f.type}</td>
                 <td className="py-1.5 pr-3 text-gray-600">{f.focus}</td>
                 <td className="py-1.5 text-gray-600 whitespace-nowrap">
-                  {f.accessibility.class}
+                  API: {f.accessibility.api}
                   {!f.accessibility.verified && (
                     <span className="ml-1 text-xs text-amber-600">
                       (to verify)
                     </span>
                   )}
+                  <span className="block text-xs text-gray-400">
+                    docs {f.accessibility.apiDocumented} · dashboard{" "}
+                    {f.accessibility.publicDashboard} · methodology{" "}
+                    {f.accessibility.methodologyOpen}
+                  </span>
                 </td>
               </tr>
             ))}

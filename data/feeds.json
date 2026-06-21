@@ -1,5 +1,5 @@
 {
-  "$comment": "Risk feed registry. RFP \u00a74 list is illustrative; this is our proposed registry. accessibility is our working classification \u2014 entries marked verified:false are pending first-hand verification (SAT-302).",
+  "$comment": "Risk feed registry. RFP §4 list is illustrative; this is our proposed registry. accessibility is our working classification — entries marked verified:false are pending first-hand verification (SAT-302).",
   "feeds": [
     {
       "id": "defiscan",
@@ -8,13 +8,16 @@
       "type": "Rating",
       "url": "https://defiscan.info",
       "accessibility": {
-        "class": "public-api",
+        "api": "open",
+        "apiDocumented": "yes",
+        "publicDashboard": "yes",
+        "methodologyOpen": "yes",
         "verified": true,
-        "note": "Open-source GitHub repo (deficollective/defiscan) with structured per-chain frontmatter; synced via scripts/sync-defiscan.mjs"
+        "note": "Open-source repo (deficollective/defiscan) + public API docs (docs.defiscan.info); synced via scripts/sync-defiscan.mjs."
       },
       "coverageBlocker": {
         "kind": "provider-scope",
-        "note": "DeFiScan reviews protocols one by one; uncovered protocols have no published review yet. Unblock: request a review upstream (open process) \u2014 nothing on our side."
+        "note": "DeFiScan reviews protocols one by one; uncovered protocols have no published review yet. Unblock: request a review upstream (open process) — nothing on our side."
       }
     },
     {
@@ -24,7 +27,10 @@
       "type": "Dashboard",
       "url": "https://curatorwatch.xyz",
       "accessibility": {
-        "class": "published-scrapeable",
+        "api": "unknown",
+        "apiDocumented": "unknown",
+        "publicDashboard": "unknown",
+        "methodologyOpen": "unknown",
         "verified": false,
         "note": "Public dashboard; API availability to verify"
       },
@@ -40,9 +46,12 @@
       "type": "Dashboard",
       "url": "https://blockanalitica.com",
       "accessibility": {
-        "class": "published-scrapeable",
-        "verified": true,
-        "note": "Public Morpho risk dashboard at morpho.blockanalitica.com (per-vault liquidation/collateral analytics). Coverage of other protocols' bespoke modeling remains gated on a direct data relationship."
+        "api": "unknown",
+        "apiDocumented": "unknown",
+        "publicDashboard": "yes",
+        "methodologyOpen": "unknown",
+        "verified": false,
+        "note": "Public Morpho risk dashboard (morpho.blockanalitica.com). API and methodology openness for other coverage not verified first-hand."
       },
       "coverageBlocker": {
         "kind": "verification-pending",
@@ -56,9 +65,12 @@
       "type": "Rating",
       "url": "https://defipunkd.com/",
       "accessibility": {
-        "class": "public-api",
+        "api": "unknown",
+        "apiDocumented": "unknown",
+        "publicDashboard": "yes",
+        "methodologyOpen": "unknown",
         "verified": false,
-        "note": "Registry model suggests open data; endpoint to verify"
+        "note": "Public site live (defipunkd.com). API docs and methodology openness not yet verified first-hand (SAT-302)."
       },
       "coverageBlocker": {
         "kind": "verification-pending",
@@ -72,7 +84,10 @@
       "type": "Monitoring",
       "url": "https://pharos.watch",
       "accessibility": {
-        "class": "gated-manual",
+        "api": "unknown",
+        "apiDocumented": "unknown",
+        "publicDashboard": "unknown",
+        "methodologyOpen": "unknown",
         "verified": false,
         "note": "Alert product; public feed availability to verify"
       },
@@ -88,13 +103,16 @@
       "type": "Dashboard",
       "url": "https://defisaver.com",
       "accessibility": {
-        "class": "public-api",
+        "api": "unknown",
+        "apiDocumented": "unknown",
+        "publicDashboard": "unknown",
+        "methodologyOpen": "unknown",
         "verified": false,
         "note": "Public position/loan-health stats; API to verify"
       },
       "coverageBlocker": {
         "kind": "access-gated",
-        "note": "API exists but returns 401 (verified 2026-06-10) \u2014 needs a key. Scope is also limited to lending/CDP position health. Unblock: API key request (SAT-306)."
+        "note": "API exists but returns 401 (verified 2026-06-10) — needs a key. Scope is also limited to lending/CDP position health. Unblock: API key request (SAT-306)."
       }
     },
     {
@@ -104,7 +122,10 @@
       "type": "Rating",
       "url": "https://credora.io",
       "accessibility": {
-        "class": "gated-manual",
+        "api": "unknown",
+        "apiDocumented": "unknown",
+        "publicDashboard": "unknown",
+        "methodologyOpen": "unknown",
         "verified": false,
         "note": "Institutional product; expect gated, manual curation with permission"
       },
@@ -120,7 +141,10 @@
       "type": "Dashboard",
       "url": "https://pigi.finance",
       "accessibility": {
-        "class": "published-scrapeable",
+        "api": "unknown",
+        "apiDocumented": "unknown",
+        "publicDashboard": "unknown",
+        "methodologyOpen": "unknown",
         "verified": false,
         "note": "Public dashboard; API availability to verify"
       },
@@ -136,9 +160,12 @@
       "type": "Rating",
       "url": "https://xerberus.io",
       "accessibility": {
-        "class": "public-api",
+        "api": "unknown",
+        "apiDocumented": "unknown",
+        "publicDashboard": "unknown",
+        "methodologyOpen": "yes",
         "verified": false,
-        "note": "Open-source and API-first per their positioning; endpoint to verify"
+        "note": "Methodology published openly (publish.obsidian.md/xerberus). API/dashboard access not yet verified first-hand (SAT-302)."
       },
       "coverageBlocker": {
         "kind": "verification-pending",
@@ -152,7 +179,10 @@
       "type": "Dashboard",
       "url": "https://zyf.ai",
       "accessibility": {
-        "class": "published-scrapeable",
+        "api": "unknown",
+        "apiDocumented": "unknown",
+        "publicDashboard": "unknown",
+        "methodologyOpen": "unknown",
         "verified": false,
         "note": "Public dashboard; API availability to verify"
       },
@@ -168,7 +198,10 @@
       "type": "Research",
       "url": "https://llamarisk.com",
       "accessibility": {
-        "class": "published-scrapeable",
+        "api": "unknown",
+        "apiDocumented": "unknown",
+        "publicDashboard": "unknown",
+        "methodologyOpen": "unknown",
         "verified": false,
         "note": "Public research reports; structured data to verify"
       },
@@ -184,7 +217,10 @@
       "type": "Rating",
       "url": "https://philidor.xyz",
       "accessibility": {
-        "class": "public-api",
+        "api": "unknown",
+        "apiDocumented": "unknown",
+        "publicDashboard": "unknown",
+        "methodologyOpen": "unknown",
         "verified": false,
         "note": "Open methodology, deterministic outputs; endpoint to verify"
       },

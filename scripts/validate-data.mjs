@@ -14,7 +14,8 @@ async function loadJson(rel) {
 
 const STATUSES = ["covered", "partial", "not-yet-covered"];
 const FEED_TYPES = ["Rating", "Dashboard", "Monitoring", "Research"];
-const ACCESS_CLASSES = ["public-api", "published-scrapeable", "gated-manual"];
+const API_ACCESS = ["open", "permissioned", "paid", "none", "unknown"];
+const TRISTATE = ["yes", "no", "unknown"];
 const BLOCKER_KINDS = ["provider-scope", "access-gated", "verification-pending"];
 const METRIC_KINDS = ["tvl", "volume24h"];
 
@@ -31,9 +32,11 @@ for (const f of feeds.feeds ?? []) {
   feedIds.add(f.id);
   if (!f.name || !f.focus || !f.url) err(where, "missing name/focus/url");
   if (!FEED_TYPES.includes(f.type)) err(where, `bad type "${f.type}"`);
-  if (!ACCESS_CLASSES.includes(f.accessibility?.class))
-    err(where, `bad accessibility.class "${f.accessibility?.class}"`);
-  if (typeof f.accessibility?.verified !== "boolean")
+  const a = f.accessibility ?? {};
+  if (!API_ACCESS.includes(a.api)) err(where, `bad accessibility.api "${a.api}"`);
+  for (const k of ["apiDocumented", "publicDashboard", "methodologyOpen"])
+    if (!TRISTATE.includes(a[k])) err(where, `accessibility.${k} must be yes/no/unknown`);
+  if (typeof a.verified !== "boolean")
     err(where, "accessibility.verified must be boolean");
   if (!BLOCKER_KINDS.includes(f.coverageBlocker?.kind) || !f.coverageBlocker?.note)
     err(where, "coverageBlocker must have a valid kind and a note");

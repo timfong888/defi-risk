@@ -28,6 +28,33 @@ const BLOCKER_LABEL: Record<string, { label: string; style: string }> = {
   },
 };
 
+// #66 access categorization — one MECE API-access value + three yes/no/unknown capability flags.
+const API_STYLE: Record<string, string> = {
+  open: "bg-emerald-50 text-emerald-700",
+  permissioned: "bg-amber-50 text-amber-700",
+  paid: "bg-violet-50 text-violet-700",
+  none: "bg-gray-100 text-gray-500",
+  unknown: "bg-gray-50 text-gray-400",
+};
+
+function Cap({ label, v }: { label: string; v: "yes" | "no" | "unknown" }) {
+  const mark = v === "yes" ? "✓" : v === "no" ? "✗" : "?";
+  const style =
+    v === "yes"
+      ? "bg-emerald-50 text-emerald-700"
+      : v === "no"
+        ? "bg-gray-100 text-gray-400"
+        : "bg-amber-50 text-amber-600";
+  return (
+    <span
+      className={`rounded px-1.5 py-0.5 text-[11px] ${style}`}
+      title={v === "unknown" ? "not yet verified (SAT-302)" : v}
+    >
+      {label} {mark}
+    </span>
+  );
+}
+
 export default function FeedsPage() {
   const categories = Array.from(new Set(protocols.map((p) => p.category)));
 
@@ -72,6 +99,12 @@ export default function FeedsPage() {
           </a>
           ; no single feed is canonical.
         </p>
+        <p className="mt-1.5 text-xs text-gray-500">
+          Each feed is tagged by <strong>API access</strong> (open · permissioned
+          · paid · none) and whether it offers <strong>API docs</strong>, a{" "}
+          <strong>public dashboard</strong>, and an{" "}
+          <strong>open methodology</strong> (✓ yes · ✗ no · ? not yet verified).
+        </p>
         <div className="mt-4 space-y-3">
           {orderedFeeds.map((f) => (
             <div key={f.id} className="rounded-lg border border-gray-200 p-3">
@@ -84,14 +117,18 @@ export default function FeedsPage() {
                 >
                   {f.type}
                 </span>
-                <span className="text-xs text-gray-500">
-                  {f.accessibility.class}
-                  {f.accessibility.verified ? (
-                    <span className="ml-1 text-emerald-600">verified</span>
-                  ) : (
-                    <span className="ml-1 text-amber-600">to verify</span>
-                  )}
+                <span
+                  className={`rounded px-1.5 py-0.5 text-[11px] font-medium ${API_STYLE[f.accessibility.api]}`}
+                  title="how the data is accessed programmatically"
+                >
+                  API: {f.accessibility.api}
                 </span>
+                <Cap label="API docs" v={f.accessibility.apiDocumented} />
+                <Cap label="Dashboard" v={f.accessibility.publicDashboard} />
+                <Cap label="Methodology" v={f.accessibility.methodologyOpen} />
+                {f.accessibility.verified && (
+                  <span className="text-[11px] text-emerald-600">verified</span>
+                )}
               </div>
               <p className="mt-1 text-sm text-gray-700">{f.focus}</p>
               <p className="mt-0.5 text-xs text-gray-500">
