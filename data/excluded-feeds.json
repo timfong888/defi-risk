@@ -12,6 +12,12 @@
       "name": "DeFi Sphere",
       "reason": "Unverifiable — no live product found; previously mis-attributed as a Block Analitica product, which it is not (verified 2026-06-17).",
       "checked": "2026-06-17"
+    },
+    {
+      "id": "defisaver",
+      "name": "DeFi Saver",
+      "reason": "Not a risk feed — DeFi Saver is a position-management dapp. Its public 'Explore' dashboards (Aave/Maker/Liquity) render protocol market data (TVL, supply/borrow caps, APY), liquidation telemetry (positions liquidated, seized collateral, repaid debt), and per-wallet position tooling. None of it is an attributable risk assessment OF a protocol, so it fails the charter's 'what a feed says about a protocol' test. Market data is already sourced from DefiLlama. Re-include only if DeFi Saver publishes a protocol-level rating product. (verified live 2026-06-22; API also 401-gated.)",
+      "checked": "2026-06-22"
     }
   ]
 }

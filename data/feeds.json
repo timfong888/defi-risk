@@ -97,25 +97,6 @@
       }
     },
     {
-      "id": "defisaver",
-      "name": "DeFi Saver",
-      "focus": "Live loan health and liquidation statistics for leveraged DeFi positions",
-      "type": "Dashboard",
-      "url": "https://defisaver.com",
-      "accessibility": {
-        "api": "unknown",
-        "apiDocumented": "unknown",
-        "publicDashboard": "unknown",
-        "methodologyOpen": "unknown",
-        "verified": false,
-        "note": "Public position/loan-health stats; API to verify"
-      },
-      "coverageBlocker": {
-        "kind": "access-gated",
-        "note": "API exists but returns 401 (verified 2026-06-10) — needs a key. Scope is also limited to lending/CDP position health. Unblock: API key request (SAT-306)."
-      }
-    },
-    {
       "id": "credora",
       "name": "Credora",
       "focus": "Institutional-grade credit risk ratings for DeFi protocols and borrowers",
