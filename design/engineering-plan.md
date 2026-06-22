@@ -50,7 +50,7 @@ Vercel static pages ──► live metrics fetched server-side at revalidation
 | File | Contents | Written by |
 |---|---|---|
 | `data/protocols.json` | 20 seed protocols: family, versions, category, DefiLlama slug, metric kind (tvl / volume24h) | curated; new entries via mechanical inclusion rule |
-| `data/feeds.json` | Feed registry: focus, type (Rating/Dashboard/Monitoring/Research), accessibility class + verified flag | curated; verification updates from SAT-302 |
+| `data/feeds.json` | Feed registry: focus, type (Rating/Dashboard/Monitoring/Research), #66 access attributes (`api` + apiDocumented/publicDashboard/methodologyOpen) + verified flag | curated; verification updates from SAT-302 |
 | `data/coverage.json` | Manual matrix entries: status, provenance, note. Unlisted pairs default to `not-yet-covered` / `assessment-pending` in `lib/data.ts` — every cell resolves to a labeled state | curated |
 | `data/synced/<feed>.json` | Generated verbatim assessments: status, verbatim text, source URL, updated date | sync scripts only (never hand-edited) |
 | `data/details.json` | Per-protocol governance facts, audits, incidents — each with provenance + source | curated → progressively onchain-verified |
@@ -91,14 +91,15 @@ enum values) and must refuse entry-count regressions vs. the committed file
 — misattributing a provider's assessment is the worst failure this system
 can have, so not transcribing is the only honest fallback. Golden-file
 tests against pinned upstream fixtures are part of each feed's
-definition-of-done (M1). Per-feed approach is driven by the
-verified accessibility class (SAT-302):
+definition-of-done (M1). Per-feed approach is driven by the verified access attributes (#66:
+`api` + `apiDocumented`/`publicDashboard`/`methodologyOpen`, each `unknown` until SAT-302):
 
-| Class | Method | Provenance |
+| Access shape | Method | Provenance |
 |---|---|---|
-| public-api | direct fetch in sync script | provider-published |
-| published-scrapeable | parser over published pages; breakage fails CI visibly | provider-published |
-| gated-manual | curator checklist + reviewer sign-off; keys (if granted, SAT-304) live in Actions secrets | manual |
+| `api: open` | direct fetch in sync script | provider-published |
+| `api: permissioned/paid` | direct fetch once access granted; keys (SAT-304) in Actions secrets | provider-published |
+| `api: none` + `publicDashboard: yes` | parser over published pages; breakage fails CI visibly | provider-published |
+| `api: none`, no public surface | curator checklist + reviewer sign-off | manual |
 
 ### 4.3 Governance extraction (planned, M1)
 `scripts/extract-governance.ts` (viem): Safe `getOwners()`/`getThreshold()`,
@@ -171,8 +172,8 @@ itself provenance-tagged data (see §10.4).
 
 ## 9. Open questions
 
-1. Scraper hosting for `published-scrapeable` feeds: in-repo Actions (free,
-   public) vs. provider-negotiated exports (better; SAT-304 outcome decides).
+1. Scraper hosting for dashboard-only feeds (`api: none` + `publicDashboard: yes`): in-repo Actions
+   (free, public) vs. provider-negotiated exports (better; SAT-304 outcome decides).
 2. ~~RPC provider for governance extraction~~ **Decided** — fallback pool of
    public endpoints, keyed provider optional (§4.3, decision log D1).
 3. Historical TVL sparklines: deferred — DefiLlama per-protocol history is
