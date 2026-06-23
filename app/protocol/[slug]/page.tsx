@@ -9,7 +9,7 @@ import {
   orderedFeeds,
   protocols,
 } from "@/lib/data";
-import { fetchMetric, formatUsd } from "@/lib/metrics";
+import { fetchMetric, formatPulledAt, formatUsd } from "@/lib/metrics";
 
 export const revalidate = 3600;
 
@@ -87,6 +87,7 @@ export default async function ProtocolPage({
   if (!protocol) notFound();
 
   const metric = await fetchMetric(protocol.metric);
+  const pulledAt = formatPulledAt(new Date());
   const detail = details[protocol.id];
 
   const cells = Object.fromEntries(
@@ -148,6 +149,9 @@ export default async function ProtocolPage({
             {protocol.metric.kind === "volume24h" ? "24h volume" : "TVL"} ·
             DefiLlama · hourly
           </span>
+          <span className="block text-[11px] text-gray-400">
+            last pulled {pulledAt}
+          </span>
         </span>
       </div>
       <p className="mt-1 max-w-3xl text-sm text-gray-600">{protocol.notes}</p>
@@ -199,9 +203,7 @@ export default async function ProtocolPage({
           </dl>
         ) : (
           <p className="mt-2 rounded-lg border border-dashed border-gray-300 p-3 text-sm text-gray-500">
-            Governance data curation pending for this protocol. The page
-            structure is final; data lands via the open, community-correctable
-            data layer.
+            Governance data curation pending for this protocol.
           </p>
         )}
       </section>

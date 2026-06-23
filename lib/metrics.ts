@@ -46,6 +46,12 @@ export async function fetchMetric(
     : { value: null, stale: false };
 }
 
+// Last data-pull timestamp shown to users. Pages revalidate hourly, so render
+// time tracks the live fetch. Formatted as UTC day + time (e.g. "2026-06-23 14:30 UTC").
+export function formatPulledAt(d: Date): string {
+  return `${d.toISOString().slice(0, 16).replace("T", " ")} UTC`;
+}
+
 export function formatUsd(n: number | null): string {
   if (n === null) return "pending";
   if (n >= 1e9) return `$${(n / 1e9).toFixed(2)}B`;

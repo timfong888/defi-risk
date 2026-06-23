@@ -12,6 +12,12 @@
       "name": "DeFi Sphere",
       "reason": "Unverifiable — no live product found; previously mis-attributed as a Block Analitica product, which it is not (verified 2026-06-17).",
       "checked": "2026-06-17"
+    },
+    {
+      "id": "pharos",
+      "name": "Pharos",
+      "reason": "No public-facing dashboard or risk methodology — alert product with no confirmed public event feed. Re-included if a live, inspectable feed appears (SAT-308).",
+      "checked": "2026-06-23"
     }
   ]
 }
