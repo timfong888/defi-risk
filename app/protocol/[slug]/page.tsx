@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CoverageStrip } from "@/components/MatrixTable";
+import FeedMatrix, { type FeedMatrixRow } from "./FeedMatrix";
 import {
   details,
   getCell,
@@ -16,25 +17,6 @@ export const revalidate = 3600;
 export function generateStaticParams() {
   return protocols.map((p) => ({ slug: p.id }));
 }
-
-const STATUS_BADGE: Record<string, string> = {
-  covered: "bg-emerald-100 text-emerald-800",
-  partial: "bg-amber-100 text-amber-800",
-  "not-yet-covered": "bg-gray-100 text-gray-500",
-};
-
-const STATUS_BORDER: Record<string, string> = {
-  covered: "border-l-emerald-400",
-  partial: "border-l-amber-300",
-  "not-yet-covered": "border-l-gray-200",
-};
-
-const TYPE_STYLE: Record<string, string> = {
-  Rating: "bg-indigo-50 text-indigo-700",
-  Dashboard: "bg-sky-50 text-sky-700",
-  Monitoring: "bg-rose-50 text-rose-700",
-  Research: "bg-violet-50 text-violet-700",
-};
 
 const PROVENANCE_DESC: Record<string, string> = {
   "onchain-verifiable":
@@ -95,13 +77,28 @@ export default async function ProtocolPage({
   const counts = { covered: 0, partial: 0, "not-yet-covered": 0 };
   for (const f of orderedFeeds) counts[cells[f.id].status] += 1;
 
+  const feedRows: FeedMatrixRow[] = orderedFeeds.map((f) => {
+    const cell = cells[f.id];
+    return {
+      id: f.id,
+      name: f.name,
+      type: f.type,
+      focus: f.focus,
+      url: f.url,
+      status: cell.status,
+      verbatim: cell.verbatim,
+      note: cell.note,
+      sourceUrl: cell.sourceUrl,
+      provenance: cell.provenance,
+      updated: cell.updated,
+    };
+  });
+
   const idx = protocols.findIndex((p) => p.id === protocol.id);
   const prev = protocols[idx - 1];
   const next = protocols[idx + 1];
 
   const iconSlug = iconSlugFor(protocol);
-
-  const feedTypes = Array.from(new Set(orderedFeeds.map((f) => f.type)));
 
   return (
     <div className="max-w-5xl">
@@ -207,89 +204,12 @@ export default async function ProtocolPage({
       </section>
 
       <section className="mt-8">
-        <SectionHeading id="feeds" title="What each risk feed says" />
-        {feedTypes.map((type) => (
-          <div key={type} className="mt-4">
-            <h3
-              className={`inline-block rounded px-1.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${TYPE_STYLE[type]}`}
-            >
-              {type}
-            </h3>
-            <div className="mt-2 grid gap-3 sm:grid-cols-2">
-              {orderedFeeds
-                .filter((f) => f.type === type)
-                .map((f) => {
-                  const cell = cells[f.id];
-                  return (
-                    <div
-                      key={f.id}
-                      id={`feed-${f.id}`}
-                      className={`scroll-mt-20 rounded-lg border border-gray-200 border-l-4 p-3 ${STATUS_BORDER[cell.status]}`}
-                    >
-                      <div className="flex items-baseline gap-2">
-                        <a href={f.url} className="font-medium hover:underline">
-                          {f.name}
-                        </a>
-                        <span
-                          className={`ml-auto rounded px-1.5 py-0.5 text-xs ${STATUS_BADGE[cell.status]}`}
-                        >
-                          {cell.status === "not-yet-covered"
-                            ? "not yet covered"
-                            : cell.status}
-                        </span>
-                      </div>
-                      <p className="mt-1 text-xs text-gray-500">{f.focus}</p>
-                      <div className="mt-2 text-sm">
-                        {cell.verbatim ? (
-                          <blockquote className="rounded bg-gray-50 px-2.5 py-2 text-gray-800">
-                            {cell.verbatim.split(" | ").map((line) => (
-                              <span key={line} className="block">
-                                {line}
-                              </span>
-                            ))}
-                            <footer className="mt-1 text-xs text-gray-400">
-                              — {f.name}
-                              {cell.updated && ` · updated ${cell.updated}`}
-                            </footer>
-                          </blockquote>
-                        ) : cell.status === "not-yet-covered" ? (
-                          <span className="text-gray-400">
-                            No assessment from this provider yet.{" "}
-                            <Link
-                              href="/feeds#gaps"
-                              className="text-gray-500 underline"
-                            >
-                              Why?
-                            </Link>
-                          </span>
-                        ) : (
-                          <>
-                            <span className="text-gray-600">{cell.note ?? "Coverage noted"}.</span>
-                            <span className="block text-xs text-gray-400">
-                              Verbatim assessment ingestion pending first-hand
-                              verification.
-                            </span>
-                          </>
-                        )}
-                        {/* one consistent source link for every cell that has one */}
-                        {cell.sourceUrl && (
-                          <a
-                            href={cell.sourceUrl}
-                            className="mt-1 block text-xs text-gray-500 underline"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            source ↗
-                          </a>
-                        )}{" "}
-                        <Provenance tag={cell.provenance} />
-                      </div>
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
-        ))}
+        <SectionHeading
+          id="feeds"
+          title="What each risk feed says"
+          sub="sortable — click a column header"
+        />
+        <FeedMatrix rows={feedRows} />
       </section>
 
       <section className="mt-8">
