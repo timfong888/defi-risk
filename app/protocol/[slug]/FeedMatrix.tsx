@@ -41,7 +41,7 @@ const COVERAGE_RANK: Record<FeedMatrixRow["status"], number> = {
   "not-yet-covered": 2,
 };
 
-const TYPE_STYLE: Record<string, string> = {
+const TYPE_STYLE: Record<FeedMatrixRow["type"], string> = {
   Rating: "bg-indigo-50 text-indigo-700",
   Dashboard: "bg-sky-50 text-sky-700",
   Monitoring: "bg-rose-50 text-rose-700",
