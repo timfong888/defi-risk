@@ -235,7 +235,9 @@ export default function MatrixTable({
                   title={`${f.name} — ${f.focus}`}
                 >
                   <span className="inline-block rotate-180 whitespace-nowrap [writing-mode:vertical-rl]">
-                    {f.name}
+                    <Link href={`/feeds#feed-${f.id}`} className="hover:underline">
+                      {f.name}
+                    </Link>
                   </span>
                 </th>
               ))}

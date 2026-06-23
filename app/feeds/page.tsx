@@ -82,7 +82,11 @@ export default function FeedsPage() {
         </p>
         <div className="mt-4 space-y-3">
           {orderedFeeds.map((f) => (
-            <div key={f.id} className="rounded-lg border border-gray-200 p-3">
+            <div
+              key={f.id}
+              id={`feed-${f.id}`}
+              className="scroll-mt-20 rounded-lg border border-gray-200 p-3"
+            >
               <div className="flex flex-wrap items-baseline gap-2">
                 <a href={f.url} className="font-medium hover:underline">
                   {f.name}

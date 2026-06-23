@@ -35,8 +35,6 @@
     { "protocol": "morpho", "feed": "credora", "status": "partial", "provenance": "manual-unverified", "note": "Coverage to confirm" },
     { "protocol": "compound", "feed": "credora", "status": "partial", "provenance": "manual-unverified", "note": "Coverage to confirm" },
 
-    { "protocol": "aave", "feed": "pharos", "status": "partial", "provenance": "manual-unverified", "note": "Live risk-event monitoring scope to confirm" },
-    { "protocol": "lido", "feed": "pharos", "status": "partial", "provenance": "manual-unverified", "note": "Monitoring scope to confirm" },
 
     { "protocol": "uniswap", "feed": "defipunkd", "status": "partial", "provenance": "manual-unverified", "note": "Registry coverage to confirm" },
     { "protocol": "aave", "feed": "defipunkd", "status": "partial", "provenance": "manual-unverified", "note": "Registry coverage to confirm" },
