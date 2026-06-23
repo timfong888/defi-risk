@@ -53,7 +53,9 @@ export default function FeedMatrixFilter({
     [protocols]
   );
 
-  // Protocols grouped by category, for a scannable checkbox menu.
+  // Protocols grouped by category, for a scannable checkbox menu. Categories
+  // and the protocols within each are sorted alphabetically so the menu order
+  // is deterministic regardless of source-data order.
   const groups = useMemo(() => {
     const byCategory = new Map<string, ProtocolLite[]>();
     for (const p of protocols) {
@@ -61,7 +63,12 @@ export default function FeedMatrixFilter({
       list.push(p);
       byCategory.set(p.category, list);
     }
-    return Array.from(byCategory.entries());
+    return Array.from(byCategory.entries())
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([category, list]) => [
+        category,
+        [...list].sort((a, b) => a.name.localeCompare(b.name)),
+      ] as [string, ProtocolLite[]]);
   }, [protocols]);
 
   const toggle = (id: string) =>

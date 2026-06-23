@@ -78,11 +78,13 @@ function SortHeader({
 }) {
   const active = sortKey === k;
   return (
-    <th className={`border-b border-gray-200 px-3 py-2 font-medium ${className}`}>
+    <th
+      className={`border-b border-gray-200 px-3 py-2 font-medium ${className}`}
+      aria-sort={active ? (sortDir === "asc" ? "ascending" : "descending") : "none"}
+    >
       <button
         type="button"
         onClick={() => onSort(k)}
-        aria-sort={active ? (sortDir === "asc" ? "ascending" : "descending") : "none"}
         className="inline-flex items-center gap-1 hover:text-gray-900"
       >
         {label}
@@ -184,7 +186,10 @@ export default function FeedMatrix({ rows }: { rows: FeedMatrixRow[] }) {
                 <span className="mt-1 block">
                   <span
                     className="rounded border border-gray-200 bg-gray-50 px-1 py-0.5 text-[11px] text-gray-500"
-                    title={PROVENANCE_DESC[f.provenance]}
+                    title={
+                      PROVENANCE_DESC[f.provenance] ??
+                      "Provenance category (description pending)"
+                    }
                   >
                     {f.provenance}
                   </span>
