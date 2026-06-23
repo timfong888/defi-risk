@@ -8,7 +8,7 @@ import {
   protocols,
   providerVerifiedCellCount,
 } from "@/lib/data";
-import { fetchMetric, formatUsd } from "@/lib/metrics";
+import { fetchMetric, formatPulledAt, formatUsd } from "@/lib/metrics";
 
 export const revalidate = 3600;
 
@@ -33,6 +33,7 @@ export default async function Home() {
     0
   );
   const totalCells = protocols.length * feeds.length;
+  const pulledAt = formatPulledAt(new Date());
 
   const stats: { label: string; value: string; hint: string; href?: string }[] = [
     { label: "Protocols", value: String(protocols.length), hint: "top 20 by funds at risk" },
@@ -57,11 +58,6 @@ export default async function Home() {
           What every major risk feed says about the top 20 Ethereum DeFi
           protocols
         </h1>
-        <p className="mt-1.5 max-w-3xl text-sm text-gray-600">
-          One neutral reference, side by side and verbatim. Every
-          protocol-by-feed cell is assessed and labeled — and this site never
-          produces a score of its own.
-        </p>
         <dl className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
           {stats.map((s) => {
             const tile = (
@@ -86,6 +82,9 @@ export default async function Home() {
             );
           })}
         </dl>
+        <p className="mt-2 text-[11px] text-gray-400">
+          Data last pulled {pulledAt}
+        </p>
       </div>
       <MatrixTable rows={rows} feeds={orderedFeeds} />
     </div>

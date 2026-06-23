@@ -78,25 +78,6 @@
       }
     },
     {
-      "id": "pharos",
-      "name": "Pharos",
-      "focus": "Real-time risk monitoring and automated alerts for live protocol risk events",
-      "type": "Monitoring",
-      "url": "https://pharos.watch",
-      "accessibility": {
-        "api": "unknown",
-        "apiDocumented": "unknown",
-        "publicDashboard": "unknown",
-        "methodologyOpen": "unknown",
-        "verified": false,
-        "note": "Alert product; public feed availability to verify"
-      },
-      "coverageBlocker": {
-        "kind": "access-gated",
-        "note": "Real-time alerting product; no public event feed confirmed. Unblock: determine access model and request a feed/webhook (SAT-308)."
-      }
-    },
-    {
       "id": "credora",
       "name": "Credora",
       "focus": "Institutional-grade credit risk ratings for DeFi protocols and borrowers",
