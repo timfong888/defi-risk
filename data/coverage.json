@@ -24,12 +24,6 @@
     { "protocol": "morpho", "feed": "curatorwatch", "status": "partial", "provenance": "manual-unverified", "note": "Vault-level focus; core protocol indirectly covered" },
     { "protocol": "euler", "feed": "curatorwatch", "status": "partial", "provenance": "manual-unverified", "note": "Curated vault coverage to confirm" },
 
-    { "protocol": "aave", "feed": "defisaver", "status": "covered", "provenance": "manual-unverified", "note": "Loan health and liquidation stats" },
-    { "protocol": "compound", "feed": "defisaver", "status": "covered", "provenance": "manual-unverified", "note": "Loan health and liquidation stats" },
-    { "protocol": "liquity", "feed": "defisaver", "status": "covered", "provenance": "manual-unverified", "note": "Trove management and stats" },
-    { "protocol": "spark", "feed": "defisaver", "status": "covered", "provenance": "manual-unverified", "note": "Position management support" },
-    { "protocol": "morpho", "feed": "defisaver", "status": "partial", "provenance": "manual-unverified", "note": "Support scope to confirm" },
-    { "protocol": "fluid", "feed": "defisaver", "status": "partial", "provenance": "manual-unverified", "note": "Support scope to confirm" },
 
     { "protocol": "curve", "feed": "llamarisk", "status": "covered", "provenance": "manual-unverified", "note": "Long-running Curve-ecosystem risk research" },
     { "protocol": "aave", "feed": "llamarisk", "status": "partial", "provenance": "manual-unverified", "note": "Collateral risk research engagements" },

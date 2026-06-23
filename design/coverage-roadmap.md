@@ -23,7 +23,7 @@ Frax, Convex, Aerodrome-on-Base (when L2 scope opens), Symbiotic, EigenLayer.
 
 ## Feed expansion
 
-The registry currently holds 12 providers (`data/feeds.json`). Each carries the #66 access
+The registry currently holds 11 providers (`data/feeds.json`). Each carries the #66 access
 attributes — `api` (open / permissioned / paid / none / unknown) plus `apiDocumented`,
 `publicDashboard`, `methodologyOpen` — that drive the automation plan, and a `coverageBlocker`
 documenting what stands between today's state and full coverage:
@@ -48,8 +48,9 @@ Order of bringing feeds onto the nightly `sync-feeds.yml` pipeline, easiest firs
 firms up as each feed's `api`/capability attributes are verified (SAT-302):
 
 1. **DeFiScan** — done (`api: open`, `data/synced/defiscan.json`).
-2. **Open-API candidates** — DeFiPunk'd, Xerberus, Philidor (DeFi Saver pending a working key →
-   `permissioned`). Confirm each provider's `api`/`apiDocumented` first.
+2. **Open-API candidates** — DeFiPunk'd, Xerberus, Philidor. Confirm each provider's
+   `api`/`apiDocumented` first. (DeFi Saver was dropped from the registry — it is a
+   position-management dapp, not a risk feed; see `data/excluded-feeds.json`.)
 3. **Dashboard-only feeds** (`publicDashboard: yes`, `api: none`) — CuratorWatch, pigi.finance,
    Zyfai, LlamaRisk, and BlockAnalitica's public Morpho dashboard — parse + reviewable PR.
 4. **Gated feeds** — Credora, Pharos, and BlockAnalitica's non-Morpho modeling — manual curation
