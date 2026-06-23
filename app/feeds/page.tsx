@@ -117,8 +117,17 @@ export default function FeedsPage() {
         </p>
         <div className="mt-3">
           <FeedMatrixFilter
-            feeds={orderedFeeds.map((f) => ({ id: f.id, name: f.name, type: f.type }))}
-            protocols={protocols.map((p) => ({ id: p.id, name: p.name }))}
+            feeds={orderedFeeds.map((f) => ({
+              id: f.id,
+              name: f.name,
+              type: f.type,
+              focus: f.focus,
+            }))}
+            protocols={protocols.map((p) => ({
+              id: p.id,
+              name: p.name,
+              category: p.category,
+            }))}
             coverage={coverage}
           />
         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type FeedType = "Rating" | "Dashboard" | "Monitoring" | "Research";
 type CoverageStatus = "covered" | "partial";
@@ -9,10 +9,12 @@ interface FeedLite {
   id: string;
   name: string;
   type: FeedType;
+  focus: string;
 }
 interface ProtocolLite {
   id: string;
   name: string;
+  category: string;
 }
 // coverage[feedId][protocolId] = "covered" | "partial" (not-yet-covered omitted)
 type Coverage = Record<string, Record<string, CoverageStatus>>;
@@ -43,24 +45,49 @@ export default function FeedMatrixFilter({
   coverage: Coverage;
 }) {
   const [selected, setSelected] = useState<string[]>([]);
-  const [input, setInput] = useState("");
+  const [open, setOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
-  const byName = useMemo(
-    () => new Map(protocols.map((p) => [p.name.toLowerCase(), p.id])),
-    [protocols]
-  );
   const nameOf = useMemo(
     () => Object.fromEntries(protocols.map((p) => [p.id, p.name])),
     [protocols]
   );
 
-  const addProtocol = (raw: string) => {
-    const id = byName.get(raw.trim().toLowerCase());
-    if (id) setSelected((prev) => (prev.includes(id) ? prev : [...prev, id]));
-    setInput("");
-  };
+  // Protocols grouped by category, for a scannable checkbox menu.
+  const groups = useMemo(() => {
+    const byCategory = new Map<string, ProtocolLite[]>();
+    for (const p of protocols) {
+      const list = byCategory.get(p.category) ?? [];
+      list.push(p);
+      byCategory.set(p.category, list);
+    }
+    return Array.from(byCategory.entries());
+  }, [protocols]);
+
+  const toggle = (id: string) =>
+    setSelected((prev) =>
+      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
+    );
   const remove = (id: string) =>
     setSelected((prev) => prev.filter((s) => s !== id));
+
+  // Close the dropdown on outside click or Escape.
+  useEffect(() => {
+    if (!open) return;
+    const onClick = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node))
+        setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onClick);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
 
   // A feed is shown if it covers (covered/partial) at least one selected protocol.
   // With nothing selected, every feed is shown.
@@ -74,38 +101,50 @@ export default function FeedMatrixFilter({
     [feeds, coverage, selected]
   );
 
-  const available = useMemo(
-    () => protocols.filter((p) => !selected.includes(p.id)),
-    [protocols, selected]
-  );
-
   return (
     <div>
       <div className="flex flex-wrap items-center gap-2">
-        <input
-          list="protocol-options"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              addProtocol(input);
-            }
-          }}
-          onInput={(e) => {
-            // datalist selection fires input with the chosen value
-            const v = (e.target as HTMLInputElement).value;
-            if (byName.has(v.trim().toLowerCase())) addProtocol(v);
-          }}
-          placeholder="Type a protocol (e.g. Aave)…"
-          className="w-64 rounded-md border border-gray-300 px-2.5 py-1.5 text-sm focus:border-gray-400 focus:outline-none"
-          aria-label="Filter feeds by protocol"
-        />
-        <datalist id="protocol-options">
-          {available.map((p) => (
-            <option key={p.id} value={p.name} />
-          ))}
-        </datalist>
+        <div className="relative" ref={menuRef}>
+          <button
+            type="button"
+            onClick={() => setOpen((o) => !o)}
+            aria-haspopup="true"
+            aria-expanded={open}
+            className="inline-flex items-center gap-2 rounded-md border border-gray-300 px-3 py-1.5 text-sm hover:border-gray-400 focus:border-gray-400 focus:outline-none"
+          >
+            {selected.length === 0
+              ? "Filter by protocol"
+              : `${selected.length} protocol${selected.length > 1 ? "s" : ""} selected`}
+            <span className="text-gray-400" aria-hidden>▾</span>
+          </button>
+
+          {open && (
+            <div className="absolute left-0 z-10 mt-1 max-h-80 w-72 overflow-y-auto rounded-md border border-gray-200 bg-white p-2 shadow-lg">
+              {groups.map(([category, items]) => (
+                <div key={category} className="mb-2 last:mb-0">
+                  <p className="px-1 py-1 text-[11px] font-semibold uppercase tracking-wide text-gray-400">
+                    {category}
+                  </p>
+                  {items.map((p) => (
+                    <label
+                      key={p.id}
+                      className="flex cursor-pointer items-center gap-2 rounded px-1 py-1 text-sm hover:bg-gray-50"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={selected.includes(p.id)}
+                        onChange={() => toggle(p.id)}
+                        className="h-4 w-4 rounded border-gray-300"
+                      />
+                      {p.name}
+                    </label>
+                  ))}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
         {selected.length > 0 && (
           <button
             onClick={() => setSelected([])}
@@ -138,7 +177,7 @@ export default function FeedMatrixFilter({
 
       <p className="mt-3 text-xs text-gray-500">
         {selected.length === 0
-          ? `Showing all ${feeds.length} feeds. Type one or more protocols to keep only the feeds that cover them.`
+          ? `Showing all ${feeds.length} feeds. Pick one or more protocols to keep only the feeds that cover them.`
           : `${visible.length} of ${feeds.length} feeds cover ${
               selected.length === 1 ? "this protocol" : "at least one of these"
             } (● covered · ◐ partial).`}
@@ -150,6 +189,7 @@ export default function FeedMatrixFilter({
             <tr className="bg-gray-50 text-left">
               <th className="border-b border-gray-200 px-3 py-2 font-medium">Feed</th>
               <th className="border-b border-gray-200 px-3 py-2 font-medium">Type</th>
+              <th className="border-b border-gray-200 px-3 py-2 font-medium">Data type</th>
               {selected.map((id) => (
                 <th
                   key={id}
@@ -171,6 +211,9 @@ export default function FeedMatrixFilter({
                     {f.type}
                   </span>
                 </td>
+                <td className="px-3 py-1.5 text-gray-600">
+                  <span className="block max-w-xs">{f.focus}</span>
+                </td>
                 {selected.map((id) => (
                   <td key={id} className="px-3 py-1.5 text-center">
                     <StatusCell status={coverage[f.id]?.[id]} />
@@ -180,7 +223,7 @@ export default function FeedMatrixFilter({
             ))}
             {visible.length === 0 && (
               <tr>
-                <td colSpan={2 + selected.length} className="px-3 py-3 text-center text-gray-500">
+                <td colSpan={3 + selected.length} className="px-3 py-3 text-center text-gray-500">
                   No feeds cover the selected protocol{selected.length > 1 ? "s" : ""} yet.
                 </td>
               </tr>
