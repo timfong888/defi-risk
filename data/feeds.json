@@ -26,7 +26,7 @@
       "name": "CuratorWatch",
       "focus": "Vault-level risk monitoring for Morpho curators, tracking allocation risk and curator behavior",
       "type": "Dashboard",
-      "url": "https://curatorwatch.xyz",
+      "url": "https://curatorwatch.com",
       "accessibility": {
         "api": "unknown",
         "apiDocumented": "unknown",
@@ -141,7 +141,7 @@
       "name": "Zyfai Risk",
       "focus": "Real-time risk score dashboard for DeFi liquidity pools. Tracks risk metrics, TVL, APY, and security grades across pools",
       "type": "Dashboard",
-      "url": "https://zyf.ai",
+      "url": "https://risk.zyf.ai",
       "accessibility": {
         "api": "unknown",
         "apiDocumented": "unknown",
@@ -179,7 +179,7 @@
       "name": "Philidor Analytics",
       "focus": "Deterministic vault risk scoring across 700+ vaults. Three-vector framework: asset quality, platform code maturity, and governance controls. Open methodology",
       "type": "Rating",
-      "url": "https://philidor.xyz",
+      "url": "https://philidor.io",
       "accessibility": {
         "api": "unknown",
         "apiDocumented": "unknown",
