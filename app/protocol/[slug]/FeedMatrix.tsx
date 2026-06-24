@@ -196,6 +196,8 @@ export default function FeedMatrix({ rows }: { rows: FeedMatrixRow[] }) {
                 </span>
               </td>
               <td className="px-3 py-2 whitespace-nowrap">
+                {/* Every row links to a source: the specific report when known,
+                    else the provider site, else the coverage-gap explanation. */}
                 {f.sourceUrl ? (
                   <a
                     href={f.sourceUrl}
@@ -205,8 +207,19 @@ export default function FeedMatrix({ rows }: { rows: FeedMatrixRow[] }) {
                   >
                     report ↗
                   </a>
+                ) : f.status === "not-yet-covered" ? (
+                  <Link href="/feeds#gaps" className="text-xs text-gray-500 underline">
+                    why? →
+                  </Link>
                 ) : (
-                  <span className="text-xs text-gray-300">—</span>
+                  <a
+                    href={f.url}
+                    className="text-xs text-gray-600 underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    provider ↗
+                  </a>
                 )}
               </td>
             </tr>

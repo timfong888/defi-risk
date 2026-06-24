@@ -25,11 +25,8 @@
     { "protocol": "euler", "feed": "curatorwatch", "status": "partial", "provenance": "manual-unverified", "note": "Curated vault coverage to confirm" },
 
 
-    { "protocol": "curve", "feed": "llamarisk", "status": "covered", "provenance": "manual-unverified", "note": "Long-running Curve-ecosystem risk research" },
-    { "protocol": "aave", "feed": "llamarisk", "status": "partial", "provenance": "manual-unverified", "note": "Collateral risk research engagements" },
-    { "protocol": "liquity", "feed": "llamarisk", "status": "partial", "provenance": "manual-unverified", "note": "Stablecoin/CDP research coverage to confirm" },
-    { "protocol": "lido", "feed": "llamarisk", "status": "partial", "provenance": "manual-unverified", "note": "LST collateral research coverage to confirm" },
-    { "protocol": "pendle", "feed": "llamarisk", "status": "partial", "provenance": "manual-unverified", "note": "Research coverage to confirm" },
+    { "protocol": "curve", "feed": "llamarisk", "status": "covered", "provenance": "manual-unverified", "note": "Long-running Curve-ecosystem risk research", "sourceUrl": "https://dashboard.llamarisk.com/protocols/curve/overview" },
+    { "protocol": "aave", "feed": "llamarisk", "status": "partial", "provenance": "manual-unverified", "note": "Collateral risk research engagements", "sourceUrl": "https://dashboard.llamarisk.com/protocols/aave/overview" },
 
     { "protocol": "aave", "feed": "credora", "status": "partial", "provenance": "manual-unverified", "note": "Institutional credit ratings; protocol coverage to confirm" },
     { "protocol": "morpho", "feed": "credora", "status": "partial", "provenance": "manual-unverified", "note": "Coverage to confirm" },
