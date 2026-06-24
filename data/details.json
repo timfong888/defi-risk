@@ -47,6 +47,278 @@
       "incidents": [
         { "date": "2022-07", "description": "Phishing campaign targeted LP NFT holders (~$8M user losses); not a protocol contract flaw", "link": "https://blog.uniswap.org" }
       ]
+    },
+    "spark": {
+      "governance": [
+        { "label": "Governance system", "value": "Spark is governed by SPK token holders via Snapshot voting, with all parameter changes routed through the Spark Agent artifact in the Sky (formerly MakerDAO) Atlas", "provenance": "public-docs", "source": "https://docs.spark.fi/governance/" },
+        { "label": "Proposal threshold", "value": "Holders of 1% of SPK supply (100M tokens) or nested contributors like Phoenix Labs can submit proposals, reviewed by the Spark Risk Council before a 3-day Snapshot vote", "provenance": "public-docs", "source": "https://docs.spark.fi/governance/spk-token" },
+        { "label": "Sky dependency", "value": "SparkLend stablecoin liquidity is provided directly by Sky and the protocol is a Sky sub-protocol whose parameters tether to the broader Sky Atlas framework", "provenance": "public-docs", "source": "https://docs.spark.fi/user-guides/using-sparklend" }
+      ],
+      "audits": [
+        { "firm": "ChainSecurity", "scope": "SparkLend deployment verification (Aave v3 fork), original mainnet launch", "date": "2023", "link": "https://docs.spark.fi/assets/Chainsecurity-SparkLend-Deployment-Verification.pdf" },
+        { "firm": "ChainSecurity", "scope": "SparkLend Advanced — oracles and interest rate strategies", "date": "2024", "link": "https://www.chainsecurity.com/security-audit/makerdao-sparklend-advanced" },
+        { "firm": "ChainSecurity", "scope": "Spark Vaults V2 — ERC-4626 vault system", "date": "2025", "link": "https://www.chainsecurity.com/security-audit/spark-vaults" }
+      ],
+      "incidents": [
+        { "date": "2026-04", "description": "During the KelpDAO rsETH bridge exploit that left Aave with ~$230M bad debt, SparkLend was largely unaffected (~$37K exposure) because governance had proactively halted new rsETH supply in Jan 2026", "link": "https://thedefiant.io/news/defi/sparklend-tvl-surges-by-usd1b-since-kelp-exploit" },
+        { "date": "2026-06", "description": "No direct security exploit or bad-debt event specific to SparkLend or sUSDS identified; Credora maintains a current third-party risk report on the protocol", "link": "https://reports.credora.io/spark/latest.pdf" }
+      ]
+    },
+    "morpho": {
+      "governance": [
+        { "label": "Governance system", "value": "MORPHO token DAO votes via Snapshot with execution by a governance multisig; controls treasury, fee switch, and whitelisting of LLTVs and interest-rate models", "provenance": "public-docs", "source": "https://docs.morpho.org/learn/governance/organization/" },
+        { "label": "Core protocol immutability", "value": "Morpho Blue's ~650-line core contract is immutable with no admin keys or upgradability, and governance cannot alter deployed markets", "provenance": "public-docs", "source": "https://github.com/morpho-org/morpho-blue/blob/main/README.md" },
+        { "label": "Permissionless markets", "value": "Anyone can create an isolated lending market with custom parameters without governance approval, with risk delegated to vault curators depositors choose", "provenance": "onchain-verifiable", "source": "https://github.com/morpho-org/morpho-blue" }
+      ],
+      "audits": [
+        { "firm": "OpenZeppelin", "scope": "Morpho Blue and SpeedJumpIRM interest rate model", "date": "2023", "link": "https://github.com/morpho-org/morpho-blue/tree/main/audits" },
+        { "firm": "Cantina (Spearbit)", "scope": "Morpho Blue managed security review", "date": "2023", "link": "https://github.com/morpho-org/morpho-blue/tree/main/audits" },
+        { "firm": "Cantina", "scope": "Morpho Blue public security competition", "date": "2024", "link": "https://github.com/morpho-org/morpho-blue/tree/main/audits" },
+        { "firm": "Certora", "scope": "Formal verification of Morpho Blue critical functions", "date": "2023", "link": "https://morpho.org/blog/morpho-blue-security-framework-building-the-most-secure-lending-protocol/" }
+      ],
+      "incidents": [
+        { "date": "2025-04", "description": "Frontend/SDK misconfiguration routed token approvals to the Bundler3 contract instead of its adapters; one bundled tx was intercepted by a whitehat MEV bot and funds returned, frontend rolled back in minutes (no core-contract flaw, no funds lost)", "link": "https://morpho.org/blog/morpho-app-incident-april-10-2025/" }
+      ]
+    },
+    "fluid": {
+      "governance": [
+        { "label": "Governance system", "value": "Fluid is governed by the Fluid DAO (rebranded from Instadapp, INST→FLUID 1:1) where FLUID holders vote on rate curves, fees, risk parameters, and protocol allowances after Snapshot signaling", "provenance": "public-docs", "source": "https://guides.instadapp.io/governance/voting-and-governance" },
+        { "label": "Governance flow", "value": "Proposals progress through community discussion, a Snapshot signal stage, then on-chain execution; the core team transferred protocol ownership to governance", "provenance": "public-docs", "source": "https://gov.fluid.io/t/governance-flow/31" },
+        { "label": "Treasury control", "value": "The DAO actively votes on treasury matters including a proposed Foundation funded by a DAO grant and a treasury draw to cover bad debt", "provenance": "public-docs", "source": "https://gov.fluid.io/t/rebranding-and-growth-plan-for-fluid-protocol/985" }
+      ],
+      "audits": [
+        { "firm": "PeckShield", "scope": "Pre-launch protocol audit", "date": "2024", "link": "https://docs.fluid.instadapp.io/Peckshield_Fluid_Audit.pdf" },
+        { "firm": "StateMind", "scope": "Initial protocol audit", "date": "2024", "link": "https://docs.fluid.instadapp.io/Statemind_Fluid_Audit.pdf" },
+        { "firm": "MixBytes", "scope": "Vault and liquidity layer", "date": "2024", "link": "https://docs.fluid.instadapp.io/Mixbytes_Fluid_Vault_Protocol_Audit.pdf" },
+        { "firm": "Cantina", "scope": "DEX protocol", "date": "2024", "link": "https://docs.fluid.instadapp.io/cantina-audit-dex.pdf" }
+      ],
+      "incidents": [
+        { "date": "2026-03", "description": "Resolv USR depeg left ~$21M bad debt in Fluid lending markets (Fluid's own contracts were not exploited); covered by Resolv, Fluid treasury, and deferred team revenue", "link": "https://defiprime.com/fluid-resolv-treasury-governance" },
+        { "date": "2026-05", "description": "Off-chain Merkle rewards-distribution key compromise drained ~125K FLUID and ~51.9K GHO via empty-proof claims; core lending/DEX contracts were unaffected and keys were replaced", "link": "https://www.cryptotimes.io/2026/05/31/fluid-protocol-loses-125k-fluid-51-9k-gho-in-key-compromise-attack/" }
+      ]
+    },
+    "gearbox": {
+      "governance": [
+        { "label": "Governance system", "value": "Gearbox is governed by the Gearbox DAO of GEAR token holders, voting via Snapshot on treasury, parameters, and asset/protocol onboarding", "provenance": "public-docs", "source": "https://docs.gearbox.finance/governance/setup" },
+        { "label": "Delegation", "value": "Snapshot delegation lets smaller GEAR holders delegate voting power to community delegates", "provenance": "public-docs", "source": "https://docs.gearbox.finance/governance/community-delegates" },
+        { "label": "Execution & emergency control", "value": "DAO decisions are executed on-chain through multisig wallets that can pause protocol contracts in emergencies", "provenance": "onchain-verifiable", "source": "https://github.com/Gearbox-protocol/security/tree/main/audits" }
+      ],
+      "audits": [
+        { "firm": "ChainSecurity", "scope": "Gearbox V2.1 and V3 core, governance, integrations, oracles", "date": "2023", "link": "https://github.com/Gearbox-protocol/security/tree/main/audits" },
+        { "firm": "Sigma Prime", "scope": "Gearbox V2 smart contract security assessment", "date": "2022", "link": "https://github.com/Gearbox-protocol/security/tree/main/audits" },
+        { "firm": "ABDK", "scope": "Gearbox Core V3 and Oracles V3", "date": "2023", "link": "https://github.com/Gearbox-protocol/security/tree/main/audits" },
+        { "firm": "Decurity", "scope": "Gearbox governance and V3 integrations", "date": "2024", "link": "https://github.com/Gearbox-protocol/security/tree/main/audits" }
+      ],
+      "incidents": [
+        { "date": "2022-03", "description": "Whitehat reported a UniswapV3 adapter path-parsing bug bypassing health checks; contracts paused via multisig and patched with no funds lost, bounty paid", "link": "https://github.com/Gearbox-protocol/security/blob/main/disclosures/2022-03-25%20-%20uniswapV3.md" },
+        { "date": "2022-04", "description": "Forbidden-tokens vulnerability disclosed and fixed; no exploit or loss of funds occurred", "link": "https://github.com/Gearbox-protocol/security/blob/main/disclosures/2022-04-10%20-%20forbidden_tokens.md" }
+      ]
+    },
+    "euler": {
+      "governance": [
+        { "label": "Governance model", "value": "EulerDAO is governed by EUL token holders on a one-token-one-vote basis, using Snapshot for off-chain voting and Tally for on-chain execution", "provenance": "public-docs", "source": "https://docs.euler.finance/EUL/overview/" },
+        { "label": "Proposal process", "value": "Changes flow from forum RFC to a eIP, then Snapshot/Tally votes covering risk parameters, asset classifications, and core contract upgrades", "provenance": "public-docs", "source": "https://euler.foundation/euler-DAO/governance" },
+        { "label": "Treasury control", "value": "The DAO treasury is controlled by EUL token holders through on-chain and off-chain governance and overseen by the Euler Foundation", "provenance": "public-docs", "source": "https://docs.euler.finance/euler-dao/treasury/" }
+      ],
+      "audits": [
+        { "firm": "OpenZeppelin", "scope": "Euler Vault Kit (EVK) core contracts", "date": "2024", "link": "https://www.openzeppelin.com/news/euler-vault-kit-evk-audit" },
+        { "firm": "ChainSecurity", "scope": "Ethereum Vault Connector (EVC) immutable primitive", "date": "2024", "link": "https://www.chainsecurity.com/security-audit/euler-ethereum-vault-connector" },
+        { "firm": "ChainSecurity", "scope": "Euler Price Oracles module", "date": "2024", "link": "https://www.chainsecurity.com/security-audit/euler-price-oracles" },
+        { "firm": "Multiple (Cantina, Certora, Spearbit, OpenZeppelin, yAudit, Omniscia)", "scope": "EVK audit reports and $1.25M Cantina code competition, collected in repo", "date": "2024", "link": "https://github.com/euler-xyz/euler-vault-kit/tree/master/audits" }
+      ],
+      "incidents": [
+        { "date": "2023-03", "description": "A flash-loan/donation exploit abusing the unchecked donateToReserves function drained ~$197M from Euler v1; the attacker subsequently returned essentially all of the stolen funds", "link": "https://www.chainalysis.com/blog/euler-finance-flash-loan-attack/" }
+      ]
+    },
+    "compound": {
+      "governance": [
+        { "label": "Governance module", "value": "Compound is governed by COMP token holders via Governor Bravo, where addresses holding or delegated 25,000+ COMP can submit proposals", "provenance": "public-docs", "source": "https://docs.compound.finance/v2/governance/" },
+        { "label": "Timelock execution", "value": "Successful proposals are queued in the Compound Timelock contract with a mandatory delay (typically 2 days) before on-chain execution", "provenance": "onchain-verifiable", "source": "https://docs.compound.finance/v2/governance/" },
+        { "label": "Pause Guardian", "value": "A designated Pause Guardian can disable Mint, Borrow, Transfer, and Liquidate in emergencies but can never block Redeem or Repay, so users can always exit", "provenance": "public-docs", "source": "https://docs.compound.finance/v2/governance/" }
+      ],
+      "audits": [
+        { "firm": "Trail of Bits", "scope": "Compound v2 protocol review", "date": "2019", "link": "https://github.com/trailofbits/publications/blob/master/reviews/compound-2.pdf" },
+        { "firm": "OpenZeppelin", "scope": "COMP distribution system audit (Comptroller distribution logic)", "date": "2020", "link": "https://blog.openzeppelin.com/compound-comp-distribution-system-audit/" },
+        { "firm": "OpenZeppelin", "scope": "Compound III (Comet) audit", "date": "2022", "link": "https://www.openzeppelin.com/news/compound-iii-audit" },
+        { "firm": "ChainSecurity", "scope": "Compound III (Comet) smart contract code assessment", "date": "2022", "link": "https://reports.chainsecurity.com/Compound/ChainSecurity_Compound_Comet_Audit.pdf" }
+      ],
+      "incidents": [
+        { "date": "2021-09", "description": "Proposal 062 upgraded the Comptroller with a faulty conditional, over-distributing COMP rewards with up to ~280,000 COMP (~$80M+) at risk, much of it unrecoverable due to the governance timelock", "link": "https://www.coindesk.com/tech/2021/09/30/defi-money-market-compound-overpays-15m-in-comp-rewards-in-possible-exploit" },
+        { "date": "2021-10", "description": "A follow-up drip-function call placed an additional ~202,472 COMP (~$65M) at risk while a time-locked fix (Proposal 064) was pending", "link": "https://cointelegraph.com/news/compounding-problems-65m-more-comp-at-risk-as-devs-wait-for-time-locked-bug-fix" }
+      ]
+    },
+    "liquity": {
+      "governance": [
+        { "label": "Liquity v1 governance model", "value": "Liquity v1 is fully immutable, non-upgradeable, and completely governance-free with no admin key, so nobody can alter the protocol's rules", "provenance": "public-docs", "source": "https://www.liquity.org/features/governance-free" },
+        { "label": "Liquity v2 minimal governance scope", "value": "Liquity v2's only governance power is directing Protocol Incentivized Liquidity (PIL) from a share of revenue; core contracts remain immutable", "provenance": "public-docs", "source": "https://docs.liquity.org/v2-faq/general" },
+        { "label": "LQTY staking and voting", "value": "LQTY stakers vote to direct PIL incentives with voting power proportional to staked amount and growing linearly over time", "provenance": "public-docs", "source": "https://docs.liquity.org/v2-faq/lqty-staking" }
+      ],
+      "audits": [
+        { "firm": "Trail of Bits", "scope": "Liquity v1 core protocol", "date": "2021", "link": "https://docs.liquity.org/liquity-v1/faq/general" },
+        { "firm": "ChainSecurity", "scope": "Liquity v2 (BOLD) core smart contracts", "date": "2025", "link": "https://www.chainsecurity.com/security-audit/liquity-bold-smart-contracts" },
+        { "firm": "Dedaub", "scope": "Liquity v2 core protocol audit", "date": "2024", "link": "https://dedaub.com/audits/liquity/liquity-v2-aug-28-2024/" },
+        { "firm": "Coinspect", "scope": "Liquity v2 BOLD core smart contract audit", "date": "2024", "link": "https://www.coinspect.com/doc/Coinspect%20-%20Smart%20Contract%20Audit%20-%20Liquity%20-%20Bold%20-%20v241231.pdf" }
+      ],
+      "incidents": [
+        { "date": "2024-03", "description": "No exploit identified against Liquity v1 or v2 itself; the only related incident was a ~$11.6M exploit of Prisma Finance, a separate Liquity fork, via its MigrateTroveZap contract", "link": "https://rekt.news/prismafi-rekt" }
+      ]
+    },
+    "curve": {
+      "governance": [
+        { "label": "Governance model", "value": "Curve is governed by a Curve DAO using a modified Aragon Voting App, with on-chain proposals controlling protocol admin functions", "provenance": "public-docs", "source": "https://curve.readthedocs.io/dao-overview.html" },
+        { "label": "Voting power (veCRV)", "value": "CRV holders lock tokens for one week to four years to receive non-transferable veCRV voting power, with longer locks granting more weight", "provenance": "public-docs", "source": "https://docs.curve.finance/curve_dao/voting-escrow/voting-escrow/" },
+        { "label": "Gauge weight votes", "value": "veCRV holders allocate voting weight to liquidity gauges to direct CRV emissions, changeable at most once per 10 days", "provenance": "onchain-verifiable", "source": "https://github.com/curvefi/curve-dao-contracts/blob/master/doc/README.md" }
+      ],
+      "audits": [
+        { "firm": "Trail of Bits", "scope": "Core Curve DAO and DEX smart contracts", "date": "2020", "link": "https://docs.curve.finance/references/audits/" },
+        { "firm": "MixBytes", "scope": "crvUSD stablecoin AMM and Controller contracts", "date": "2023", "link": "https://mixbytes.io/blog/recap-of-the-crvusd-audit-findings" },
+        { "firm": "ChainSecurity", "scope": "Curve Tricrypto pool contracts", "date": "2024", "link": "https://www.chainsecurity.com/security-audit/curve-finance-tricrypto" }
+      ],
+      "incidents": [
+        { "date": "2023-07", "description": "A bug in older Vyper compiler versions negated reentrancy protection, allowing attackers to drain several ETH-paired pools (alETH/ETH, pETH/ETH, msETH/ETH, CRV/ETH) for ~$60-70M, much later returned by whitehats and the attacker", "link": "https://www.chainalysis.com/blog/curve-finance-liquidity-pool-hack/" }
+      ]
+    },
+    "balancer": {
+      "governance": [
+        { "label": "Token-based DAO voting", "value": "Balancer governance is conducted by BAL holders voting on proposals (BIPs) via Snapshot, with off-chain votes enacted on-chain through a multisig", "provenance": "public-docs", "source": "https://docs.balancer.fi/concepts/governance/" },
+        { "label": "veBAL voting escrow", "value": "Holders lock 80/20 BAL/WETH pool tokens for up to one year to receive veBAL, conferring boosted voting weight, gauge rights, and fee share", "provenance": "public-docs", "source": "https://docs.balancer.fi/concepts/governance/veBAL/" },
+        { "label": "Gauge voting", "value": "veBAL holders direct BAL liquidity-mining emissions across pools through gauge votes, modeled on Curve's veCRV system", "provenance": "public-docs", "source": "https://balancer-dao.gitbook.io/learn-about-balancer/fundamentals/vebal-tokenomics/vote-escrowed-governance" }
+      ],
+      "audits": [
+        { "firm": "Trail of Bits", "scope": "Balancer V2 Vault, pools and Composable Stable Pool", "date": "2022", "link": "https://github.com/balancer/balancer-v2-monorepo/tree/master/audits" },
+        { "firm": "OpenZeppelin", "scope": "Balancer V2 core contracts", "date": "2021", "link": "https://github.com/balancer/balancer-v2-monorepo/tree/master/audits" },
+        { "firm": "Certora", "scope": "Vault, Composable Stable Pool, and Timelock Authorizer (formal verification)", "date": "2023", "link": "https://github.com/balancer/balancer-v2-monorepo/tree/master/audits" }
+      ],
+      "incidents": [
+        { "date": "2023-08", "description": "A critical rounding-error vulnerability in ERC4626 Linear/Boosted Pools was disclosed via Immunefi; most at-risk funds were withdrawn but follow-on attacks later drained ~$2.1M", "link": "https://immunefi.com/blog/bug-fix-reviews/balancer-rounding-error/" },
+        { "date": "2025-11", "description": "A rounding flaw in the EXACT_OUT swap path of Balancer V2 Composable Stable Pools was exploited via batchSwaps and flashloans, draining ~$116-128M across multiple chains, with partial whitehat recovery", "link": "https://rekt.news/balancer-rekt2" }
+      ]
+    },
+    "cow-swap": {
+      "governance": [
+        { "label": "Governance body", "value": "CoW Protocol is governed by CoW DAO via COW token holders voting on CoW Improvement Proposals (CIPs) through a forum and Snapshot space", "provenance": "public-docs", "source": "https://docs.cow.fi/governance" },
+        { "label": "Token & treasury", "value": "1 billion COW tokens were issued at TGE with 44.4% to the CoW DAO Treasury, and inflation capped at 3% per annum", "provenance": "public-docs", "source": "https://docs.cow.fi/governance/token" },
+        { "label": "Origin", "value": "CoW DAO and the COW token were spun out of GnosisDAO via GIP-13, with GnosisDAO receiving a 10% token allocation", "provenance": "public-docs", "source": "https://forum.gnosis.io/t/gip-13-phase-2-cowdao-and-cow-token/2735" }
+      ],
+      "audits": [
+        { "firm": "G0 Group", "scope": "Gnosis Protocol V2 (GPv2) core settlement contracts", "date": "2021", "link": "https://github.com/cowprotocol/contracts/tree/main/audits" },
+        { "firm": "Ackee Blockchain", "scope": "ComposableCoW and ExtensibleFallbackHandler (conditional/programmatic orders)", "date": "2023", "link": "https://ackee.xyz/blog/%D1%81ow-protocol-composablecow-extensiblefallbackhandler-audit-summary/" },
+        { "firm": "Ackee Blockchain", "scope": "CoW Flash Loan Router", "date": "2024", "link": "https://ackee.xyz/blog/cow-flash-loan-router-audit-summary/" }
+      ],
+      "incidents": [
+        { "date": "2023-02", "description": "A malicious whitelisted solver exploited a pre-approved interaction in the GPv2Settlement contract, draining ~$166K of accumulated protocol fees; user funds were unaffected and the solver's bond fully repaid the loss", "link": "https://blog.cow.fi/cow-swap-solver-exploit-post-mortem-07-02-2023-2faa9f918e29" }
+      ]
+    },
+    "1inch": {
+      "governance": [
+        { "label": "Governance token & voting", "value": "The 1INCH token governs the 1inch Network DAO; only holders who stake 1INCH (gaining Unicorn Power) may vote on or create proposals", "provenance": "public-docs", "source": "https://gov.1inch.community/docs/governance/overview/" },
+        { "label": "Proposal process", "value": "Proposals follow a multi-phase 1inch Improvement Proposal (1IP) lifecycle: forum discussion, temperature check, then a binding Snapshot vote", "provenance": "public-docs", "source": "https://help.1inch.io/en/articles/4767696-how-to-stake-1inch-tokens-and-participate-in-1inch-network-s-instant-dao-governance-models" },
+        { "label": "Treasury control", "value": "The 1inch Network DAO Treasury is allocated by DAO vote, covering funding proposals and deploying new protocols on the network", "provenance": "public-docs", "source": "https://gov.1inch.community/docs/governance/overview/" }
+      ],
+      "audits": [
+        { "firm": "Multiple (OpenZeppelin, ConsenSys, ABDK, MixBytes, PeckShield, Pessimistic, Coinfabrik, Statemind)", "scope": "Aggregation Protocol v5 and Limit Order Protocol V3", "date": "2023", "link": "https://github.com/1inch/1inch-audits/blob/master/README.md" },
+        { "firm": "Multiple (ChainSecurity, Decurity, Hexens, OpenZeppelin, Oxorio, iosiro)", "scope": "Fusion Mode and token-plugins contracts", "date": "2023", "link": "https://github.com/1inch/1inch-audits/blob/master/README.md" },
+        { "firm": "Decurity", "scope": "Aggregation Router v6 audit report", "date": "2023", "link": "https://github.com/decurity/audits/blob/master/1inch/1inch-aggregation-router-v6-audit-report-2023-1.1.pdf" }
+      ],
+      "incidents": [
+        { "date": "2025-03", "description": "A calldata-corruption vulnerability in the obsolete Fusion v1 resolver contract let an attacker drain ~$5M from resolver contracts only (end-user funds unaffected); the attacker returned the majority after a bug-bounty negotiation", "link": "https://blog.1inch.com/vulnerability-discovered-in-resolver-contract/" }
+      ]
+    },
+    "0x-matcha": {
+      "governance": [
+        { "label": "ZRX governance token", "value": "ZRX holders govern the 0x Protocol via the 0x DAO, voting off-chain (Snapshot) on ZeroEx Improvement Proposals (ZEIPs) covering parameters, fees, and treasury", "provenance": "public-docs", "source": "https://github.com/0xProject/0x-protocol-specification/blob/master/v3/zero-ex-governor.md" },
+        { "label": "ZeroExGovernor (timelocked multisig)", "value": "Permissioned contract functions are controlled by the ZeroExGovernor, a time-locked multisig requiring 2/3 signatures and a default 14-day timelock", "provenance": "public-docs", "source": "https://github.com/0xProject/0x-protocol-specification/blob/master/v3/zero-ex-governor.md" },
+        { "label": "Settler / AllowanceHolder model", "value": "Current swap settlement uses the stateless Settler contracts with Permit2 and AllowanceHolder, replacing the legacy Exchange Proxy", "provenance": "public-docs", "source": "https://0x.org/docs/developer-resources/core-concepts/contracts" }
+      ],
+      "audits": [
+        { "firm": "ConsenSys Diligence", "scope": "0x Exchange v4 (legacy Exchange Proxy era)", "date": "2020", "link": "https://diligence.security/audits/2020/12/0x-exchange-v4/" },
+        { "firm": "Ourovoros", "scope": "0x Settler settlement contracts", "date": "2023", "link": "https://github.com/0xProject/0x-settler/tree/master/audits" },
+        { "firm": "OpenZeppelin", "scope": "0x Settler (final report)", "date": "2024", "link": "https://github.com/0xProject/0x-settler/tree/master/audits" },
+        { "firm": "Dedaub", "scope": "0x Settler intent upgrade", "date": "2025", "link": "https://dedaub.com/audits/0x/0x-settler-intent-upgrade-jan-23-2025/" }
+      ],
+      "incidents": [
+        { "date": "2019-07", "description": "A signature-verification bug in the legacy 0x v2.0 Exchange contract was disclosed by samczsun; emergency-shutdown and patched within ~8 hours with no exploit and no funds lost", "link": "https://samczsun.com/the-0x-vulnerability-explained/" }
+      ]
+    },
+    "yearn": {
+      "governance": [
+        { "label": "YFI token holder voting", "value": "Yearn is governed by YFI token holders who submit and vote on off-chain proposals (YIPs), with majority support required for implementation", "provenance": "public-docs", "source": "https://docs.yearn.fi/contributing/governance/proposal-process" },
+        { "label": "Multi-DAO structure", "value": "Since YIP-61 Yearn operates as a multi-DAO of YFI holders, yTeams, and the Multisig under constrained delegation", "provenance": "public-docs", "source": "https://docs.yearn.fi/contributing/governance/governance-and-operations" },
+        { "label": "Multisig execution (6-of-9)", "value": "On-chain decisions are executed or vetoed by the 9-member Yearn Multisig (yChad) acting as Guardian, requiring 6 of 9 signatures", "provenance": "onchain-verifiable", "source": "https://docs.yearn.fi/contributing/governance/governance-and-operations" }
+      ],
+      "audits": [
+        { "firm": "ChainSecurity", "scope": "Yearn V3 Vaults (ERC-4626 vault core)", "date": "2024", "link": "https://github.com/yearn/yearn-security/tree/master/audits/20240504_ChainSecurity_Yearn_V3" },
+        { "firm": "Statemind", "scope": "Yearn V3 Vaults core contracts", "date": "2024", "link": "https://github.com/yearn/yearn-security/tree/master/audits/20240502_Statemind_Yearn_V3" },
+        { "firm": "Trail of Bits", "scope": "Yearn V2 Vaults legacy core contracts", "date": "2021", "link": "https://github.com/yearn/yearn-security/tree/master/audits/20210719_ToB_yearn_vaultsv2" }
+      ],
+      "incidents": [
+        { "date": "2021-02", "description": "Attacker used Aave flash loans to manipulate Curve 3pool pricing and drain the v1 DAI vault, causing ~$11M in losses before signers paused the vault within ~11 minutes", "link": "https://www.coindesk.com/tech/2021/02/04/yearn-finance-dai-vault-has-suffered-an-exploit-11m-drained" },
+        { "date": "2023-04", "description": "A legacy iearn/yUSDT misconfiguration (latent since 2020) let an attacker mint ~1.2 quadrillion yUSDT and steal ~$11.6M in stablecoins; Yearn v2 vaults were unaffected", "link": "https://www.halborn.com/blog/post/explained-the-yearn-finance-hack-april-2023" }
+      ]
+    },
+    "mellow": {
+      "governance": [
+        { "label": "Admin / DAO multisig", "value": "The protocol Admin grants and revokes admin-delegate roles, governed by Mellow DAO voting and implemented via special-purpose multisig wallets", "provenance": "public-docs", "source": "https://docs.mellow.finance/core-vaults/architecture" },
+        { "label": "Curated vault model", "value": "Depositors provide capital while designated curators operate strategy strictly within on-chain constraints and limits set by the vault owner", "provenance": "public-docs", "source": "https://docs.mellow.finance/mellow-vaults-overview" },
+        { "label": "Emergency safeguards", "value": "Vaults include emergency pause, multisig controls, and timelocked parameter changes configured per vault, with Hypernative real-time monitoring", "provenance": "self-reported", "source": "https://mellowprotocol.substack.com/p/introducing-multivaults" }
+      ],
+      "audits": [
+        { "firm": "Statemind", "scope": "Mellow LRT core system — treasury, strategy/module contracts, oracles", "date": "2024", "link": "https://github.com/mellow-finance/mellow-lrt/blob/main/audits/202405_Statemind/Mellow%20LRT%20Final%20report.pdf" },
+        { "firm": "MixBytes", "scope": "Mellow Finance vault contracts (incl. DVV)", "date": "2024", "link": "https://github.com/mixbytes/audits_public/blob/master/Mellow%20Finance/README.md" },
+        { "firm": "ChainSecurity", "scope": "Mellow LRT smart contracts and MultiVault", "date": "2024", "link": "https://www.chainsecurity.com/security-audit/mellow-protocol" }
+      ],
+      "incidents": [
+        { "date": "2026-06", "description": "No public exploit, hack, or loss-of-funds incident affecting Mellow Protocol identified; the security documentation lists only audits and protective measures with no incident disclosures as of this research", "link": "https://docs.mellow.finance/security" }
+      ]
+    },
+    "morpho-vaults": {
+      "governance": [
+        { "label": "Four-role permission model", "value": "Each MetaMorpho vault assigns Owner, Curator, Allocator and Guardian roles, with the Curator choosing markets and caps while the Guardian can veto malicious actions", "provenance": "public-docs", "source": "https://docs.morpho.org/curate/concepts/roles/" },
+        { "label": "Curator as chief risk officer", "value": "The Curator unilaterally defines the vault's investment thesis, selects collateral markets and sets allocation caps, making curator judgment the primary risk vector", "provenance": "public-docs", "source": "https://docs.morpho.org/learn/concepts/curator/" },
+        { "label": "Named third-party curators", "value": "Vaults are operated by independent curator firms such as Gauntlet, Steakhouse, Re7 Labs and MEV Capital rather than by Morpho DAO, decentralizing allocation risk", "provenance": "self-reported", "source": "https://curatorwatch.com/" }
+      ],
+      "audits": [
+        { "firm": "Cantina", "scope": "MetaMorpho managed review", "date": "2023", "link": "https://github.com/morpho-org/metamorpho/tree/main/audits" },
+        { "firm": "OpenZeppelin", "scope": "Morpho Blue periphery / MetaMorpho", "date": "2023", "link": "https://github.com/morpho-org/metamorpho/tree/main/audits" },
+        { "firm": "Cantina", "scope": "MetaMorpho v1.1 diff managed review", "date": "2024", "link": "https://github.com/morpho-org/metamorpho-v1.1/tree/main/audits" },
+        { "firm": "Certora", "scope": "Formal verification of Morpho / MetaMorpho contracts", "date": "2024", "link": "https://morpho.org/blog/formally-verifying-morpho-with-certora/" }
+      ],
+      "incidents": [
+        { "date": "2025-11", "description": "Following the Stream Finance/xUSD collapse, MEV Capital's Ethereum Morpho USDC vault delisted the Elixir sdeUSD/USDC market and realized bad debt of ~3.6% of vault TVL — a curator-allocation-driven loss", "link": "https://coinfomania.com/morpho-delists-elixir-sdeusd-bad-debt/" },
+        { "date": "2025-11", "description": "The Stream Finance contagion exposed multiple Morpho curators to bad debt via xUSD/Elixir collateral, though only one of ~320 MetaMorpho vaults had direct exposure (~$700k bad debt)", "link": "https://cryptorank.io/news/feed/275ce-risk-curators-took-off-in-2025-but-led-to-recent-defi-lending-vault-troubles" }
+      ]
+    },
+    "pendle": {
+      "governance": [
+        { "label": "vePENDLE vote-escrow model", "value": "PENDLE holders lock tokens up to 2 years for non-transferable vePENDLE, which grants gauge voting power to direct emissions plus a share of pool trading fees", "provenance": "public-docs", "source": "https://docs.pendle.finance/ProtocolMechanics/Mechanisms/vePENDLE" },
+        { "label": "Transition to sPENDLE", "value": "Pendle is phasing out the long-lock vePENDLE model in favor of sPENDLE, a liquid governance token with a short unstaking period", "provenance": "public-docs", "source": "https://docs.pendle.finance/pendle-v2/ProtocolMechanics/Mechanisms/sPENDLE" },
+        { "label": "Gauge-directed emissions", "value": "vePENDLE holders vote on gauges to channel PENDLE incentives to chosen pools and can collect third-party bribes and LP yield boosts", "provenance": "public-docs", "source": "https://docs.pendle.finance/ProtocolMechanics/Mechanisms/vePENDLE" }
+      ],
+      "audits": [
+        { "firm": "Ackee Blockchain", "scope": "Pendle V2 security review", "date": "2022", "link": "https://ackee.xyz/blog/pendle-finance-pendle-v2-audit-summary/" },
+        { "firm": "Dedaub", "scope": "Pendle V2 — Yield Tokenization and Trading", "date": "2022", "link": "https://dedaub.com/audits/pendle/pendle-finance-v2-yield-tokenization-and-trading-jul-01-2022/" },
+        { "firm": "ChainSecurity", "scope": "Pendle V2 Core smart contract audit", "date": "2022", "link": "https://www.chainsecurity.com/security-audit/pendle-v2-core" },
+        { "firm": "Least Authority", "scope": "Pendle Protocol (V1) smart contracts final audit", "date": "2021", "link": "https://github.com/pendle-finance/pendle-core/blob/master/docs/audits/Least%20Authority%20-%20Pendle%20Protocol%20Smart%20Contracts%20-%20Final%20Audit%20Report%20(v3).pdf" }
+      ],
+      "incidents": [
+        { "date": "2024-09", "description": "Penpie — a separate third-party protocol built on top of Pendle — was exploited for ~$27M via a reentrancy bug; Pendle core contracts were NOT exploited, and Pendle's coordinated pause protected an additional ~$105M", "link": "https://www.halborn.com/blog/post/explained-the-penpie-hack-september-2024" }
+      ]
+    },
+    "rocket-pool": {
+      "governance": [
+        { "label": "Two-DAO structure", "value": "Rocket Pool is governed by a Protocol DAO (pDAO) of node operators with staked RPL and an Oracle DAO (oDAO) of invite-only members who provide oracle data and caretaker functions", "provenance": "public-docs", "source": "https://docs.rocketpool.net/guides/odao/overview.html" },
+        { "label": "pDAO voting power", "value": "Node operators' effective staked RPL conveys pDAO voting power via a square-root modifier that dampens the influence of large holders", "provenance": "public-docs", "source": "https://medium.com/rocket-pool/rocket-pool-protocol-dao-governance-phase-0-4b8ec7bfe07e" },
+        { "label": "Node operators / minipools", "value": "Anyone can permissionlessly run a node and create minipools (bonding ETH plus RPL) to validate, while rETH is the liquid staking token issued to depositors", "provenance": "public-docs", "source": "https://docs.rocketpool.net/overview/glossary.html" }
+      ],
+      "audits": [
+        { "firm": "Sigma Prime", "scope": "Rocket Pool protocol smart contract architecture (pre-mainnet, plus Atlas review)", "date": "2021", "link": "https://rocketpool.net/files/audits/sigma-prime-audit.pdf" },
+        { "firm": "ConsenSys Diligence", "scope": "Rocket Pool protocol contract architecture audit (pre-mainnet)", "date": "2021", "link": "https://diligence.security/audits/2021/04/rocketpool/" },
+        { "firm": "Trail of Bits", "scope": "Rocket Pool protocol contract architecture audit (pre-mainnet)", "date": "2021", "link": "https://github.com/trailofbits/publications/blob/master/reviews/RocketPool.pdf" }
+      ],
+      "incidents": [
+        { "date": "2022-05", "description": "Two oDAO nodes operated by the Rocket Pool team were compromised via a hijacked workstation with unencrypted SSH keys, draining ~14.75 ETH plus RPL from those node accounts; the protocol itself was unaffected", "link": "https://dao.rocketpool.net/t/post-mortem-security-incident-26-05/701" },
+        { "date": "2023-04", "description": "An ETH-transfer attack against the Atlas upgrade's distributeBalance logic was responsibly disclosed via Immunefi and patched before deployment, with no user funds lost", "link": "https://hackmd.io/@knoshua/B1SNq_lm3" }
+      ]
     }
   }
 }
