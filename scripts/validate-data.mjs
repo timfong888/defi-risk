@@ -40,6 +40,11 @@ for (const f of feeds.feeds ?? []) {
     err(where, "accessibility.verified must be boolean");
   if (!BLOCKER_KINDS.includes(f.coverageBlocker?.kind) || !f.coverageBlocker?.note)
     err(where, "coverageBlocker must have a valid kind and a note");
+  if (
+    f.aggregatorStatus !== undefined &&
+    !["live", "available", "none", "unknown"].includes(f.aggregatorStatus)
+  )
+    err(where, `bad aggregatorStatus "${f.aggregatorStatus}"`);
 }
 
 for (const e of excluded.excluded ?? []) {

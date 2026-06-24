@@ -18,7 +18,8 @@
       "coverageBlocker": {
         "kind": "provider-scope",
         "note": "DeFiScan reviews protocols one by one; uncovered protocols have no published review yet. Unblock: request a review upstream (open process) — nothing on our side."
-      }
+      },
+      "aggregatorStatus": "live"
     },
     {
       "id": "curatorwatch",
@@ -122,17 +123,18 @@
       "type": "Rating",
       "url": "https://xerberus.io",
       "accessibility": {
-        "api": "unknown",
-        "apiDocumented": "unknown",
+        "api": "open",
+        "apiDocumented": "yes",
         "publicDashboard": "unknown",
         "methodologyOpen": "yes",
-        "verified": false,
-        "note": "Methodology published openly (publish.obsidian.md/xerberus). API/dashboard access not yet verified first-hand (SAT-302)."
+        "verified": true,
+        "note": "Free public Risk Ratings API (api.xerberus.io/public/v1) — documented, x-api-key auth. Endpoint confirmed live 2026-06-24; key provisioned in the Vercel environment (XERBERUS_API)."
       },
       "coverageBlocker": {
         "kind": "provider-scope",
-        "note": "Open-source and API-first (per #59); the rated scope is vault-focused, which limits seed-protocol coverage. Endpoint integration pending (SAT-302)."
-      }
+        "note": "Open-source and API-first (per #59) with a free public API; the rated scope is vault-focused, which limits seed-protocol coverage."
+      },
+      "aggregatorStatus": "available"
     },
     {
       "id": "zyfai",

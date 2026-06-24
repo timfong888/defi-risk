@@ -26,6 +26,11 @@ export interface Feed {
     kind: "provider-scope" | "access-gated" | "verification-pending";
     note: string;
   };
+  // Whether the feed's data is actively reachable BY THIS AGGREGATOR (distinct
+  // from what the provider offers publicly): "live" = we sync it, "available" =
+  // usable API + validated path but no auto-sync yet, "none" = no access,
+  // "unknown" = not yet assessed. Absent ≡ "unknown".
+  aggregatorStatus?: "live" | "available" | "none" | "unknown";
 }
 
 export interface Protocol {

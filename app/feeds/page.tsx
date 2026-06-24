@@ -38,6 +38,24 @@ function AccessMark({ v }: { v: Tri }) {
   );
 }
 
+// Whether the feed's data is reachable by this aggregator (not what the
+// provider offers publicly). Absent ≡ "unknown".
+const AGG_STYLE: Record<NonNullable<Feed["aggregatorStatus"]>, { label: string; style: string; title: string }> = {
+  live: { label: "live", style: "bg-emerald-50 text-emerald-700", title: "actively synced into the aggregator" },
+  available: { label: "available", style: "bg-sky-50 text-sky-700", title: "usable API + validated path; auto-sync pending" },
+  none: { label: "—", style: "bg-gray-100 text-gray-400", title: "no programmatic access available to us" },
+  unknown: { label: "?", style: "bg-amber-50 text-amber-600", title: "not yet assessed" },
+};
+
+function AggStatus({ s }: { s: Feed["aggregatorStatus"] }) {
+  const a = AGG_STYLE[s ?? "unknown"];
+  return (
+    <span className={`rounded px-1.5 py-0.5 text-[11px] font-medium ${a.style}`} title={a.title}>
+      {a.label}
+    </span>
+  );
+}
+
 const BLOCKER_LABEL: Record<string, { label: string; style: string }> = {
   "provider-scope": {
     label: "provider scope",
@@ -115,8 +133,9 @@ export default function FeedsPage() {
           Each feed is shown as an access matrix — <strong>API documented</strong>,{" "}
           <strong>API free &amp; public</strong>, <strong>API paid only</strong>,{" "}
           <strong>open methodology</strong>, and <strong>public dashboard</strong>{" "}
-          (✓ yes · ✗ no · ? not yet verified) — plus how many of the{" "}
-          {protocols.length} seed protocols it covers.
+          (✓ yes · ✗ no · ? not yet verified) — plus whether its data is{" "}
+          <strong>available to this aggregator</strong> (live · available · —)
+          and how many of the {protocols.length} seed protocols it covers.
         </p>
         <div className="mt-4 overflow-x-auto rounded-lg border border-gray-200">
           <table className="w-full border-collapse text-sm">
@@ -128,6 +147,7 @@ export default function FeedsPage() {
                 <th className="px-2 py-2 font-medium border-b border-gray-200 text-center">API paid only</th>
                 <th className="px-2 py-2 font-medium border-b border-gray-200 text-center">Open methodology</th>
                 <th className="px-2 py-2 font-medium border-b border-gray-200 text-center">Public dashboard</th>
+                <th className="px-2 py-2 font-medium border-b border-gray-200 text-center whitespace-nowrap">Available to aggregator</th>
                 <th className="px-2 py-2 font-medium border-b border-gray-200 text-center whitespace-nowrap">Seed coverage</th>
               </tr>
             </thead>
@@ -159,6 +179,7 @@ export default function FeedsPage() {
                     <td className="px-2 py-2 text-center"><AccessMark v={apiPaidOnly(a.api)} /></td>
                     <td className="px-2 py-2 text-center"><AccessMark v={a.methodologyOpen} /></td>
                     <td className="px-2 py-2 text-center"><AccessMark v={a.publicDashboard} /></td>
+                    <td className="px-2 py-2 text-center"><AggStatus s={f.aggregatorStatus} /></td>
                     <td className="px-2 py-2 text-center tabular-nums whitespace-nowrap">
                       {cov.covered + cov.partial} / {protocols.length}
                       {cov.partial > 0 && (
