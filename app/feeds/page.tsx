@@ -130,9 +130,11 @@ export default function FeedsPage() {
           ; no single feed is canonical.
         </p>
         <p className="mt-1.5 text-xs text-gray-500">
-          Each feed is shown as an access matrix — <strong>API documented</strong>,{" "}
+          Each feed is shown as a matrix — what it assesses
+          (<strong>protocol coverage</strong>, <strong>vault monitoring</strong>),
+          its access (<strong>API documented</strong>,{" "}
           <strong>API free &amp; public</strong>, <strong>API paid only</strong>,{" "}
-          <strong>open methodology</strong>, and <strong>public dashboard</strong>{" "}
+          <strong>open methodology</strong>, <strong>public dashboard</strong>)
           (✓ yes · ✗ no · ? not yet verified) — plus whether its data is{" "}
           <strong>available to this aggregator</strong> (live · available · —)
           and how many of the {protocols.length} seed protocols it covers.
@@ -142,6 +144,8 @@ export default function FeedsPage() {
             <thead>
               <tr className="bg-gray-50 text-left">
                 <th className="px-3 py-2 font-medium border-b border-gray-200">Feed</th>
+                <th className="px-2 py-2 font-medium border-b border-gray-200 text-center whitespace-nowrap">Protocol coverage</th>
+                <th className="px-2 py-2 font-medium border-b border-gray-200 text-center whitespace-nowrap">Vault monitoring</th>
                 <th className="px-2 py-2 font-medium border-b border-gray-200 text-center">API documented</th>
                 <th className="px-2 py-2 font-medium border-b border-gray-200 text-center">API free &amp; public</th>
                 <th className="px-2 py-2 font-medium border-b border-gray-200 text-center">API paid only</th>
@@ -174,10 +178,20 @@ export default function FeedsPage() {
                         {f.focus}
                       </span>
                     </td>
+                    <td className="px-2 py-2 text-center"><AccessMark v={f.scope?.protocolCoverage ?? "unknown"} /></td>
+                    <td className="px-2 py-2 text-center"><AccessMark v={f.scope?.vaultMonitoring ?? "unknown"} /></td>
                     <td className="px-2 py-2 text-center"><AccessMark v={a.apiDocumented} /></td>
                     <td className="px-2 py-2 text-center"><AccessMark v={apiFreePublic(a.api)} /></td>
                     <td className="px-2 py-2 text-center"><AccessMark v={apiPaidOnly(a.api)} /></td>
-                    <td className="px-2 py-2 text-center"><AccessMark v={a.methodologyOpen} /></td>
+                    <td className="px-2 py-2 text-center">
+                      {a.methodologyUrl ? (
+                        <a href={a.methodologyUrl} target="_blank" rel="noopener noreferrer" className="hover:opacity-70">
+                          <AccessMark v={a.methodologyOpen} />
+                        </a>
+                      ) : (
+                        <AccessMark v={a.methodologyOpen} />
+                      )}
+                    </td>
                     <td className="px-2 py-2 text-center"><AccessMark v={a.publicDashboard} /></td>
                     <td className="px-2 py-2 text-center"><AggStatus s={f.aggregatorStatus} /></td>
                     <td className="px-2 py-2 text-center tabular-nums whitespace-nowrap">

@@ -19,12 +19,20 @@ export interface Feed {
     apiDocumented: "yes" | "no" | "unknown";
     publicDashboard: "yes" | "no" | "unknown";
     methodologyOpen: "yes" | "no" | "unknown";
+    // Public link to the open methodology, when one exists (makes the ✓ clickable).
+    methodologyUrl?: string;
     verified: boolean;
     note: string;
   };
   coverageBlocker: {
     kind: "provider-scope" | "access-gated" | "verification-pending";
     note: string;
+  };
+  // What the feed assesses, so the matrix can score protocol vs. vault coverage
+  // independently (e.g. CuratorWatch: protocol no, vault yes). Absent ≡ "unknown".
+  scope?: {
+    protocolCoverage: "yes" | "no" | "unknown";
+    vaultMonitoring: "yes" | "no" | "unknown";
   };
   // Whether the feed's data is actively reachable BY THIS AGGREGATOR (distinct
   // from what the provider offers publicly): "live" = we sync it, "available" =

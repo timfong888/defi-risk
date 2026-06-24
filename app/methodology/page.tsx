@@ -76,7 +76,17 @@ export default function MethodologyPage() {
                     <ApiPill api={f.accessibility.api} />
                     <Cap label="API docs" v={f.accessibility.apiDocumented} />
                     <Cap label="Dashboard" v={f.accessibility.publicDashboard} />
-                    <Cap label="Methodology" v={f.accessibility.methodologyOpen} />
+                    {f.accessibility.methodologyUrl ? (
+                      <a
+                        href={f.accessibility.methodologyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Cap label="Methodology" v={f.accessibility.methodologyOpen} />
+                      </a>
+                    ) : (
+                      <Cap label="Methodology" v={f.accessibility.methodologyOpen} />
+                    )}
                   </div>
                 </td>
               </tr>

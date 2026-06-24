@@ -19,7 +19,11 @@
         "kind": "provider-scope",
         "note": "DeFiScan reviews protocols one by one; uncovered protocols have no published review yet. Unblock: request a review upstream (open process) — nothing on our side."
       },
-      "aggregatorStatus": "live"
+      "aggregatorStatus": "live",
+      "scope": {
+        "protocolCoverage": "yes",
+        "vaultMonitoring": "no"
+      }
     },
     {
       "id": "curatorwatch",
@@ -31,13 +35,18 @@
         "api": "unknown",
         "apiDocumented": "unknown",
         "publicDashboard": "unknown",
-        "methodologyOpen": "unknown",
+        "methodologyOpen": "yes",
         "verified": false,
-        "note": "Public dashboard; API availability to verify"
+        "note": "Public dashboard; API availability to verify",
+        "methodologyUrl": "https://curatorwatch.com/docs"
       },
       "coverageBlocker": {
         "kind": "provider-scope",
         "note": "CuratorWatch monitors the Morpho curator/vault ecosystem only; most seed protocols are outside its scope by design. Unblock: not applicable beyond Morpho-family rows."
+      },
+      "scope": {
+        "protocolCoverage": "no",
+        "vaultMonitoring": "yes"
       }
     },
     {
@@ -57,6 +66,10 @@
       "coverageBlocker": {
         "kind": "verification-pending",
         "note": "Morpho coverage is via the public dashboard (morpho.blockanalitica.com); verbatim transcription pending a parser + first-hand verification. Non-Morpho bespoke modeling stays private (outreach via EF App Relations, SAT-305)."
+      },
+      "scope": {
+        "protocolCoverage": "yes",
+        "vaultMonitoring": "yes"
       }
     },
     {
@@ -69,13 +82,18 @@
         "api": "unknown",
         "apiDocumented": "unknown",
         "publicDashboard": "yes",
-        "methodologyOpen": "unknown",
+        "methodologyOpen": "yes",
         "verified": false,
-        "note": "Public site live (defipunkd.com). API docs and methodology openness not yet verified first-hand (SAT-302)."
+        "note": "Public site live (defipunkd.com). API docs and methodology openness not yet verified first-hand (SAT-302).",
+        "methodologyUrl": "https://defipunkd.com/methodology"
       },
       "coverageBlocker": {
         "kind": "verification-pending",
         "note": "Registry/API availability not yet verified first-hand. Unblock: our verification work (SAT-302)."
+      },
+      "scope": {
+        "protocolCoverage": "yes",
+        "vaultMonitoring": "no"
       }
     },
     {
@@ -95,6 +113,10 @@
       "coverageBlocker": {
         "kind": "access-gated",
         "note": "Institutional product; redistribution of ratings requires an agreement. Unblock: data agreement (SAT-307)."
+      },
+      "scope": {
+        "protocolCoverage": "yes",
+        "vaultMonitoring": "no"
       }
     },
     {
@@ -114,6 +136,10 @@
       "coverageBlocker": {
         "kind": "verification-pending",
         "note": "Public dashboard; API availability unverified. Vault-focused scope. Unblock: SAT-302."
+      },
+      "scope": {
+        "protocolCoverage": "no",
+        "vaultMonitoring": "yes"
       }
     },
     {
@@ -134,7 +160,11 @@
         "kind": "provider-scope",
         "note": "Open-source and API-first (per #59) with a free public API; the rated scope is vault-focused, which limits seed-protocol coverage."
       },
-      "aggregatorStatus": "available"
+      "aggregatorStatus": "available",
+      "scope": {
+        "protocolCoverage": "no",
+        "vaultMonitoring": "yes"
+      }
     },
     {
       "id": "zyfai",
@@ -153,6 +183,10 @@
       "coverageBlocker": {
         "kind": "verification-pending",
         "note": "API for vaults and wallets, but not at the pool level."
+      },
+      "scope": {
+        "protocolCoverage": "no",
+        "vaultMonitoring": "yes"
       }
     },
     {
@@ -172,6 +206,10 @@
       "coverageBlocker": {
         "kind": "provider-scope",
         "note": "Specific reports but limited in scope (currently Curve and Aave of the seed); no public API. (SAT-302)"
+      },
+      "scope": {
+        "protocolCoverage": "yes",
+        "vaultMonitoring": "no"
       }
     },
     {
@@ -191,6 +229,10 @@
       "coverageBlocker": {
         "kind": "verification-pending",
         "note": "Open methodology, deterministic outputs claimed; endpoint unverified. Vault-focused scope. Unblock: SAT-302."
+      },
+      "scope": {
+        "protocolCoverage": "no",
+        "vaultMonitoring": "yes"
       }
     }
   ]
