@@ -54,7 +54,6 @@ Vercel static pages ──► live metrics fetched server-side at revalidation
 | `data/coverage.json` | Manual matrix entries: status, provenance, note. Unlisted pairs default to `not-yet-covered` / `assessment-pending` in `lib/data.ts` — every cell resolves to a labeled state | curated |
 | `data/synced/<feed>.json` | Generated verbatim assessments: status, verbatim text, source URL, updated date | sync scripts only (never hand-edited) |
 | `data/details.json` | Per-protocol governance facts, audits, incidents — each with provenance + source | curated → progressively onchain-verified |
-| `data/responses.json` (planned, M2) | Protocol right-of-response entries | protocol teams via PR |
 
 **Merge precedence** (in `lib/data.ts`): synced (`provider-published`) >
 manual (`manual-unverified`) > default (`assessment-pending`). Data quality
@@ -63,6 +62,14 @@ self-upgrades as feeds come online; no one deletes manual curation by hand.
 **Provenance ladder** (rendered in UI): `onchain-verifiable` > `public-docs`
 > `provider-published` > `self-reported` > `manual-unverified` >
 `assessment-pending`.
+
+> **Deprecated tier — `self-reported`.** The revised contribution model
+> ([community-contribution-model.md](community-contribution-model.md) §1–2)
+> removes the protocol-authored surface: protocols no longer submit facts into
+> the aggregator, so nothing is tagged `self-reported`. The tier remains in the
+> UI label maps (`app/protocol/[slug]/FeedMatrix.tsx`, `page.tsx`) only until a
+> follow-up strips it; new data must not use it. Protocol input now routes to
+> the feeds (community-contribution-model §2.3).
 
 ## 4. Ingestion pipelines
 
@@ -132,8 +139,6 @@ itself provenance-tagged data (see §10.4).
   entry counts do not regress, and only `verbatim`/`updated`/`generatedAt`
   fields changed; anything else requires human review. Feeds run as
   independent steps so one provider's failure doesn't starve the rest.
-- **Staleness bot** (M2): opens issues on claimed protocol pages with data
-  older than 90 days.
 - **Threshold check** (M1): new-protocol PRs validated against the published
   inclusion criteria (DefiLlama slug resolves, TVL/volume above threshold).
 
@@ -168,7 +173,7 @@ itself provenance-tagged data (see §10.4).
 | Milestone | Stories | Gate |
 |---|---|---|
 | M1 (wk 12) | SAT-289 matrix · SAT-290 detail pages (20/20 populated) · SAT-291 methodology · SAT-292 data layer + CONTRIBUTING · SAT-294–298, 301 tasks · governance extraction (§4.3) | production URL; all 20 populated; every cell labeled; methodology live |
-| M2 (wk 20) | SAT-293 automation (SAT-302 verification, SAT-303 nightly syncs) · SAT-304 provider access (305–308) · response slots + claiming + staleness bot (new story) · expansion roadmap | ≥1 external correction merged; automation live where data is public; steward confirmed |
+| M2 (wk 20) | SAT-293 automation (SAT-302 verification, SAT-303 nightly syncs) · SAT-304 provider access (305–308) · feed-coverage expansion + protocol→feed engagement path documented · expansion roadmap | ≥1 external correction merged; automation live where data is public; steward confirmed |
 
 ## 9. Open questions
 
