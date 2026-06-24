@@ -41,10 +41,13 @@ it. Status: ✅ live · 🔶 designed, build pending · ⬜ gap (noted).
 
 ## Scope-creep check (design elements with no requirement)
 
-- Protocol right-of-response slots (community-contribution-model §2 lane 2):
-  not RFP-required — justified as contribution-model enabler for the M2
-  external-correction proof. **Keep, M2.**
-- Page claiming / staleness bot: same justification. **Keep, M2.**
+- Protocol right-of-response slots: not RFP-required. **Cut (SAT-329).** They
+  put protocol-authored content inside the neutral aggregator; the revised
+  contribution model routes all protocol input to the feeds instead
+  (community-contribution-model §1–2). Disputes are a feed conversation, mirrored
+  via sync — not an aggregator feature.
+- Page claiming / staleness bot: not RFP-required. **Cut (SAT-329)** — same
+  reason; removed alongside the response slots.
 - Sub-threshold community tier: no requirement — **deferred (already).**
 - .eth mirror: no requirement — **deferred (§9 Q4).**
 
