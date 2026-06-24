@@ -138,9 +138,9 @@ export default function FeedMatrix({ rows }: { rows: FeedMatrixRow[] }) {
               className="scroll-mt-20 border-b border-gray-100 align-top last:border-0 target:bg-amber-50"
             >
               <td className="px-3 py-2 whitespace-nowrap">
-                <a href={f.url} className="font-medium hover:underline">
+                <Link href={`/feeds#feed-${f.id}`} className="font-medium hover:underline">
                   {f.name}
-                </a>
+                </Link>
                 <span className="block max-w-[14rem] text-xs text-gray-500">{f.focus}</span>
               </td>
               <td className="px-3 py-2">

@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { excludedFeeds, getCell, orderedFeeds, protocols } from "@/lib/data";
-import { ApiPill, Cap } from "@/components/AccessBadges";
+import { excludedFeeds, getCell, orderedFeeds, protocols, type Feed } from "@/lib/data";
 import FeedMatrixFilter from "./FeedMatrixFilter";
 
 export const metadata = {
@@ -13,6 +12,31 @@ const TYPE_STYLE: Record<string, string> = {
   Monitoring: "bg-rose-50 text-rose-700",
   Research: "bg-violet-50 text-violet-700",
 };
+
+type Tri = "yes" | "no" | "unknown";
+
+// Derive the API-access matrix columns from the orthogonal #66 access flags.
+function apiFreePublic(api: Feed["accessibility"]["api"]): Tri {
+  return api === "open" ? "yes" : api === "unknown" ? "unknown" : "no";
+}
+function apiPaidOnly(api: Feed["accessibility"]["api"]): Tri {
+  return api === "paid" ? "yes" : api === "unknown" ? "unknown" : "no";
+}
+
+// ✓ / ✗ / ? cell for the access matrix.
+function AccessMark({ v }: { v: Tri }) {
+  const mark = v === "yes" ? "✓" : v === "no" ? "✗" : "?";
+  const cls =
+    v === "yes" ? "text-emerald-600" : v === "no" ? "text-gray-300" : "text-amber-500";
+  return (
+    <span
+      className={`font-semibold ${cls}`}
+      title={v === "unknown" ? "not yet verified" : v}
+    >
+      {mark}
+    </span>
+  );
+}
 
 const BLOCKER_LABEL: Record<string, { label: string; style: string }> = {
   "provider-scope": {
@@ -56,6 +80,19 @@ export default function FeedsPage() {
     return { covered, partial };
   };
 
+  // Seed-protocol coverage per feed, across all categories — recomputes from
+  // protocols + coverage data, so the X / N count is never hardcoded.
+  const feedCoverage = (feedId: string) => {
+    let covered = 0;
+    let partial = 0;
+    for (const p of protocols) {
+      const status = getCell(p.id, feedId).status;
+      if (status === "covered") covered++;
+      else if (status === "partial") partial++;
+    }
+    return { covered, partial };
+  };
+
   return (
     <div className="max-w-6xl space-y-10">
       <section>
@@ -75,41 +112,66 @@ export default function FeedsPage() {
           ; no single feed is canonical.
         </p>
         <p className="mt-1.5 text-xs text-gray-500">
-          Each feed is tagged by <strong>API access</strong> (open · permissioned
-          · paid · none) and whether it offers <strong>API docs</strong>, a{" "}
-          <strong>public dashboard</strong>, and an{" "}
-          <strong>open methodology</strong> (✓ yes · ✗ no · ? not yet verified).
+          Each feed is shown as an access matrix — <strong>API documented</strong>,{" "}
+          <strong>API free &amp; public</strong>, <strong>API paid only</strong>,{" "}
+          <strong>open methodology</strong>, and <strong>public dashboard</strong>{" "}
+          (✓ yes · ✗ no · ? not yet verified) — plus how many of the{" "}
+          {protocols.length} seed protocols it covers.
         </p>
-        <div className="mt-4 space-y-3">
-          {orderedFeeds.map((f) => (
-            <div
-              key={f.id}
-              id={`feed-${f.id}`}
-              className="scroll-mt-20 rounded-lg border border-gray-200 p-3"
-            >
-              <div className="flex flex-wrap items-baseline gap-2">
-                <a href={f.url} className="font-medium hover:underline">
-                  {f.name}
-                </a>
-                <span
-                  className={`rounded px-1.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${TYPE_STYLE[f.type]}`}
-                >
-                  {f.type}
-                </span>
-                <ApiPill api={f.accessibility.api} />
-                <Cap label="API docs" v={f.accessibility.apiDocumented} />
-                <Cap label="Dashboard" v={f.accessibility.publicDashboard} />
-                <Cap label="Methodology" v={f.accessibility.methodologyOpen} />
-                {f.accessibility.verified && (
-                  <span className="text-[11px] text-emerald-600">verified</span>
-                )}
-              </div>
-              <p className="mt-1 text-sm text-gray-700">{f.focus}</p>
-              <p className="mt-0.5 text-xs text-gray-500">
-                {f.accessibility.note}
-              </p>
-            </div>
-          ))}
+        <div className="mt-4 overflow-x-auto rounded-lg border border-gray-200">
+          <table className="w-full border-collapse text-sm">
+            <thead>
+              <tr className="bg-gray-50 text-left">
+                <th className="px-3 py-2 font-medium border-b border-gray-200">Feed</th>
+                <th className="px-2 py-2 font-medium border-b border-gray-200 text-center">API documented</th>
+                <th className="px-2 py-2 font-medium border-b border-gray-200 text-center">API free &amp; public</th>
+                <th className="px-2 py-2 font-medium border-b border-gray-200 text-center">API paid only</th>
+                <th className="px-2 py-2 font-medium border-b border-gray-200 text-center">Open methodology</th>
+                <th className="px-2 py-2 font-medium border-b border-gray-200 text-center">Public dashboard</th>
+                <th className="px-2 py-2 font-medium border-b border-gray-200 text-center whitespace-nowrap">Seed coverage</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orderedFeeds.map((f) => {
+                const a = f.accessibility;
+                const cov = feedCoverage(f.id);
+                return (
+                  <tr
+                    key={f.id}
+                    id={`feed-${f.id}`}
+                    className="scroll-mt-20 border-b border-gray-100 align-top last:border-0"
+                  >
+                    <td className="px-3 py-2">
+                      <a href={f.url} className="font-medium hover:underline">
+                        {f.name}
+                      </a>
+                      <span
+                        className={`ml-2 rounded px-1.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${TYPE_STYLE[f.type]}`}
+                      >
+                        {f.type}
+                      </span>
+                      <span className="mt-0.5 block max-w-md text-xs text-gray-500">
+                        {f.focus}
+                      </span>
+                    </td>
+                    <td className="px-2 py-2 text-center"><AccessMark v={a.apiDocumented} /></td>
+                    <td className="px-2 py-2 text-center"><AccessMark v={apiFreePublic(a.api)} /></td>
+                    <td className="px-2 py-2 text-center"><AccessMark v={apiPaidOnly(a.api)} /></td>
+                    <td className="px-2 py-2 text-center"><AccessMark v={a.methodologyOpen} /></td>
+                    <td className="px-2 py-2 text-center"><AccessMark v={a.publicDashboard} /></td>
+                    <td className="px-2 py-2 text-center tabular-nums whitespace-nowrap">
+                      {cov.covered + cov.partial} / {protocols.length}
+                      {cov.partial > 0 && (
+                        <span className="block text-[11px] text-gray-400">
+                          {cov.covered} full · {cov.partial} partial
+                        </span>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </section>
 
@@ -209,8 +271,9 @@ export default function FeedsPage() {
           For every cell that is not yet covered, the blocker is one of three
           things: the provider doesn&apos;t cover that protocol class
           (their scope, not a defect), the data is gated behind keys or
-          agreements (our outreach work), or we haven&apos;t yet verified the
-          provider&apos;s data access first-hand (our verification work).
+          agreements and may be paid and require fees, or we haven&apos;t yet
+          verified the provider&apos;s data access first-hand (our verification
+          work).
         </p>
         <table className="mt-3 w-full text-sm">
           <thead>

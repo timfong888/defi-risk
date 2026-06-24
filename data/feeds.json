@@ -130,8 +130,8 @@
         "note": "Methodology published openly (publish.obsidian.md/xerberus). API/dashboard access not yet verified first-hand (SAT-302)."
       },
       "coverageBlocker": {
-        "kind": "verification-pending",
-        "note": "API-first positioning unverified; vault-focused scope. Unblock: SAT-302."
+        "kind": "provider-scope",
+        "note": "Open-source and API-first (per #59); the rated scope is vault-focused, which limits seed-protocol coverage. Endpoint integration pending (SAT-302)."
       }
     },
     {
@@ -150,7 +150,7 @@
       },
       "coverageBlocker": {
         "kind": "verification-pending",
-        "note": "Pool-level dashboard; API unverified. Unblock: SAT-302."
+        "note": "API for vaults and wallets, but not at the pool level."
       }
     },
     {
@@ -168,8 +168,8 @@
         "note": "Public research reports; structured data to verify"
       },
       "coverageBlocker": {
-        "kind": "verification-pending",
-        "note": "Public research reports; structured-data availability unverified. Unblock: SAT-302."
+        "kind": "provider-scope",
+        "note": "Specific reports but limited in scope (currently Curve and Aave of the seed); no public API. (SAT-302)"
       }
     },
     {
