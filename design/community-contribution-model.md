@@ -19,7 +19,7 @@ maintainer judgment.
 
 ## 2. Protocol contribution — three lanes
 
-### Lane 1: Factual corrections (open to anyone)
+### Lane 1: Factual corrections (open to anyone) - drafting and in review
 
 Governance parameters, audit entries, incident records, version metadata —
 all PR-able, including by protocol teams. The constraint is what the schema
@@ -34,19 +34,13 @@ accepts, not who can edit:
   verifiable (publish the timelock address, point to the Safe) so the tag
   upgrades. The ladder does the moderating.
 
-### Lane 2: Right of response (the draw)
+### Lane 2: Protocol submitting missing feeds
 
-A dedicated, labeled **"Protocol response"** slot per feed assessment and per
-incident record:
+The aggregator does not process change requests directly to the ratings sourced from feeds.
 
-- Verbatim, attributed to the team, length-capped (~500 chars), rendered
-  visually distinct from feed content.
-- The feed's assessment never moves. The reader sees both.
-- Precedent: L2Beat team disputes; credit-rating issuer response statements.
+Protocol work directly with feeds.  Those changes from feeds should be reflected in the Aggregator.
 
-This is the strongest voluntary-participation driver: protocols dislike being
-rated with no recourse, and an attributed response slot — without edit power
-over the rating — brings them to the table.
+However, in the case where the updated feed coverage has **not** been automatically reflected, we are proposing a design for protocols to submit (still TBD).
 
 Schema sketch (`data/responses.json`):
 
@@ -61,29 +55,11 @@ Schema sketch (`data/responses.json`):
 }
 ```
 
-### Lane 3: Page claiming + freshness attestation
+### Lane 3: New protocol additions
 
-- A team **claims** its page via PR from their official GitHub org — org
-  membership is cheap, verifiable identity; no wallet ceremony needed.
-- Claimed pages render "reviewed by the [X] team on [date]".
-- **Staleness automation works for us**: when a claimed page's data ages past
-  90 days, a bot opens an issue pinging the team; a one-click confirm renews
-  the freshness badge. The badge decays if ignored — protocols end up
-  maintaining their own rows.
+Define the process for new protocols to be added.  This *should* automatically be updated when a feed updates their coverage.
 
-### M2 proof strategy
-
-M2 requires "at least one round of external corrections accepted and merged."
-Pre-M2, invite all 20 seed protocol teams to review their pages (using EF App
-Relations introductions — a stated grant benefit). Some will find errors;
-each fix is the workflow demonstrated end-to-end with the EF watching.
-
-## 3. New-protocol listing — mechanical, not editorial
-
-The neutrality risk in listing is not spam; it is **discretion**. The moment a
-maintainer judges who is worthy, the project has opinions — and invites the
-pay-to-list dynamic that corrupts raters. Inclusion is therefore
-criteria-based and machine-checkable:
+Below is draft to work through, but it seems like having protocols listed in an Aggregator is not quite right, but still need to explore this.
 
 **Inclusion rule (published, versioned in this file):**
 1. Ethereum mainnet deployment (RFP hard scope)
@@ -98,29 +74,9 @@ criteria-based and machine-checkable:
 - If green, merge is mechanical — the maintainer is a liveness function, not
   a gatekeeper. A rejected PR can only cite a failed criterion, never taste.
 
-**Explicitly rejected: stake-to-list / pay-to-list onchain registries.**
-Crypto-native-sounding, but it recreates issuer-pays economics and conflicts
-with the RFP's neutral-positioning hard requirement. Listing stays free and
-criteria-based; this commitment belongs in the charter.
 
-**Deferred: the sub-threshold "community tier."** A separated, labeled
-section for schema-valid protocols below threshold (whose all-gray rows
-honestly signal "no independent feed has assessed this") is sound design but
-is deferred post-M2 — see §5.
+## 3. Feed-provider inclusion 
 
-The deeper permissionless surface is the **data layer itself**: AGPL JSON in
-a public repo. Anyone can fork it, build a competing UI, or extend it. The
-canonical site is just the reference renderer with mechanical listing rules.
-
-## 3b. Feed-provider inclusion — same rigor as protocols
-
-Design review found an asymmetry: rows (protocols) had mechanical criteria
-while columns (feeds) were pure editorial discretion — and the columns are
-where neutrality will actually be attacked. A bad-faith "risk feed" admitted
-to the registry gets its assessments displayed verbatim with the site's
-implicit endorsement; a rejected provider gets a legitimate bias complaint.
-
-**Feed inclusion rule (machine- or checklist-checkable):**
 1. **Published methodology** — a public document describing what is assessed
    and how; "trust us" scores with no methodology are ineligible.
 2. **Coverage floor** — assesses ≥3 protocols on the current seed list (the
@@ -141,51 +97,3 @@ violation discovered). The current 14 RFP-listed providers are re-evaluated
 against this rule as part of SAT-302 verification — any that fail criterion
 1 or 3 are flagged to the EF rather than silently retained.
 
-## 4. Execution plan
-
-| Phase | Work | Tracks to |
-|---|---|---|
-| M1 wk 1–4 | CONTRIBUTING.md (three workflows: correction / new protocol / new feed provider); issue forms + PR templates; CI schema validation | SAT-301, SAT-292 |
-| M1 wk 5–10 | Provenance ladder rendered in UI (already live); `self-reported` tag added to schema; inclusion rule published with threshold | SAT-292 |
-| M1 wk 11–12 | M1 gate: correction process documented in README (done) and exercised internally once | SAT-292 |
-| M2 wk 13–16 | Response slot (`data/responses.json` + feed-card / incident UI); page-claiming convention; staleness bot (GitHub Action opening issues on claimed pages > 90 days) | new story below |
-| M2 wk 17–20 | Seed-protocol review round via EF introductions → ≥1 external correction merged (M2 deliverable); expansion roadmap published citing the mechanical inclusion rule | SAT-292, SAT-304 |
-
-New Linear story to create when M2 work starts: *"Protocol engagement: response
-slots, page claiming, staleness attestation"* (extends SAT-292).
-
-## 5. Review: is permissionless addition useful design, given the proposal?
-
-**Verdict: the mechanical inclusion rule is in; the fully-permissionless
-community tier is out (deferred). "Permissionless" as a word stays out of the
-proposal.**
-
-For:
-- The RFP *requires* "an open, community-correctable data layer with
-  documented process for corrections, new protocols, and new feed providers"
-  — a rules-based listing process is a direct, superior answer to that
-  deliverable.
-- M2 requires "a short roadmap outlining how protocol coverage expands beyond
-  the initial 20." A published mechanical criterion is the cleanest possible
-  roadmap: coverage expands exactly when a protocol crosses the threshold —
-  no editorial bottleneck, no governance fight.
-- It structurally reinforces the neutrality hard requirement: no discretion
-  means no favoritism to disclose.
-
-Against:
-- A $15k grant funds a thin maintenance budget. Fully-permissionless
-  (merge-free) listing invents moderation work — spam rows, abandoned-fork
-  protocols, squatting — that the steward must absorb. The EF is explicitly
-  screening for sustainable stewardship; volunteering for unbounded
-  moderation undercuts that story.
-- All-gray sub-threshold rows dilute the data density that the design-quality
-  soft requirement rewards.
-- The word "permissionless" over-promises to this audience: EF reviewers will
-  read it as "unmoderated," which collides with their named-steward and
-  quality concerns.
-
-Resolution as encoded above: **criteria-based listing where CI is the
-gatekeeper and the maintainer is a liveness function** — permissionless in
-substance (no discretion, fork-able data layer) without the unbounded
-moderation surface or the loaded word. The community tier is revisited
-post-M2 if matching funding materializes.
