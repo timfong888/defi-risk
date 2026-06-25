@@ -17,8 +17,7 @@ inflation is the equilibrium (the issuer-pays problem). So the binding rule:
 > **Protocols contribute facts and responses — never assessments.**
 
 Assessments belong to feed providers, shown verbatim (see CHARTER.md).
-Everything below is structured so the schema enforces this rule, not
-maintainer judgment.
+
 
 ## 2. Protocol contribution — three lanes
 
