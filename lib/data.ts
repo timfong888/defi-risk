@@ -19,7 +19,13 @@ export interface Feed {
     apiDocumented: "yes" | "no" | "unknown";
     // Public link to the API docs, when one exists (makes the ✓ clickable).
     apiDocsUrl?: string;
+    // Independent of `api`: a feed can have both a free public tier and a paid
+    // tier. When set, these override the values derived from `api`.
+    apiFreePublic?: "yes" | "no" | "unknown";
+    apiPaidTier?: "yes" | "no" | "unknown";
     publicDashboard: "yes" | "no" | "unknown";
+    // Public link to the dashboard, when one exists (makes the ✓ clickable).
+    dashboardUrl?: string;
     methodologyOpen: "yes" | "no" | "unknown";
     // Public link to the open methodology, when one exists (makes the ✓ clickable).
     methodologyUrl?: string;

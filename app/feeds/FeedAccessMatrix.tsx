@@ -15,10 +15,11 @@ export interface MatrixFeed {
   apiDocumented: Tri;
   apiDocsUrl?: string;
   apiFreePublic: Tri;
-  apiPaidOnly: Tri;
+  apiPaidTier: Tri;
   methodologyOpen: Tri;
   methodologyUrl?: string;
   publicDashboard: Tri;
+  dashboardUrl?: string;
   protocolCoverage: Tri;
   vaultMonitoring: Tri;
   covered: number;
@@ -272,8 +273,8 @@ export default function FeedAccessMatrix({
               <th className="sticky top-0 z-10 bg-gray-50 px-2 py-2 font-medium border-b border-gray-200 text-center whitespace-nowrap">Vault monitoring</th>
               <th className="sticky top-0 z-10 bg-gray-50 px-2 py-2 font-medium border-b border-gray-200 text-center">API documented</th>
               <th className="sticky top-0 z-10 bg-gray-50 px-2 py-2 font-medium border-b border-gray-200 text-center">API free &amp; public</th>
-              <th className="sticky top-0 z-10 bg-gray-50 px-2 py-2 font-medium border-b border-gray-200 text-center">API paid only</th>
-              <th className="sticky top-0 z-10 bg-gray-50 px-2 py-2 font-medium border-b border-gray-200 text-center whitespace-nowrap">Documented methodology</th>
+              <th className="sticky top-0 z-10 bg-gray-50 px-2 py-2 font-medium border-b border-gray-200 text-center whitespace-nowrap">API Paid Tier</th>
+              <th className="sticky top-0 z-10 bg-gray-50 px-2 py-2 font-medium border-b border-gray-200 text-center whitespace-nowrap">Published methodology</th>
               <th className="sticky top-0 z-10 bg-gray-50 px-2 py-2 font-medium border-b border-gray-200 text-center">Public dashboard</th>
               <th className="sticky top-0 z-10 bg-gray-50 px-2 py-2 font-medium border-b border-gray-200 text-center whitespace-nowrap">Seed coverage</th>
             </tr>
@@ -300,9 +301,9 @@ export default function FeedAccessMatrix({
                 <td className="px-2 py-2 text-center"><AccessMark v={f.vaultMonitoring} /></td>
                 <td className="px-2 py-2 text-center"><MarkCell v={f.apiDocumented} href={f.apiDocsUrl} /></td>
                 <td className="px-2 py-2 text-center"><AccessMark v={f.apiFreePublic} /></td>
-                <td className="px-2 py-2 text-center"><AccessMark v={f.apiPaidOnly} /></td>
+                <td className="px-2 py-2 text-center"><AccessMark v={f.apiPaidTier} /></td>
                 <td className="px-2 py-2 text-center"><MarkCell v={f.methodologyOpen} href={f.methodologyUrl} /></td>
-                <td className="px-2 py-2 text-center"><AccessMark v={f.publicDashboard} /></td>
+                <td className="px-2 py-2 text-center"><MarkCell v={f.publicDashboard} href={f.dashboardUrl} /></td>
                 <td className="px-2 py-2 text-center tabular-nums whitespace-nowrap">
                   {f.covered + f.partial} / {seedTotal}
                   {f.partial > 0 && (

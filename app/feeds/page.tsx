@@ -83,11 +83,12 @@ export default function FeedsPage() {
       focus: f.focus,
       apiDocumented: f.accessibility.apiDocumented,
       apiDocsUrl: f.accessibility.apiDocsUrl,
-      apiFreePublic: apiFreePublic(f.accessibility.api),
-      apiPaidOnly: apiPaidOnly(f.accessibility.api),
+      apiFreePublic: f.accessibility.apiFreePublic ?? apiFreePublic(f.accessibility.api),
+      apiPaidTier: f.accessibility.apiPaidTier ?? apiPaidOnly(f.accessibility.api),
       methodologyOpen: f.accessibility.methodologyOpen,
       methodologyUrl: f.accessibility.methodologyUrl,
       publicDashboard: f.accessibility.publicDashboard,
+      dashboardUrl: f.accessibility.dashboardUrl,
       protocolCoverage: f.scope?.protocolCoverage ?? "unknown",
       vaultMonitoring: f.scope?.vaultMonitoring ?? "unknown",
       covered: cov.covered,
@@ -117,8 +118,8 @@ export default function FeedsPage() {
           Each feed is shown as a matrix — what it assesses
           (<strong>protocol coverage</strong>, <strong>vault monitoring</strong>),
           its access (<strong>API documented</strong>,{" "}
-          <strong>API free &amp; public</strong>, <strong>API paid only</strong>,{" "}
-          <strong>documented methodology</strong>, <strong>public dashboard</strong>)
+          <strong>API free &amp; public</strong>, <strong>API Paid Tier</strong>,{" "}
+          <strong>published methodology</strong>, <strong>public dashboard</strong>)
           (✓ yes · ✗ no · ? not yet verified; a ↗ on a ✓ opens the docs) — and how
           many of the {protocols.length} seed protocols it covers. Filter by
           category or protocol above.
