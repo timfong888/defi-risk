@@ -34,8 +34,6 @@ written agreement from the Ethereum Foundation.
   provenance tag and source link
 - Live metrics server-fetched from DefiLlama (`api.llama.fi`); fetch failures
   render explicit pending badges, never blanks
-- Design baseline and deliberate improvements over the EF POC:
-  [`design/poc-baseline.md`](design/poc-baseline.md)
 
 ## Corrections, new protocols, new feed providers (DRAFT - still TBD)
 
