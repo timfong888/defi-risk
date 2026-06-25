@@ -1,18 +1,20 @@
 import Link from "next/link";
-import { excludedFeeds, getCell, orderedFeeds, protocols } from "@/lib/data";
-import { ApiPill, Cap } from "@/components/AccessBadges";
-import FeedMatrixFilter from "./FeedMatrixFilter";
+import { excludedFeeds, getCell, orderedFeeds, protocols, type Feed } from "@/lib/data";
+import FeedAccessMatrix, { type MatrixFeed } from "./FeedAccessMatrix";
 
 export const metadata = {
   title: "Risk Feeds — DeFi Risk Intelligence Aggregator",
 };
 
-const TYPE_STYLE: Record<string, string> = {
-  Rating: "bg-indigo-50 text-indigo-700",
-  Dashboard: "bg-sky-50 text-sky-700",
-  Monitoring: "bg-rose-50 text-rose-700",
-  Research: "bg-violet-50 text-violet-700",
-};
+type Tri = "yes" | "no" | "unknown";
+
+// Derive the API-access matrix columns from the orthogonal #66 access flags.
+function apiFreePublic(api: Feed["accessibility"]["api"]): Tri {
+  return api === "open" ? "yes" : api === "unknown" ? "unknown" : "no";
+}
+function apiPaidOnly(api: Feed["accessibility"]["api"]): Tri {
+  return api === "paid" ? "yes" : api === "unknown" ? "unknown" : "no";
+}
 
 const BLOCKER_LABEL: Record<string, { label: string; style: string }> = {
   "provider-scope": {
@@ -56,6 +58,44 @@ export default function FeedsPage() {
     return { covered, partial };
   };
 
+  // Seed-protocol coverage per feed, across all categories — recomputes from
+  // protocols + coverage data, so the X / N count is never hardcoded.
+  const feedCoverage = (feedId: string) => {
+    let covered = 0;
+    let partial = 0;
+    for (const p of protocols) {
+      const status = getCell(p.id, feedId).status;
+      if (status === "covered") covered++;
+      else if (status === "partial") partial++;
+    }
+    return { covered, partial };
+  };
+
+  // Flatten each feed into matrix-row props (access columns derived here so the
+  // interactive matrix stays a thin client component).
+  const matrixFeeds: MatrixFeed[] = orderedFeeds.map((f) => {
+    const cov = feedCoverage(f.id);
+    return {
+      id: f.id,
+      name: f.name,
+      type: f.type,
+      url: f.url,
+      focus: f.focus,
+      apiDocumented: f.accessibility.apiDocumented,
+      apiDocsUrl: f.accessibility.apiDocsUrl,
+      apiFreePublic: f.accessibility.apiFreePublic ?? apiFreePublic(f.accessibility.api),
+      apiPaidTier: f.accessibility.apiPaidTier ?? apiPaidOnly(f.accessibility.api),
+      methodologyOpen: f.accessibility.methodologyOpen,
+      methodologyUrl: f.accessibility.methodologyUrl,
+      publicDashboard: f.accessibility.publicDashboard,
+      dashboardUrl: f.accessibility.dashboardUrl,
+      protocolCoverage: f.scope?.protocolCoverage ?? "unknown",
+      vaultMonitoring: f.scope?.vaultMonitoring ?? "unknown",
+      covered: cov.covered,
+      partial: cov.partial,
+    };
+  });
+
   return (
     <div className="max-w-6xl space-y-10">
       <section>
@@ -75,66 +115,21 @@ export default function FeedsPage() {
           ; no single feed is canonical.
         </p>
         <p className="mt-1.5 text-xs text-gray-500">
-          Each feed is tagged by <strong>API access</strong> (open · permissioned
-          · paid · none) and whether it offers <strong>API docs</strong>, a{" "}
-          <strong>public dashboard</strong>, and an{" "}
-          <strong>open methodology</strong> (✓ yes · ✗ no · ? not yet verified).
+          Each feed is shown as a matrix — what it assesses
+          (<strong>protocol coverage</strong>, <strong>vault monitoring</strong>),
+          its access (<strong>API documented</strong>,{" "}
+          <strong>API free &amp; public</strong>, <strong>API Paid Tier</strong>,{" "}
+          <strong>published methodology</strong>, <strong>public dashboard</strong>)
+          (✓ yes · ✗ no · ? not yet verified; a ↗ on a ✓ opens the docs) — and how
+          many of the {protocols.length} seed protocols it covers. Filter by
+          category or protocol above.
         </p>
-        <div className="mt-4 space-y-3">
-          {orderedFeeds.map((f) => (
-            <div
-              key={f.id}
-              id={`feed-${f.id}`}
-              className="scroll-mt-20 rounded-lg border border-gray-200 p-3"
-            >
-              <div className="flex flex-wrap items-baseline gap-2">
-                <a href={f.url} className="font-medium hover:underline">
-                  {f.name}
-                </a>
-                <span
-                  className={`rounded px-1.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${TYPE_STYLE[f.type]}`}
-                >
-                  {f.type}
-                </span>
-                <ApiPill api={f.accessibility.api} />
-                <Cap label="API docs" v={f.accessibility.apiDocumented} />
-                <Cap label="Dashboard" v={f.accessibility.publicDashboard} />
-                <Cap label="Methodology" v={f.accessibility.methodologyOpen} />
-                {f.accessibility.verified && (
-                  <span className="text-[11px] text-emerald-600">verified</span>
-                )}
-              </div>
-              <p className="mt-1 text-sm text-gray-700">{f.focus}</p>
-              <p className="mt-0.5 text-xs text-gray-500">
-                {f.accessibility.note}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section id="find" className="scroll-mt-20">
-        <h2 className="text-lg font-semibold">Find feeds by protocol</h2>
-        <p className="mt-1 max-w-3xl text-sm text-gray-600">
-          Type the protocol(s) you care about — the list narrows to the feeds
-          that actually cover them, so you can see at a glance who assesses what.
-        </p>
-        <div className="mt-3">
-          <FeedMatrixFilter
-            feeds={orderedFeeds.map((f) => ({
-              id: f.id,
-              name: f.name,
-              type: f.type,
-              focus: f.focus,
-            }))}
-            protocols={protocols.map((p) => ({
-              id: p.id,
-              name: p.name,
-              category: p.category,
-            }))}
-            coverage={coverage}
-          />
-        </div>
+        <FeedAccessMatrix
+          feeds={matrixFeeds}
+          protocols={protocols.map((p) => ({ id: p.id, name: p.name, category: p.category }))}
+          coverage={coverage}
+          seedTotal={protocols.length}
+        />
       </section>
 
       <section>
@@ -204,20 +199,13 @@ export default function FeedsPage() {
       </section>
 
       <section id="gaps" className="scroll-mt-20">
-        <h2 className="text-lg font-semibold">What blocks coverage</h2>
-        <p className="mt-1 max-w-3xl text-sm text-gray-600">
-          For every cell that is not yet covered, the blocker is one of three
-          things: the provider doesn&apos;t cover that protocol class
-          (their scope, not a defect), the data is gated behind keys or
-          agreements (our outreach work), or we haven&apos;t yet verified the
-          provider&apos;s data access first-hand (our verification work).
-        </p>
+        <h2 className="text-lg font-semibold">Coloring</h2>
         <table className="mt-3 w-full text-sm">
           <thead>
             <tr className="border-b border-gray-200 text-left text-gray-500">
               <th className="py-1 pr-3 font-medium">Feed</th>
-              <th className="py-1 pr-3 font-medium">Blocker</th>
-              <th className="py-1 font-medium">Detail &amp; what unblocks it</th>
+              <th className="py-1 pr-3 font-medium">Category</th>
+              <th className="py-1 font-medium">Detail</th>
             </tr>
           </thead>
           <tbody>

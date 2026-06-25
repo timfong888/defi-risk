@@ -18,6 +18,11 @@
       "coverageBlocker": {
         "kind": "provider-scope",
         "note": "DeFiScan reviews protocols one by one; uncovered protocols have no published review yet. Unblock: request a review upstream (open process) — nothing on our side."
+      },
+      "aggregatorStatus": "live",
+      "scope": {
+        "protocolCoverage": "yes",
+        "vaultMonitoring": "no"
       }
     },
     {
@@ -25,18 +30,24 @@
       "name": "CuratorWatch",
       "focus": "Vault-level risk monitoring for Morpho curators, tracking allocation risk and curator behavior",
       "type": "Dashboard",
-      "url": "https://curatorwatch.xyz",
+      "url": "https://curatorwatch.com",
       "accessibility": {
         "api": "unknown",
         "apiDocumented": "unknown",
-        "publicDashboard": "unknown",
-        "methodologyOpen": "unknown",
+        "publicDashboard": "yes",
+        "methodologyOpen": "yes",
         "verified": false,
-        "note": "Public dashboard; API availability to verify"
+        "note": "Public dashboard; API availability to verify",
+        "methodologyUrl": "https://curatorwatch.com/docs",
+        "dashboardUrl": "https://curatorwatch.com/ratings"
       },
       "coverageBlocker": {
         "kind": "provider-scope",
         "note": "CuratorWatch monitors the Morpho curator/vault ecosystem only; most seed protocols are outside its scope by design. Unblock: not applicable beyond Morpho-family rows."
+      },
+      "scope": {
+        "protocolCoverage": "no",
+        "vaultMonitoring": "yes"
       }
     },
     {
@@ -56,6 +67,10 @@
       "coverageBlocker": {
         "kind": "verification-pending",
         "note": "Morpho coverage is via the public dashboard (morpho.blockanalitica.com); verbatim transcription pending a parser + first-hand verification. Non-Morpho bespoke modeling stays private (outreach via EF App Relations, SAT-305)."
+      },
+      "scope": {
+        "protocolCoverage": "yes",
+        "vaultMonitoring": "yes"
       }
     },
     {
@@ -66,15 +81,20 @@
       "url": "https://defipunkd.com/",
       "accessibility": {
         "api": "unknown",
-        "apiDocumented": "unknown",
+        "apiDocumented": "no",
         "publicDashboard": "yes",
-        "methodologyOpen": "unknown",
+        "methodologyOpen": "yes",
         "verified": false,
-        "note": "Public site live (defipunkd.com). API docs and methodology openness not yet verified first-hand (SAT-302)."
+        "note": "Public site live (defipunkd.com). API docs and methodology openness not yet verified first-hand (SAT-302).",
+        "methodologyUrl": "https://defipunkd.com/methodology"
       },
       "coverageBlocker": {
         "kind": "verification-pending",
         "note": "Registry/API availability not yet verified first-hand. Unblock: our verification work (SAT-302)."
+      },
+      "scope": {
+        "protocolCoverage": "yes",
+        "vaultMonitoring": "no"
       }
     },
     {
@@ -85,15 +105,21 @@
       "url": "https://credora.io",
       "accessibility": {
         "api": "unknown",
-        "apiDocumented": "unknown",
+        "apiDocumented": "yes",
         "publicDashboard": "unknown",
-        "methodologyOpen": "unknown",
+        "methodologyOpen": "yes",
         "verified": false,
-        "note": "Institutional product; expect gated, manual curation with permission"
+        "note": "Institutional product; expect gated, manual curation with permission",
+        "apiDocsUrl": "https://www.credora.network/docs/api-documentation/",
+        "methodologyUrl": "https://www.credora.network/docs/methodologies/"
       },
       "coverageBlocker": {
         "kind": "access-gated",
         "note": "Institutional product; redistribution of ratings requires an agreement. Unblock: data agreement (SAT-307)."
+      },
+      "scope": {
+        "protocolCoverage": "yes",
+        "vaultMonitoring": "no"
       }
     },
     {
@@ -104,15 +130,20 @@
       "url": "https://pigi.finance",
       "accessibility": {
         "api": "unknown",
-        "apiDocumented": "unknown",
+        "apiDocumented": "yes",
         "publicDashboard": "unknown",
         "methodologyOpen": "unknown",
         "verified": false,
-        "note": "Public dashboard; API availability to verify"
+        "note": "Public dashboard; API availability to verify",
+        "apiDocsUrl": "https://pigi.finance/defi-api-docs"
       },
       "coverageBlocker": {
         "kind": "verification-pending",
         "note": "Public dashboard; API availability unverified. Vault-focused scope. Unblock: SAT-302."
+      },
+      "scope": {
+        "protocolCoverage": "no",
+        "vaultMonitoring": "yes"
       }
     },
     {
@@ -122,16 +153,22 @@
       "type": "Rating",
       "url": "https://xerberus.io",
       "accessibility": {
-        "api": "unknown",
-        "apiDocumented": "unknown",
+        "api": "open",
+        "apiDocumented": "yes",
         "publicDashboard": "unknown",
         "methodologyOpen": "yes",
-        "verified": false,
-        "note": "Methodology published openly (publish.obsidian.md/xerberus). API/dashboard access not yet verified first-hand (SAT-302)."
+        "verified": true,
+        "note": "Free public Risk Ratings API (api.xerberus.io/public/v1) — documented, x-api-key auth. Endpoint confirmed live 2026-06-24; key provisioned in the Vercel environment (XERBERUS_API).",
+        "methodologyUrl": "https://publish.obsidian.md/xerberus/Welcome"
       },
       "coverageBlocker": {
-        "kind": "verification-pending",
-        "note": "API-first positioning unverified; vault-focused scope. Unblock: SAT-302."
+        "kind": "provider-scope",
+        "note": "Open-source and API-first (per #59) with a free public API; the rated scope is vault-focused, which limits seed-protocol coverage."
+      },
+      "aggregatorStatus": "available",
+      "scope": {
+        "protocolCoverage": "no",
+        "vaultMonitoring": "yes"
       }
     },
     {
@@ -139,18 +176,24 @@
       "name": "Zyfai Risk",
       "focus": "Real-time risk score dashboard for DeFi liquidity pools. Tracks risk metrics, TVL, APY, and security grades across pools",
       "type": "Dashboard",
-      "url": "https://zyf.ai",
+      "url": "https://risk.zyf.ai",
       "accessibility": {
         "api": "unknown",
         "apiDocumented": "unknown",
-        "publicDashboard": "unknown",
-        "methodologyOpen": "unknown",
+        "publicDashboard": "yes",
+        "methodologyOpen": "yes",
         "verified": false,
-        "note": "Public dashboard; API availability to verify"
+        "note": "Public dashboard; API availability to verify",
+        "methodologyUrl": "https://docs.zyf.ai/docs/product/overview/risk-framework",
+        "dashboardUrl": "https://risk.zyf.ai/"
       },
       "coverageBlocker": {
         "kind": "verification-pending",
-        "note": "Pool-level dashboard; API unverified. Unblock: SAT-302."
+        "note": "API for vaults and wallets, but not at the pool level."
+      },
+      "scope": {
+        "protocolCoverage": "no",
+        "vaultMonitoring": "yes"
       }
     },
     {
@@ -168,8 +211,12 @@
         "note": "Public research reports; structured data to verify"
       },
       "coverageBlocker": {
-        "kind": "verification-pending",
-        "note": "Public research reports; structured-data availability unverified. Unblock: SAT-302."
+        "kind": "provider-scope",
+        "note": "Specific reports but limited in scope (currently Curve and Aave of the seed); no public API. (SAT-302)"
+      },
+      "scope": {
+        "protocolCoverage": "yes",
+        "vaultMonitoring": "no"
       }
     },
     {
@@ -177,18 +224,25 @@
       "name": "Philidor Analytics",
       "focus": "Deterministic vault risk scoring across 700+ vaults. Three-vector framework: asset quality, platform code maturity, and governance controls. Open methodology",
       "type": "Rating",
-      "url": "https://philidor.xyz",
+      "url": "https://philidor.io",
       "accessibility": {
         "api": "unknown",
-        "apiDocumented": "unknown",
+        "apiDocumented": "yes",
         "publicDashboard": "unknown",
-        "methodologyOpen": "unknown",
+        "methodologyOpen": "yes",
         "verified": false,
-        "note": "Open methodology, deterministic outputs; endpoint to verify"
+        "note": "Open methodology, deterministic outputs; endpoint to verify",
+        "apiDocsUrl": "https://docs.philidor.io/docs/api-reference",
+        "apiFreePublic": "yes",
+        "apiPaidTier": "yes"
       },
       "coverageBlocker": {
         "kind": "verification-pending",
         "note": "Open methodology, deterministic outputs claimed; endpoint unverified. Vault-focused scope. Unblock: SAT-302."
+      },
+      "scope": {
+        "protocolCoverage": "no",
+        "vaultMonitoring": "yes"
       }
     }
   ]

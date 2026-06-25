@@ -17,8 +17,18 @@ export interface Feed {
     // #66 categorization — orthogonal attributes, each MECE; "unknown" = not yet verified (SAT-302)
     api: "open" | "permissioned" | "paid" | "none" | "unknown";
     apiDocumented: "yes" | "no" | "unknown";
+    // Public link to the API docs, when one exists (makes the ✓ clickable).
+    apiDocsUrl?: string;
+    // Independent of `api`: a feed can have both a free public tier and a paid
+    // tier. When set, these override the values derived from `api`.
+    apiFreePublic?: "yes" | "no" | "unknown";
+    apiPaidTier?: "yes" | "no" | "unknown";
     publicDashboard: "yes" | "no" | "unknown";
+    // Public link to the dashboard, when one exists (makes the ✓ clickable).
+    dashboardUrl?: string;
     methodologyOpen: "yes" | "no" | "unknown";
+    // Public link to the open methodology, when one exists (makes the ✓ clickable).
+    methodologyUrl?: string;
     verified: boolean;
     note: string;
   };
@@ -26,6 +36,17 @@ export interface Feed {
     kind: "provider-scope" | "access-gated" | "verification-pending";
     note: string;
   };
+  // What the feed assesses, so the matrix can score protocol vs. vault coverage
+  // independently (e.g. CuratorWatch: protocol no, vault yes). Absent ≡ "unknown".
+  scope?: {
+    protocolCoverage: "yes" | "no" | "unknown";
+    vaultMonitoring: "yes" | "no" | "unknown";
+  };
+  // Whether the feed's data is actively reachable BY THIS AGGREGATOR (distinct
+  // from what the provider offers publicly): "live" = we sync it, "available" =
+  // usable API + validated path but no auto-sync yet, "none" = no access,
+  // "unknown" = not yet assessed. Absent ≡ "unknown".
+  aggregatorStatus?: "live" | "available" | "none" | "unknown";
 }
 
 export interface Protocol {

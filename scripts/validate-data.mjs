@@ -40,6 +40,24 @@ for (const f of feeds.feeds ?? []) {
     err(where, "accessibility.verified must be boolean");
   if (!BLOCKER_KINDS.includes(f.coverageBlocker?.kind) || !f.coverageBlocker?.note)
     err(where, "coverageBlocker must have a valid kind and a note");
+  if (
+    f.aggregatorStatus !== undefined &&
+    !["live", "available", "none", "unknown"].includes(f.aggregatorStatus)
+  )
+    err(where, `bad aggregatorStatus "${f.aggregatorStatus}"`);
+  if (a.methodologyUrl !== undefined && !/^https:\/\//.test(a.methodologyUrl))
+    err(where, "accessibility.methodologyUrl must be an https URL");
+  if (a.apiDocsUrl !== undefined && !/^https:\/\//.test(a.apiDocsUrl))
+    err(where, "accessibility.apiDocsUrl must be an https URL");
+  if (a.dashboardUrl !== undefined && !/^https:\/\//.test(a.dashboardUrl))
+    err(where, "accessibility.dashboardUrl must be an https URL");
+  for (const k of ["apiFreePublic", "apiPaidTier"])
+    if (a[k] !== undefined && !TRISTATE.includes(a[k]))
+      err(where, `accessibility.${k} must be yes/no/unknown`);
+  if (f.scope !== undefined)
+    for (const k of ["protocolCoverage", "vaultMonitoring"])
+      if (!TRISTATE.includes(f.scope[k]))
+        err(where, `scope.${k} must be yes/no/unknown`);
 }
 
 for (const e of excluded.excluded ?? []) {
