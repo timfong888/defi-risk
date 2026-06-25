@@ -198,12 +198,12 @@ export default function FeedsPage() {
       </section>
 
       <section id="gaps" className="scroll-mt-20">
-        <h2 className="text-lg font-semibold">What blocks coverage</h2>
+        <h2 className="text-lg font-semibold">Coloring</h2>
         <table className="mt-3 w-full text-sm">
           <thead>
             <tr className="border-b border-gray-200 text-left text-gray-500">
               <th className="py-1 pr-3 font-medium">Feed</th>
-              <th className="py-1 pr-3 font-medium">Blocker</th>
+              <th className="py-1 pr-3 font-medium">Category</th>
               <th className="py-1 font-medium">Detail</th>
             </tr>
           </thead>
