@@ -1,16 +1,9 @@
 import Link from "next/link";
 import { excludedFeeds, getCell, orderedFeeds, protocols, type Feed } from "@/lib/data";
-import FeedMatrixFilter from "./FeedMatrixFilter";
+import FeedAccessMatrix, { type MatrixFeed } from "./FeedAccessMatrix";
 
 export const metadata = {
   title: "Risk Feeds — DeFi Risk Intelligence Aggregator",
-};
-
-const TYPE_STYLE: Record<string, string> = {
-  Rating: "bg-indigo-50 text-indigo-700",
-  Dashboard: "bg-sky-50 text-sky-700",
-  Monitoring: "bg-rose-50 text-rose-700",
-  Research: "bg-violet-50 text-violet-700",
 };
 
 type Tri = "yes" | "no" | "unknown";
@@ -21,39 +14,6 @@ function apiFreePublic(api: Feed["accessibility"]["api"]): Tri {
 }
 function apiPaidOnly(api: Feed["accessibility"]["api"]): Tri {
   return api === "paid" ? "yes" : api === "unknown" ? "unknown" : "no";
-}
-
-// ✓ / ✗ / ? cell for the access matrix.
-function AccessMark({ v }: { v: Tri }) {
-  const mark = v === "yes" ? "✓" : v === "no" ? "✗" : "?";
-  const cls =
-    v === "yes" ? "text-emerald-600" : v === "no" ? "text-gray-300" : "text-amber-500";
-  return (
-    <span
-      className={`font-semibold ${cls}`}
-      title={v === "unknown" ? "not yet verified" : v}
-    >
-      {mark}
-    </span>
-  );
-}
-
-// Whether the feed's data is reachable by this aggregator (not what the
-// provider offers publicly). Absent ≡ "unknown".
-const AGG_STYLE: Record<NonNullable<Feed["aggregatorStatus"]>, { label: string; style: string; title: string }> = {
-  live: { label: "live", style: "bg-emerald-50 text-emerald-700", title: "actively synced into the aggregator" },
-  available: { label: "available", style: "bg-sky-50 text-sky-700", title: "usable API + validated path; auto-sync pending" },
-  none: { label: "—", style: "bg-gray-100 text-gray-400", title: "no programmatic access available to us" },
-  unknown: { label: "?", style: "bg-amber-50 text-amber-600", title: "not yet assessed" },
-};
-
-function AggStatus({ s }: { s: Feed["aggregatorStatus"] }) {
-  const a = AGG_STYLE[s ?? "unknown"];
-  return (
-    <span className={`rounded px-1.5 py-0.5 text-[11px] font-medium ${a.style}`} title={a.title}>
-      {a.label}
-    </span>
-  );
 }
 
 const BLOCKER_LABEL: Record<string, { label: string; style: string }> = {
@@ -111,6 +71,30 @@ export default function FeedsPage() {
     return { covered, partial };
   };
 
+  // Flatten each feed into matrix-row props (access columns derived here so the
+  // interactive matrix stays a thin client component).
+  const matrixFeeds: MatrixFeed[] = orderedFeeds.map((f) => {
+    const cov = feedCoverage(f.id);
+    return {
+      id: f.id,
+      name: f.name,
+      type: f.type,
+      url: f.url,
+      focus: f.focus,
+      apiDocumented: f.accessibility.apiDocumented,
+      apiFreePublic: apiFreePublic(f.accessibility.api),
+      apiPaidOnly: apiPaidOnly(f.accessibility.api),
+      methodologyOpen: f.accessibility.methodologyOpen,
+      methodologyUrl: f.accessibility.methodologyUrl,
+      publicDashboard: f.accessibility.publicDashboard,
+      protocolCoverage: f.scope?.protocolCoverage ?? "unknown",
+      vaultMonitoring: f.scope?.vaultMonitoring ?? "unknown",
+      aggregatorStatus: f.aggregatorStatus ?? "unknown",
+      covered: cov.covered,
+      partial: cov.partial,
+    };
+  });
+
   return (
     <div className="max-w-6xl space-y-10">
       <section>
@@ -139,99 +123,12 @@ export default function FeedsPage() {
           <strong>available to this aggregator</strong> (live · available · —)
           and how many of the {protocols.length} seed protocols it covers.
         </p>
-        <div className="mt-4 overflow-x-auto rounded-lg border border-gray-200">
-          <table className="w-full border-collapse text-sm">
-            <thead>
-              <tr className="bg-gray-50 text-left">
-                <th className="px-3 py-2 font-medium border-b border-gray-200">Feed</th>
-                <th className="px-2 py-2 font-medium border-b border-gray-200 text-center whitespace-nowrap">Protocol coverage</th>
-                <th className="px-2 py-2 font-medium border-b border-gray-200 text-center whitespace-nowrap">Vault monitoring</th>
-                <th className="px-2 py-2 font-medium border-b border-gray-200 text-center">API documented</th>
-                <th className="px-2 py-2 font-medium border-b border-gray-200 text-center">API free &amp; public</th>
-                <th className="px-2 py-2 font-medium border-b border-gray-200 text-center">API paid only</th>
-                <th className="px-2 py-2 font-medium border-b border-gray-200 text-center">Open methodology</th>
-                <th className="px-2 py-2 font-medium border-b border-gray-200 text-center">Public dashboard</th>
-                <th className="px-2 py-2 font-medium border-b border-gray-200 text-center whitespace-nowrap">Available to aggregator</th>
-                <th className="px-2 py-2 font-medium border-b border-gray-200 text-center whitespace-nowrap">Seed coverage</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orderedFeeds.map((f) => {
-                const a = f.accessibility;
-                const cov = feedCoverage(f.id);
-                return (
-                  <tr
-                    key={f.id}
-                    id={`feed-${f.id}`}
-                    className="scroll-mt-20 border-b border-gray-100 align-top last:border-0"
-                  >
-                    <td className="px-3 py-2">
-                      <a href={f.url} className="font-medium hover:underline">
-                        {f.name}
-                      </a>
-                      <span
-                        className={`ml-2 rounded px-1.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${TYPE_STYLE[f.type]}`}
-                      >
-                        {f.type}
-                      </span>
-                      <span className="mt-0.5 block max-w-md text-xs text-gray-500">
-                        {f.focus}
-                      </span>
-                    </td>
-                    <td className="px-2 py-2 text-center"><AccessMark v={f.scope?.protocolCoverage ?? "unknown"} /></td>
-                    <td className="px-2 py-2 text-center"><AccessMark v={f.scope?.vaultMonitoring ?? "unknown"} /></td>
-                    <td className="px-2 py-2 text-center"><AccessMark v={a.apiDocumented} /></td>
-                    <td className="px-2 py-2 text-center"><AccessMark v={apiFreePublic(a.api)} /></td>
-                    <td className="px-2 py-2 text-center"><AccessMark v={apiPaidOnly(a.api)} /></td>
-                    <td className="px-2 py-2 text-center">
-                      {a.methodologyUrl ? (
-                        <a href={a.methodologyUrl} target="_blank" rel="noopener noreferrer" className="hover:opacity-70">
-                          <AccessMark v={a.methodologyOpen} />
-                        </a>
-                      ) : (
-                        <AccessMark v={a.methodologyOpen} />
-                      )}
-                    </td>
-                    <td className="px-2 py-2 text-center"><AccessMark v={a.publicDashboard} /></td>
-                    <td className="px-2 py-2 text-center"><AggStatus s={f.aggregatorStatus} /></td>
-                    <td className="px-2 py-2 text-center tabular-nums whitespace-nowrap">
-                      {cov.covered + cov.partial} / {protocols.length}
-                      {cov.partial > 0 && (
-                        <span className="block text-[11px] text-gray-400">
-                          {cov.covered} full · {cov.partial} partial
-                        </span>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section id="find" className="scroll-mt-20">
-        <h2 className="text-lg font-semibold">Find feeds by protocol</h2>
-        <p className="mt-1 max-w-3xl text-sm text-gray-600">
-          Type the protocol(s) you care about — the list narrows to the feeds
-          that actually cover them, so you can see at a glance who assesses what.
-        </p>
-        <div className="mt-3">
-          <FeedMatrixFilter
-            feeds={orderedFeeds.map((f) => ({
-              id: f.id,
-              name: f.name,
-              type: f.type,
-              focus: f.focus,
-            }))}
-            protocols={protocols.map((p) => ({
-              id: p.id,
-              name: p.name,
-              category: p.category,
-            }))}
-            coverage={coverage}
-          />
-        </div>
+        <FeedAccessMatrix
+          feeds={matrixFeeds}
+          protocols={protocols.map((p) => ({ id: p.id, name: p.name, category: p.category }))}
+          coverage={coverage}
+          seedTotal={protocols.length}
+        />
       </section>
 
       <section>
