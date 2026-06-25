@@ -1,5 +1,8 @@
 # Community Contribution Model — Design & Execution Plan
 
+STATUS: DRAFT
+LAST UPDATE: June 24, 2026
+
 How protocols, feed providers, and the public contribute to the aggregator —
 and how the design harvests protocol-team knowledge without letting rated
 parties influence their ratings.
