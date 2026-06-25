@@ -20,9 +20,9 @@ for something this important. The aggregation is the value.
 - **Methodology page** — what the project does and does not do, the full feed
   registry with inclusion rationale, and the data provenance tag legend.
 
-## What it will never do
+## What is out of scope.
 
-Produce its own risk scores. Feed ratings are shown verbatim only. This
+Produce its own risk scores. Feed ratings are shown verbatim or linked to the source directly. This
 constraint is binding — see [CHARTER.md](CHARTER.md). Any change requires
 written agreement from the Ethereum Foundation.
 
@@ -37,7 +37,7 @@ written agreement from the Ethereum Foundation.
 - Design baseline and deliberate improvements over the EF POC:
   [`design/poc-baseline.md`](design/poc-baseline.md)
 
-## Corrections, new protocols, new feed providers
+## Corrections, new protocols, new feed providers (DRAFT - still TBD)
 
 The data layer is community-correctable. To propose a change:
 
