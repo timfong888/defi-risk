@@ -80,7 +80,7 @@
       "url": "https://defipunkd.com/",
       "accessibility": {
         "api": "unknown",
-        "apiDocumented": "unknown",
+        "apiDocumented": "no",
         "publicDashboard": "yes",
         "methodologyOpen": "yes",
         "verified": false,
@@ -104,11 +104,13 @@
       "url": "https://credora.io",
       "accessibility": {
         "api": "unknown",
-        "apiDocumented": "unknown",
+        "apiDocumented": "yes",
         "publicDashboard": "unknown",
-        "methodologyOpen": "unknown",
+        "methodologyOpen": "yes",
         "verified": false,
-        "note": "Institutional product; expect gated, manual curation with permission"
+        "note": "Institutional product; expect gated, manual curation with permission",
+        "apiDocsUrl": "https://www.credora.network/docs/api-documentation/",
+        "methodologyUrl": "https://www.credora.network/docs/methodologies/"
       },
       "coverageBlocker": {
         "kind": "access-gated",
@@ -127,11 +129,12 @@
       "url": "https://pigi.finance",
       "accessibility": {
         "api": "unknown",
-        "apiDocumented": "unknown",
+        "apiDocumented": "yes",
         "publicDashboard": "unknown",
         "methodologyOpen": "unknown",
         "verified": false,
-        "note": "Public dashboard; API availability to verify"
+        "note": "Public dashboard; API availability to verify",
+        "apiDocsUrl": "https://pigi.finance/defi-api-docs"
       },
       "coverageBlocker": {
         "kind": "verification-pending",
@@ -154,7 +157,8 @@
         "publicDashboard": "unknown",
         "methodologyOpen": "yes",
         "verified": true,
-        "note": "Free public Risk Ratings API (api.xerberus.io/public/v1) — documented, x-api-key auth. Endpoint confirmed live 2026-06-24; key provisioned in the Vercel environment (XERBERUS_API)."
+        "note": "Free public Risk Ratings API (api.xerberus.io/public/v1) — documented, x-api-key auth. Endpoint confirmed live 2026-06-24; key provisioned in the Vercel environment (XERBERUS_API).",
+        "methodologyUrl": "https://publish.obsidian.md/xerberus/Welcome"
       },
       "coverageBlocker": {
         "kind": "provider-scope",

@@ -17,6 +17,8 @@ export interface Feed {
     // #66 categorization — orthogonal attributes, each MECE; "unknown" = not yet verified (SAT-302)
     api: "open" | "permissioned" | "paid" | "none" | "unknown";
     apiDocumented: "yes" | "no" | "unknown";
+    // Public link to the API docs, when one exists (makes the ✓ clickable).
+    apiDocsUrl?: string;
     publicDashboard: "yes" | "no" | "unknown";
     methodologyOpen: "yes" | "no" | "unknown";
     // Public link to the open methodology, when one exists (makes the ✓ clickable).

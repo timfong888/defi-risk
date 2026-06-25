@@ -82,6 +82,7 @@ export default function FeedsPage() {
       url: f.url,
       focus: f.focus,
       apiDocumented: f.accessibility.apiDocumented,
+      apiDocsUrl: f.accessibility.apiDocsUrl,
       apiFreePublic: apiFreePublic(f.accessibility.api),
       apiPaidOnly: apiPaidOnly(f.accessibility.api),
       methodologyOpen: f.accessibility.methodologyOpen,
@@ -89,7 +90,6 @@ export default function FeedsPage() {
       publicDashboard: f.accessibility.publicDashboard,
       protocolCoverage: f.scope?.protocolCoverage ?? "unknown",
       vaultMonitoring: f.scope?.vaultMonitoring ?? "unknown",
-      aggregatorStatus: f.aggregatorStatus ?? "unknown",
       covered: cov.covered,
       partial: cov.partial,
     };
@@ -118,10 +118,10 @@ export default function FeedsPage() {
           (<strong>protocol coverage</strong>, <strong>vault monitoring</strong>),
           its access (<strong>API documented</strong>,{" "}
           <strong>API free &amp; public</strong>, <strong>API paid only</strong>,{" "}
-          <strong>open methodology</strong>, <strong>public dashboard</strong>)
-          (✓ yes · ✗ no · ? not yet verified) — plus whether its data is{" "}
-          <strong>available to this aggregator</strong> (live · available · —)
-          and how many of the {protocols.length} seed protocols it covers.
+          <strong>documented methodology</strong>, <strong>public dashboard</strong>)
+          (✓ yes · ✗ no · ? not yet verified; a ↗ on a ✓ opens the docs) — and how
+          many of the {protocols.length} seed protocols it covers. Filter by
+          category or protocol above.
         </p>
         <FeedAccessMatrix
           feeds={matrixFeeds}
@@ -199,20 +199,12 @@ export default function FeedsPage() {
 
       <section id="gaps" className="scroll-mt-20">
         <h2 className="text-lg font-semibold">What blocks coverage</h2>
-        <p className="mt-1 max-w-3xl text-sm text-gray-600">
-          For every cell that is not yet covered, the blocker is one of three
-          things: the provider doesn&apos;t cover that protocol class
-          (their scope, not a defect), the data is gated behind keys or
-          agreements and may be paid and require fees, or we haven&apos;t yet
-          verified the provider&apos;s data access first-hand (our verification
-          work).
-        </p>
         <table className="mt-3 w-full text-sm">
           <thead>
             <tr className="border-b border-gray-200 text-left text-gray-500">
               <th className="py-1 pr-3 font-medium">Feed</th>
               <th className="py-1 pr-3 font-medium">Blocker</th>
-              <th className="py-1 font-medium">Detail &amp; what unblocks it</th>
+              <th className="py-1 font-medium">Detail</th>
             </tr>
           </thead>
           <tbody>

@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 type Tri = "yes" | "no" | "unknown";
-type AggStatus = "live" | "available" | "none" | "unknown";
 
 // One row per feed, with all matrix columns precomputed server-side so this
 // client component stays free of @/lib/data types.
@@ -14,6 +13,7 @@ export interface MatrixFeed {
   url: string;
   focus: string;
   apiDocumented: Tri;
+  apiDocsUrl?: string;
   apiFreePublic: Tri;
   apiPaidOnly: Tri;
   methodologyOpen: Tri;
@@ -21,7 +21,6 @@ export interface MatrixFeed {
   publicDashboard: Tri;
   protocolCoverage: Tri;
   vaultMonitoring: Tri;
-  aggregatorStatus: AggStatus;
   covered: number;
   partial: number;
 }
@@ -40,6 +39,28 @@ const TYPE_STYLE: Record<string, string> = {
   Research: "bg-violet-50 text-violet-700",
 };
 
+// External-link "open" icon (square with arrow) shown next to a clickable ✓.
+function OpenIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="11"
+      height="11"
+      className="ml-0.5 inline-block align-[-1px] text-gray-400"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      aria-hidden
+    >
+      <path
+        d="M14 4h6v6M20 4l-9 9M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function AccessMark({ v }: { v: Tri }) {
   const mark = v === "yes" ? "✓" : v === "no" ? "✗" : "?";
   const cls =
@@ -51,20 +72,22 @@ function AccessMark({ v }: { v: Tri }) {
   );
 }
 
-const AGG_STYLE: Record<AggStatus, { label: string; style: string; title: string }> = {
-  live: { label: "live", style: "bg-emerald-50 text-emerald-700", title: "actively synced into the aggregator" },
-  available: { label: "available", style: "bg-sky-50 text-sky-700", title: "usable API + validated path; auto-sync pending" },
-  none: { label: "—", style: "bg-gray-100 text-gray-400", title: "no programmatic access available to us" },
-  unknown: { label: "?", style: "bg-amber-50 text-amber-600", title: "not yet assessed" },
-};
-
-function AggStatus({ s }: { s: AggStatus }) {
-  const a = AGG_STYLE[s];
-  return (
-    <span className={`rounded px-1.5 py-0.5 text-[11px] font-medium ${a.style}`} title={a.title}>
-      {a.label}
-    </span>
-  );
+// A ✓/✗/? cell that becomes a link with an open icon when a docs URL exists.
+function MarkCell({ v, href }: { v: Tri; href?: string }) {
+  if (href && v === "yes") {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center hover:opacity-70"
+      >
+        <AccessMark v={v} />
+        <OpenIcon />
+      </a>
+    );
+  }
+  return <AccessMark v={v} />;
 }
 
 export default function FeedAccessMatrix({
@@ -243,17 +266,16 @@ export default function FeedAccessMatrix({
       <div className="overflow-x-auto rounded-lg border border-gray-200">
         <table className="w-full border-collapse text-sm">
           <thead>
-            <tr className="bg-gray-50 text-left">
-              <th className="px-3 py-2 font-medium border-b border-gray-200">Feed</th>
-              <th className="px-2 py-2 font-medium border-b border-gray-200 text-center whitespace-nowrap">Protocol coverage</th>
-              <th className="px-2 py-2 font-medium border-b border-gray-200 text-center whitespace-nowrap">Vault monitoring</th>
-              <th className="px-2 py-2 font-medium border-b border-gray-200 text-center">API documented</th>
-              <th className="px-2 py-2 font-medium border-b border-gray-200 text-center">API free &amp; public</th>
-              <th className="px-2 py-2 font-medium border-b border-gray-200 text-center">API paid only</th>
-              <th className="px-2 py-2 font-medium border-b border-gray-200 text-center">Open methodology</th>
-              <th className="px-2 py-2 font-medium border-b border-gray-200 text-center">Public dashboard</th>
-              <th className="px-2 py-2 font-medium border-b border-gray-200 text-center whitespace-nowrap">Available to aggregator</th>
-              <th className="px-2 py-2 font-medium border-b border-gray-200 text-center whitespace-nowrap">Seed coverage</th>
+            <tr className="text-left">
+              <th className="sticky top-0 z-10 bg-gray-50 px-3 py-2 font-medium border-b border-gray-200">Feed</th>
+              <th className="sticky top-0 z-10 bg-gray-50 px-2 py-2 font-medium border-b border-gray-200 text-center whitespace-nowrap">Protocol coverage</th>
+              <th className="sticky top-0 z-10 bg-gray-50 px-2 py-2 font-medium border-b border-gray-200 text-center whitespace-nowrap">Vault monitoring</th>
+              <th className="sticky top-0 z-10 bg-gray-50 px-2 py-2 font-medium border-b border-gray-200 text-center">API documented</th>
+              <th className="sticky top-0 z-10 bg-gray-50 px-2 py-2 font-medium border-b border-gray-200 text-center">API free &amp; public</th>
+              <th className="sticky top-0 z-10 bg-gray-50 px-2 py-2 font-medium border-b border-gray-200 text-center">API paid only</th>
+              <th className="sticky top-0 z-10 bg-gray-50 px-2 py-2 font-medium border-b border-gray-200 text-center whitespace-nowrap">Documented methodology</th>
+              <th className="sticky top-0 z-10 bg-gray-50 px-2 py-2 font-medium border-b border-gray-200 text-center">Public dashboard</th>
+              <th className="sticky top-0 z-10 bg-gray-50 px-2 py-2 font-medium border-b border-gray-200 text-center whitespace-nowrap">Seed coverage</th>
             </tr>
           </thead>
           <tbody>
@@ -276,20 +298,11 @@ export default function FeedAccessMatrix({
                 </td>
                 <td className="px-2 py-2 text-center"><AccessMark v={f.protocolCoverage} /></td>
                 <td className="px-2 py-2 text-center"><AccessMark v={f.vaultMonitoring} /></td>
-                <td className="px-2 py-2 text-center"><AccessMark v={f.apiDocumented} /></td>
+                <td className="px-2 py-2 text-center"><MarkCell v={f.apiDocumented} href={f.apiDocsUrl} /></td>
                 <td className="px-2 py-2 text-center"><AccessMark v={f.apiFreePublic} /></td>
                 <td className="px-2 py-2 text-center"><AccessMark v={f.apiPaidOnly} /></td>
-                <td className="px-2 py-2 text-center">
-                  {f.methodologyUrl ? (
-                    <a href={f.methodologyUrl} target="_blank" rel="noopener noreferrer" className="hover:opacity-70">
-                      <AccessMark v={f.methodologyOpen} />
-                    </a>
-                  ) : (
-                    <AccessMark v={f.methodologyOpen} />
-                  )}
-                </td>
+                <td className="px-2 py-2 text-center"><MarkCell v={f.methodologyOpen} href={f.methodologyUrl} /></td>
                 <td className="px-2 py-2 text-center"><AccessMark v={f.publicDashboard} /></td>
-                <td className="px-2 py-2 text-center"><AggStatus s={f.aggregatorStatus} /></td>
                 <td className="px-2 py-2 text-center tabular-nums whitespace-nowrap">
                   {f.covered + f.partial} / {seedTotal}
                   {f.partial > 0 && (
@@ -302,7 +315,7 @@ export default function FeedAccessMatrix({
             ))}
             {visible.length === 0 && (
               <tr>
-                <td colSpan={10} className="px-3 py-6 text-center text-gray-400">
+                <td colSpan={9} className="px-3 py-6 text-center text-gray-400">
                   No feeds match this filter.
                 </td>
               </tr>

@@ -47,6 +47,8 @@ for (const f of feeds.feeds ?? []) {
     err(where, `bad aggregatorStatus "${f.aggregatorStatus}"`);
   if (a.methodologyUrl !== undefined && !/^https:\/\//.test(a.methodologyUrl))
     err(where, "accessibility.methodologyUrl must be an https URL");
+  if (a.apiDocsUrl !== undefined && !/^https:\/\//.test(a.apiDocsUrl))
+    err(where, "accessibility.apiDocsUrl must be an https URL");
   if (f.scope !== undefined)
     for (const k of ["protocolCoverage", "vaultMonitoring"])
       if (!TRISTATE.includes(f.scope[k]))
