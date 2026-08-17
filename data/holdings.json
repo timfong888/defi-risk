@@ -1,0 +1,133 @@
+{
+  "asOf": "2026-08-17",
+  "note": "Sample data for illustration. Replace with actual holdings by connecting custodian exports or a tool like Empower.",
+  "accounts": [
+    { "id": "morgan-stanley", "name": "Morgan Stanley NET", "type": "Taxable", "custodian": "Morgan Stanley" },
+    { "id": "fidelity-401k", "name": "Fidelity 401k (Mary)", "type": "Tax-Deferred", "custodian": "Fidelity" },
+    { "id": "slavic-401k", "name": "Slavic 401k (Tim)", "type": "Tax-Deferred", "custodian": "Slavic" },
+    { "id": "sofi", "name": "SoFi High-Yield Savings", "type": "Taxable", "custodian": "SoFi" },
+    { "id": "ally", "name": "Ally Rainy Day", "type": "Taxable", "custodian": "Ally" }
+  ],
+  "holdings": [
+    {
+      "ticker": "IVV",
+      "name": "iShares Core S&P 500 ETF",
+      "account": "morgan-stanley",
+      "value": 85000,
+      "assetClass": "Equity",
+      "geography": "US",
+      "marketCap": "Large Cap",
+      "style": "Blend"
+    },
+    {
+      "ticker": "EFA",
+      "name": "iShares MSCI EAFE",
+      "account": "morgan-stanley",
+      "value": 35000,
+      "assetClass": "Equity",
+      "geography": "International Developed",
+      "marketCap": "Large Cap",
+      "style": "Blend"
+    },
+    {
+      "ticker": "AGG",
+      "name": "iShares US Aggregate Bond",
+      "account": "morgan-stanley",
+      "value": 30000,
+      "assetClass": "Fixed Income",
+      "geography": "US",
+      "marketCap": null,
+      "style": null
+    },
+    {
+      "ticker": "FXAIX",
+      "name": "Fidelity 500 Index Fund",
+      "account": "fidelity-401k",
+      "value": 120000,
+      "assetClass": "Equity",
+      "geography": "US",
+      "marketCap": "Large Cap",
+      "style": "Blend"
+    },
+    {
+      "ticker": "FSMDX",
+      "name": "Fidelity Mid Cap Index",
+      "account": "fidelity-401k",
+      "value": 25000,
+      "assetClass": "Equity",
+      "geography": "US",
+      "marketCap": "Mid Cap",
+      "style": "Blend"
+    },
+    {
+      "ticker": "FTIHX",
+      "name": "Fidelity Total International",
+      "account": "fidelity-401k",
+      "value": 20000,
+      "assetClass": "Equity",
+      "geography": "International Developed",
+      "marketCap": "Large Cap",
+      "style": "Blend"
+    },
+    {
+      "ticker": "FXNAX",
+      "name": "Fidelity US Bond Index",
+      "account": "fidelity-401k",
+      "value": 35000,
+      "assetClass": "Fixed Income",
+      "geography": "US",
+      "marketCap": null,
+      "style": null
+    },
+    {
+      "ticker": "LGROW",
+      "name": "Large Cap Growth Fund",
+      "account": "slavic-401k",
+      "value": 45000,
+      "assetClass": "Equity",
+      "geography": "US",
+      "marketCap": "Large Cap",
+      "style": "Growth"
+    },
+    {
+      "ticker": "EEMF",
+      "name": "Emerging Markets Index Fund",
+      "account": "slavic-401k",
+      "value": 15000,
+      "assetClass": "Equity",
+      "geography": "Emerging Markets",
+      "marketCap": "Large Cap",
+      "style": "Blend"
+    },
+    {
+      "ticker": "BONDF",
+      "name": "Bond Index Fund",
+      "account": "slavic-401k",
+      "value": 20000,
+      "assetClass": "Fixed Income",
+      "geography": "US",
+      "marketCap": null,
+      "style": null
+    },
+    {
+      "ticker": "CASH-SOFI",
+      "name": "SoFi High-Yield Savings",
+      "account": "sofi",
+      "value": 25000,
+      "assetClass": "Cash",
+      "geography": "US",
+      "marketCap": null,
+      "style": null
+    },
+    {
+      "ticker": "CASH-ALLY",
+      "name": "Ally High-Yield Savings",
+      "account": "ally",
+      "value": 18000,
+      "assetClass": "Cash",
+      "geography": "US",
+      "marketCap": null,
+      "style": null
+    }
+  ]
+}
