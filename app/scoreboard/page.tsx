@@ -30,7 +30,7 @@ export default function ScoreboardPage() {
         <p className="mt-1 max-w-2xl text-sm text-gray-500">
           How much does each AI model diverge from its reference implementation
           depending on which provider serves it? Zero = identical to the model
-          maker's direct API. Higher = more divergence.
+          maker&apos;s direct API. Higher = more divergence.
         </p>
         <div className="mt-3 flex flex-wrap gap-4 text-xs text-gray-400">
           <span>

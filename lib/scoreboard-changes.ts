@@ -73,9 +73,9 @@ export const CHANGES: ChangeEntry[] = [
     providerName: "Google Vertex AI",
     dimensionName: "Format Fidelity",
     direction: "new",
-    summary: "Streaming delta format now measured on Vertex Claude",
+    summary: "Format Fidelity now measured for the first time on Vertex Claude",
     detail:
-      "Added streaming-delta format consistency to the Vertex Claude test suite. First measurement shows a 10% divergence from direct Anthropic API — streaming chunk boundaries differ slightly but content is identical.",
+      "First Format Fidelity measurement for Claude 3.5 Sonnet via Vertex AI. Streaming chunk boundaries differ slightly from the direct Anthropic API, producing a 10% divergence score — content is identical but delta structure varies.",
   },
   {
     id: "c6",

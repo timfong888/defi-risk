@@ -51,7 +51,7 @@ export default function ChangesPage() {
           <span>↓</span> Divergence decreased (improvement)
         </span>
         <span className="flex items-center gap-1.5 text-sky-600 font-medium">
-          <span>★</span> New dimension measured
+          <span>★</span> First measurement on this provider
         </span>
       </div>
 
